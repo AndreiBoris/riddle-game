@@ -5,7 +5,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    keys = ["key to sorrow", "key to gratitude"]
+    keys = []
 
     def show(self):
         print "\nYour inventory:"
@@ -95,15 +95,49 @@ What do you do?\n"""
         print self.intro
         print self.bearings
         action = self.action()
+        if action == "go north" or action == "walk north":
+            return "middle"
 
+class MiddleRoom(Room):
 
+    good_moves = ['go east', 'walk east', 'walk south', 'walk east',
+                    'walk west', 'go south', 'go east', 'go west']
+    bad_moves = []
+    intro = """This room is huge - remarkably so. It makes one wonder what kind
+of building was designed to hold such a mammoth. Despite its awe-inspiring size,
+the upkeep leaves much to be desired. It dripping with old newspapers that have
+been left lying around and in various makeshift beddings. Dripping because the
+ceiling soaked - evidently the roof doesn't do such a great job keeping the rain
+out."""
+    bearings = """
+To the north there is a door that is in incongruously good condition. To the
+east is some sort of office wing. To the west there is a dark tunnel. To the
+south is a short hallway leading to a small apartment room.
+
+What do you do?\n"""
+    def enter(self):
+        print self.intro
+        print self.bearings
+        action = self.action()
+        if action == "go south" or action == "walk south":
+            return "start"
+        if action == "go east" or action == "walk east":
+            return "right"
+        if action == "go west" or action == "walk west":
+            return "left"
 
 
 class Map(object):
-    pass
+
+    rooms = {'start': StartingRoom(), 'middle': MiddleRoom()}
 
 the_map = Map()
 game = Engine(the_map)
 inv = Inventory()
 start = StartingRoom()
 start.enter()
+
+# TODO: if returning to starting room, there shouldn't be the wake-up intro
+# message
+# TODO: change messages after the first time being in the room, though this
+# information should be accessible using some kind of function.
