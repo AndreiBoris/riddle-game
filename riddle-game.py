@@ -59,18 +59,6 @@ There appears to be no way to get your bearings in this generic room.
 What do you do?
 """
 
-    def inventory(self):
-        # somehow access inventory
-        pass
-
-    def move(self):
-        # move in various directions using Map
-        pass
-
-    def help(self):
-        # basic instructions of what the player can do are printed
-        pass
-
     def action(self):
         # basic action options for any room
         action = None
@@ -145,6 +133,10 @@ What do you do?\n"""
             return "right"
         if action == "go west" or action == "walk west":
             return "left"
+        if action == "go north" or action == "walk north" and len(inv.keys) < 4:
+            print "The door appears to have 6 indentations that would allow"
+            print "some kind of small objects"
+
 
 
 class Map(object):
@@ -164,3 +156,5 @@ game.play('start')
 # message
 # TODO: change messages after the first time being in the room, though this
 # information should be accessible using some kind of function.
+# TODO: Opening mattress bit has to be just for the first instance of the room,
+# it shouldn't even be accessible with intro
