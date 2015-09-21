@@ -1,7 +1,25 @@
+from sys import exit
+from time import sleep
+
 class Engine(object):
 
     def __init__(self, a_map):
         self.map = a_map
+
+    def play(self, start_room):
+        # this will run for the duration of the game, using self.map to
+        # navigate between the rooms
+
+        print "You wake up.\n"
+        print "Your mind is foggy but slowly you get your bearings.\n"
+
+        next_room = self.map.play(start_room)
+
+        while next_room != 'end':
+            next_room = self.map.play(next_room)
+        if next_room == 'end':
+            self.map.play(next_room)
+
 
 class Inventory(object):
 
@@ -24,7 +42,7 @@ class Room(object):
 
     valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
             'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
-            'inv', 'bearings', 'restart']
+            'inv', 'intro', 'look around']
     vague_moves = ['walk', 'go']
     bad_moves = []
     good_moves = []
@@ -32,8 +50,8 @@ class Room(object):
 Here are some actions that you can take:
 - walk (must qualify with a compass direction, i.e. north/south/east/west)
 - inventory (or inv)
-- bearings
-- restart (the room)
+- look around
+- intro
 """
     bearings = """
 There appears to be no way to get your bearings in this generic room.
@@ -66,26 +84,28 @@ What do you do?
                 print "\nWhere would you like to %s?\n" % action
             if action == 'help':
                 print self.helper
-            if action == 'bearings':
+            if action == 'look around':
                 print self.bearings
-            if action == "restart":
+            if action == "intro":
                 print self.intro
                 print self.bearings
             if action == "inventory" or action == "inv":
                 inv.show()
                 print "\nWhat do you do? \n"
         print "\nYou %s." % action
+        sleep(1.5)
+        print "\n" * 35
+        return action
 
 class StartingRoom(Room):
 
     good_moves = ['go north', 'walk north']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
-    intro = """You wake up.
-Your mind is foggy but slowly you get your bearings. You are in a blue-tinted
-room surrounded by what seems to be drywall. You are lying on a mattress
-sprawled in the middle of the room. You're dressed normally. Nothing seems to
-have gone wrong but you don't have a clear idea of where you are or why."""
+    intro = """You are in a blue-tinted room surrounded by what seems to be
+drywall. You are lying on a mattress sprawled in the middle of the room. You're
+dressed normally. Nothing seems to have gone wrong but you don't have a clear
+idea of where you are or why."""
     bearings = """
 There is a hallway to the north.
 
@@ -131,11 +151,14 @@ class Map(object):
 
     rooms = {'start': StartingRoom(), 'middle': MiddleRoom()}
 
+    def play(self, next_room):
+        return self.rooms[next_room].enter()
+
 the_map = Map()
-game = Engine(the_map)
 inv = Inventory()
-start = StartingRoom()
-start.enter()
+game = Engine(the_map)
+game.play('start')
+
 
 # TODO: if returning to starting room, there shouldn't be the wake-up intro
 # message
