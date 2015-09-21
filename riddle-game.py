@@ -17,6 +17,8 @@ class Engine(object):
 
         while next_room != 'end':
             next_room = self.map.play(next_room)
+            # intro doesn't automatically play after a room has been visited
+            self.map.rooms[next_room].visited = True
         if next_room == 'end':
             self.map.play(next_room)
 
@@ -40,6 +42,7 @@ class Inventory(object):
 
 class Room(object):
 
+    visited = False
     valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
             'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
             'inv', 'intro', 'look around']
@@ -100,7 +103,8 @@ There is a hallway to the north.
 What do you do?\n"""
 
     def enter(self):
-        print self.intro
+        if self.visited == False:
+            print self.intro
         print self.bearings
         action = self.action()
         if action == "go north" or action == "walk north":
@@ -124,7 +128,8 @@ south is a short hallway leading to a small apartment room.
 
 What do you do?\n"""
     def enter(self):
-        print self.intro
+        if self.visited == False:
+            print self.intro
         print self.bearings
         action = self.action()
         if action == "go south" or action == "walk south":
