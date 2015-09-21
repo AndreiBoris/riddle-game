@@ -22,7 +22,16 @@ class Inventory(object):
 
 class Room(object):
 
-    valid = ['help', '']
+    valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
+            'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
+            'inv']
+    vague_moves = ['walk', 'go']
+    helper ="""
+Here are some actions that you can take:
+- walk
+(must qualify with a compass direction, i.e. north/south/east/west)
+-inventory
+"""
 
     def inventory(self):
         # somehow access inventory
@@ -38,6 +47,10 @@ class Room(object):
 
 class StartingRoom(Room):
 
+    good_moves = ['go north', 'walk north']
+    bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
+                'go west']
+
     def enter(self):
         print "You wake up. \n"
         print "Your mind is foggy but slowly you get your bearings."
@@ -45,9 +58,21 @@ class StartingRoom(Room):
         print "drywall. You are lying on a mattress sprawled in the middle of"
         print "the room. You're dressed normally. Nothing seems to have gone"
         print "wrong but you don't have a clear idea of where you are or why. \n"
-        print "What do you do?\n"
-        action = raw_input("> ").lower()
-        print action
+        print "There is a hallway to the north. \n"
+        print "What do you do? (type 'help' for valid actions)\n"
+        action = 'invalid'
+        while action not in self.good_moves:
+            action = raw_input("> ").lower()
+            if action not in self.valid:
+                print "\nI don't understand %r. Type 'help' if you are lost.\n" % action
+            if action in self.bad_moves:
+                print "\nYou can't go there from here.\n"
+            if action in self.vague_moves:
+                print "\nWhere would you like to %s?\n" % action
+            if action == 'help':
+                print self.helper
+        print "OK, let's %s!" % action
+
 
 
 class Map(object):
