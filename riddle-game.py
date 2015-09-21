@@ -31,8 +31,9 @@ class Room(object):
     helper ="""
 Here are some actions that you can take:
 - walk (must qualify with a compass direction, i.e. north/south/east/west)
-- inventory
+- inventory (or inv)
 - bearings
+- restart (the room)
 """
     bearings = """
 There appears to be no way to get your bearings in this generic room.
@@ -68,29 +69,30 @@ What do you do?
             if action == 'bearings':
                 print self.bearings
             if action == "restart":
-                return self.enter()
+                print self.intro
+                print self.bearings
             if action == "inventory" or action == "inv":
                 inv.show()
                 print "\nWhat do you do? \n"
-        print "\nOK, let's %s." % action
+        print "\nYou %s." % action
 
 class StartingRoom(Room):
 
     good_moves = ['go north', 'walk north']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
+    intro = """You wake up.
+Your mind is foggy but slowly you get your bearings. You are in a blue-tinted
+room surrounded by what seems to be drywall. You are lying on a mattress
+sprawled in the middle of the room. You're dressed normally. Nothing seems to
+have gone wrong but you don't have a clear idea of where you are or why."""
     bearings = """
 There is a hallway to the north.
 
 What do you do?\n"""
 
     def enter(self):
-        print "You wake up. \n"
-        print "Your mind is foggy but slowly you get your bearings."
-        print "You are in a blue-tinted room surrounded by what seems to be"
-        print "drywall. You are lying on a mattress sprawled in the middle of"
-        print "the room. You're dressed normally. Nothing seems to have gone"
-        print "wrong but you don't have a clear idea of where you are or why."
+        print self.intro
         print self.bearings
         action = self.action()
 
