@@ -14,9 +14,8 @@ class Inventory(object):
         if not self.keys:
             print "Nothing!"
 
-    def add(self):
-        # add a key to the inventory
-        pass
+    def add(self, new_key):
+        self.keys.append(new_key)
 
     def clear(self):
         del self.keys[:]
@@ -37,6 +36,3 @@ class Map(object):
 the_map = Map()
 game = Engine(the_map)
 inv = Inventory()
-inv.show()
-inv.clear()
-inv.show()
