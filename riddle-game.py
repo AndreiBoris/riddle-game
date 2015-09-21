@@ -32,6 +32,7 @@ Here are some actions that you can take:
 (must qualify with a compass direction, i.e. north/south/east/west)
 -inventory
 """
+    bad_moves = []
 
     def inventory(self):
         # somehow access inventory
@@ -43,6 +44,10 @@ Here are some actions that you can take:
 
     def help(self):
         # basic instructions of what the player can do are printed
+        pass
+
+    def action(self):
+        # basic action options for any room
         pass
 
 class StartingRoom(Room):
@@ -71,7 +76,7 @@ class StartingRoom(Room):
                 print "\nWhere would you like to %s?\n" % action
             if action == 'help':
                 print self.helper
-        print "OK, let's %s!" % action
+        print "OK, let's %s." % action
 
 
 
