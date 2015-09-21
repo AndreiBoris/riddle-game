@@ -22,6 +22,8 @@ class Inventory(object):
 
 class Room(object):
 
+    valid = ['help', '']
+
     def inventory(self):
         # somehow access inventory
         pass
@@ -37,13 +39,15 @@ class Room(object):
 class StartingRoom(Room):
 
     def enter(self):
-        print "You wake up. \n\n\n"
+        print "You wake up. \n"
         print "Your mind is foggy but slowly you get your bearings."
-        print "You are in a blue-tinted room  surrounded by what seems to be"
+        print "You are in a blue-tinted room surrounded by what seems to be"
         print "drywall. You are lying on a mattress sprawled in the middle of"
         print "the room. You're dressed normally. Nothing seems to have gone"
         print "wrong but you don't have a clear idea of where you are or why. \n"
-        print "What do you do?"
+        print "What do you do?\n"
+        action = raw_input("> ").lower()
+        print action
 
 
 class Map(object):
@@ -52,3 +56,5 @@ class Map(object):
 the_map = Map()
 game = Engine(the_map)
 inv = Inventory()
+start = StartingRoom()
+start.enter()
