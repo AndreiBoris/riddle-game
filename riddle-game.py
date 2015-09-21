@@ -8,7 +8,7 @@ class Inventory(object):
     keys = ["key to sorrow", "key to gratitude"]
 
     def show(self):
-        print "Your inventory:"
+        print "\nYour inventory:"
         for key in self.keys:
             print key
         if not self.keys:
@@ -24,15 +24,21 @@ class Room(object):
 
     valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
             'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
-            'inv']
+            'inv', 'bearings', 'restart']
     vague_moves = ['walk', 'go']
+    bad_moves = []
+    good_moves = []
     helper ="""
 Here are some actions that you can take:
-- walk
-(must qualify with a compass direction, i.e. north/south/east/west)
--inventory
+- walk (must qualify with a compass direction, i.e. north/south/east/west)
+- inventory
+- bearings
 """
-    bad_moves = []
+    bearings = """
+There appears to be no way to get your bearings in this generic room.
+
+What do you do?
+"""
 
     def inventory(self):
         # somehow access inventory
@@ -48,24 +54,7 @@ Here are some actions that you can take:
 
     def action(self):
         # basic action options for any room
-        pass
-
-class StartingRoom(Room):
-
-    good_moves = ['go north', 'walk north']
-    bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
-                'go west']
-
-    def enter(self):
-        print "You wake up. \n"
-        print "Your mind is foggy but slowly you get your bearings."
-        print "You are in a blue-tinted room surrounded by what seems to be"
-        print "drywall. You are lying on a mattress sprawled in the middle of"
-        print "the room. You're dressed normally. Nothing seems to have gone"
-        print "wrong but you don't have a clear idea of where you are or why. \n"
-        print "There is a hallway to the north. \n"
-        print "What do you do? (type 'help' for valid actions)\n"
-        action = 'invalid'
+        action = None
         while action not in self.good_moves:
             action = raw_input("> ").lower()
             if action not in self.valid:
@@ -76,7 +65,35 @@ class StartingRoom(Room):
                 print "\nWhere would you like to %s?\n" % action
             if action == 'help':
                 print self.helper
-        print "OK, let's %s." % action
+            if action == 'bearings':
+                print self.bearings
+            if action == "restart":
+                return self.enter()
+            if action == "inventory" or action == "inv":
+                inv.show()
+                print "\nWhat do you do? \n"
+        print "\nOK, let's %s." % action
+
+class StartingRoom(Room):
+
+    good_moves = ['go north', 'walk north']
+    bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
+                'go west']
+    bearings = """
+There is a hallway to the north.
+
+What do you do?\n"""
+
+    def enter(self):
+        print "You wake up. \n"
+        print "Your mind is foggy but slowly you get your bearings."
+        print "You are in a blue-tinted room surrounded by what seems to be"
+        print "drywall. You are lying on a mattress sprawled in the middle of"
+        print "the room. You're dressed normally. Nothing seems to have gone"
+        print "wrong but you don't have a clear idea of where you are or why."
+        print self.bearings
+        action = self.action()
+
 
 
 
