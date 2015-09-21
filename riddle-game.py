@@ -5,15 +5,21 @@ class Engine(object):
 
 class Inventory(object):
 
-    keys = []
+    keys = ["key to sorrow", "key to gratitude"]
 
     def show(self):
-        # show which keys are currently posssesed
-        pass
+        print "Your inventory:"
+        for key in self.keys:
+            print key
+        if not self.keys:
+            print "Nothing!"
 
     def add(self):
         # add a key to the inventory
         pass
+
+    def clear(self):
+        del self.keys[:]
 
 class Room(object):
 
@@ -30,3 +36,7 @@ class Map(object):
 
 the_map = Map()
 game = Engine(the_map)
+inv = Inventory()
+inv.show()
+inv.clear()
+inv.show()
