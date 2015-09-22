@@ -347,12 +347,6 @@ attempting to channel Houdini some more."""
                 count += 1
         return count
 
-class End(Room):
-
-    def enter(self):
-        print """
-This is the end, the room doesn't exist yet, the programmer hasn't coded it yet."""
-
 class Left(Room):
 
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
@@ -372,7 +366,8 @@ a place as you once thought it was."""
     bearings = """
 To the north appears to be a butcher shop. To the west you see the glimmer of a
 upperclass dining room, complete with fine china and ornamental lamps. The the
-south are some sort of ruins, seemingly made by a bomb explosion.
+south are some sort of ruins, seemingly made by a bomb explosion. To the east is
+the dumpy, drippy room.
 
 What do you do?\n"""
     def enter(self):
@@ -391,10 +386,125 @@ What do you do?\n"""
             return "butcher"
 
 class Right(Room):
-    pass
+
+    good_moves = ['go east', 'walk east', 'walk south', 'walk east',
+                    'walk west', 'go south', 'go east', 'go west', 'go north',
+                    'walk north', 'touch computer', 'touch computers']
+    bad_moves = []
+    intro = """
+Wow. A totally intact office. There are even a bunch of computers, some of
+which are just idling. As you walk by desktops and laptops you feel a growing
+lack of fulfillment. The desire to throw the computers across the room and dance
+in the wreakage grows stronger and stronger. But no. You mustn't. You love
+technology. You need it. You feel certain of this. You begin to let go.
+Surrender. Everything will be okay."""
+    extra = """
+There are a bunch of computers that you wouldn't mind touching. The sounds of
+computer fans are oddly calming. """
+    bearings = """
+To the north appears to be another bachelor's apartment. You wonder what the
+rent is around this place. To the east seems to be the entryway to a racetrack.
+The south is an opening leading to the top of a mountain. Whoa. To the west is
+that large sack of moist newspapers that might be called a great hall.
+
+What do you do?\n"""
+    def enter(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        print self.bearings
+        action = self.action()
+        if action == "go south" or action == "walk south":
+            return "world"
+        if action == "go east" or action == "walk east":
+            return "racetrack"
+        if action == "go west" or action == "walk west":
+            return "middle"
+        if action == "go north" or action == "walk north":
+            return "alone"
+        if action == "touch computer" or action == "touch computers":
+            print """
+You walk up to one of the computers with the intention to check your e-mail or
+watch some YouTube videos or something."""
+            sleep(4)
+            print """
+It seems like the computer is sleeping, so you give the mouse a shake."""
+            sleep(3)
+            print "\nIt works!"
+            sleep(3)
+            print "\nHmmm, it seems like all the networks works are passworded."
+            sleep(4)
+            print "\nAfter trying a few easy ones, you decide it is hopeless."
+            sleep(4)
+            return self.enter()
 
 class Battlefield(Room):
-    pass
+
+    guesses_left = 5
+    good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
+                'talk to her']
+    bad_moves = ['go east', 'walk east', 'walk south', 'walk east', 'walk west',
+                'go south', 'go east', 'go west', ]
+    intro = """
+After walking south from the dark tunnel you come across a pretty grim scene.
+It looks like a soldier had been hit by the bomb or whatever it was that created
+this ruin. The soldier is clearly in excrutiating pain and is doing what she can
+to stay conscious for as long as possible. It doesn't seem like that will be for
+much longer. You might say she's on her last legs. But that would seem a bit
+disrespectful as it seems that bomb had dismembered her of exactly those legs
+that the phrase seems to be referring to. She notices you."""
+    extra = """
+Looking around a little wider, the scene is actually not so pitiful! There are
+flourishing trees nearby with some birds chirping cheerily. How fun.
+
+The soldier wants you to talk to her."""
+    bearings = """
+The dismembered soldier on the ground is shaking and beckoning you to come
+closer. To the north is the dark tunnel.
+
+What do you do?\n"""
+    def enter(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        print self.bearings
+        action = self.action()
+        if action == "go north" or action == "walk north":
+            return "left"
+
+        if (action == "talk" or action == "talk to soldier" or
+            action == "talk to her"):
+            print """
+You approach the soldier and she looks you right in the eyes. As you approach
+you notice that her eyelids have been torn off in the twisted explosion. She
+doesn't appear to ever blink and you feel very uneasy."""
+            sleep(2)
+            print """
+The soldier appears to be disoriented. She speaks
+
+'You use a knife to slice my head, and weep beside me when I am dead.
+
+What am I?'"""
+            solution = ""
+            solved = False
+            while (self.guesses_left > 0 and (solution != "onion" and
+            solution != "an onion")):
+                self.guesses_left -= 1
+                solution = raw_input("\nHow do you answer? > ").lower()
+                print solution
+                if solution == "onion" or solution == "an onion":
+                    solved = True
+                if self.guesses_left == 1:
+                    print """
+The soldier whispers,
+
+'Don't let all my layers whither and die.'"""
+            if solved:
+                print "Got it!"
+            else:
+                print "Nope."
+            sleep(5)
+            return self.enter()
 
 class DiningRoom(Room):
     pass
@@ -402,11 +512,27 @@ class DiningRoom(Room):
 class Butcher(Room):
     pass
 
+class Racetrack(Room):
+    pass
+
+class Alone(Room):
+    pass
+
+class World(Room):
+    pass
+
+class End(Room):
+
+    def enter(self):
+        print """
+This is the end, the room doesn't exist yet, the programmer hasn't coded it yet."""
+
 class Map(object):
 
     rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor(),
             'left': Left(), 'right': Right(), 'butcher': Butcher(),
-            'dining room': DiningRoom(), 'battlefield': Battlefield()}
+            'dining room': DiningRoom(), 'battlefield': Battlefield(),
+            'racetrack': Racetrack(), 'alone': Alone(), 'world': World()}
 
     def play(self, next_room):
         print "\n" * 35
@@ -421,7 +547,7 @@ game.play('start')
 # testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
 # TODO: make sure the touched_indentations attribute actually helps to give clues
-# TODO: Add extras for all rooms
-# TODO: Add the rooms left and right
 # TODO: Add the puzzle rooms
 # TODO: Flush out the end room
+# TODO: puzzle rooms need to have counters that give 5 attempts and a hint for
+# the 5th and final attempts
