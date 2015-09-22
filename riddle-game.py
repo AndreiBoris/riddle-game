@@ -348,12 +348,65 @@ attempting to channel Houdini some more."""
         return count
 
 class End(Room):
+
+    def enter(self):
+        print """
+This is the end, the room doesn't exist yet, the programmer hasn't coded it yet."""
+
+class Left(Room):
+
+    good_moves = ['go east', 'walk east', 'walk south', 'walk east',
+                    'walk west', 'go south', 'go east', 'go west', 'go north',
+                    'walk north']
+    bad_moves = []
+    intro = """
+After walking through the dark tunnel for a while you begin to feel quite
+certain of one thing: it is very dark here. Not that that's a problem or
+anything. Though if it wasn't for the faint glimmers of other places peaking
+through in the distance you would probably begin to lose your mind right now
+about. Hey, maybe you'll be doing that regardless, why not!"""
+    extra = """
+The sounds made by a croaking frog are somehow comforting. Why it is here, you
+do not ask, only that you are not alone and perhaps the world is not as scary
+a place as you once thought it was."""
+    bearings = """
+To the north appears to be a butcher shop. To the west you see the glimmer of a
+upperclass dining room, complete with fine china and ornamental lamps. The the
+south are some sort of ruins, seemingly made by a bomb explosion.
+
+What do you do?\n"""
+    def enter(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        print self.bearings
+        action = self.action()
+        if action == "go south" or action == "walk south":
+            return "battlefield"
+        if action == "go east" or action == "walk east":
+            return "middle"
+        if action == "go west" or action == "walk west":
+            return "dining room"
+        if action == "go north" or action == "walk north":
+            return "butcher"
+
+class Right(Room):
     pass
 
+class Battlefield(Room):
+    pass
+
+class DiningRoom(Room):
+    pass
+
+class Butcher(Room):
+    pass
 
 class Map(object):
 
-    rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor()}
+    rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor(),
+            'left': Left(), 'right': Right(), 'butcher': Butcher(),
+            'dining room': DiningRoom(), 'battlefield': Battlefield()}
 
     def play(self, next_room):
         print "\n" * 35
