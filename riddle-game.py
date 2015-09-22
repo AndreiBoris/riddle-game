@@ -10,9 +10,6 @@ class Engine(object):
         # this will run for the duration of the game, using self.map to
         # navigate between the rooms
 
-        print "You wake up.\n"
-        print "Your mind is foggy but slowly you get your bearings."
-
         next_room = self.map.play(start_room)
 
         while next_room != 'end':
@@ -95,7 +92,10 @@ class StartingRoom(Room):
     good_moves = ['go north', 'walk north']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
-    wake_up = """
+    wake_up = """You wake up.
+
+Your mind is foggy but slowly you get your bearings.
+
 You are in a blue-tinted room surrounded by what seems to be drywall. You are
 lying on a mattress sprawled in the middle of the room. You're dressed normally.
 Nothing seems to have gone wrong but you don't have a clear idea of where you
@@ -331,4 +331,4 @@ game.play('start')
 # TODO: Make the sleep() between turns in the action method 1 second when done
 # testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
-# TODO: Fix opening so that the dream waking up parts actually display
+# TODO: make sure the touched_indentations attribute actually helps to give clues
