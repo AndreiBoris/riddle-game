@@ -38,6 +38,13 @@ class Inventory(object):
     def remove(self, old_item):
         self.items.remove(old_item)
 
+    def stones_carried(self):
+        count = 0
+        for item in self.items:
+            if item.split()[0] == "Stone":
+                count += 1
+        return count
+
 class Room(object):
 
     solved = False
@@ -542,25 +549,35 @@ and she clutches both hands together.
             return self.enter()
 
         if action == "take stone":
-            self.stone_here == False
-            inv.items.append("Stone of Respect")
-            self.good_moves.remove("take stone")
-            print"""
+
+            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+                print """
+You don't think you can carry any more of these stones at once. Maybe it makes
+sense to drop them off somewhere. Or maybe if you had some kind of container to
+carry them in, that would probably make things easier too."""
+                sleep(5)
+                return self.enter()
+
+            if inv.stones_carried == 0 or "dirty bag" in inv.items:
+                self.stone_here == False
+                inv.items.append("Stone of Respect")
+                self.good_moves.remove("take stone")
+                print"""
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
 wouldn't mind for you to take this. On the stone you see the word 'RESPECT', you
 place it in your bag."""
-            sleep(5)
-            if TheDoor.touched_indentations:
-                print """
+                sleep(5)
+                if TheDoor.touched_indentations:
+                    print """
 This stone seems like it might fit into one of those indentations you felt
 earlier at that beautiful door."""
-                sleep(4)
-            self.extra = """
+                    sleep(4)
+                self.extra = """
 Looking around a little wider, the scene is actually not so pitiful! There are
 flourishing trees nearby with some birds chirping cheerily. How fun.
 
 The soldier lies peacefully."""
-            return self.enter()
+                return self.enter()
 
 class DiningRoom(Room):
     pass
