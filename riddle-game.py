@@ -76,7 +76,10 @@ What do you do?
                 print "\nCommunication is important. Please be more specific!\n"
             if action == 'help':
                 print self.helper
-            if action == 'look around':
+            if action == 'look around' and 'take bag' in self.good_moves:
+                print self.bag_info
+                print self.bearings
+            if action == 'look around' and 'take bag' not in self.good_moves:
                 print self.bearings
             if action == "intro":
                 print self.intro
@@ -85,7 +88,7 @@ What do you do?
                 inv.show()
                 print "\nWhat do you do? \n"
         print "\nYou attempt to %s." % action
-        sleep(1)
+        sleep(0)
         return action
 
 class StartingRoom(Room):
@@ -151,6 +154,7 @@ What do you do?\n"""
 
 class TheDoor(Room):
 
+    bag = True
     good_moves = ['touch door', 'place stones', 'back away', 'go back',
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations']
@@ -162,6 +166,9 @@ class TheDoor(Room):
 This door is beautiful. It is probably the best door you have ever seen. Picture
 the nicest door you ever saw. That's what this looks like. It has three small
 indentations on either side of it."""
+    bag_info = """
+There is a bag made out of fabric on the floor next to the door. It is seriously
+messing up how cool this door looks."""
     bearings = """
 You are in front of the immaculate door. Behind you, to the south, is the big,
 dripping room.
@@ -172,11 +179,18 @@ What do you do?\n"""
         if self.visited == False:
             print self.intro
         self.visited = True
+        if self.bag == True:
+            print self.bag_info
         print self.bearings
         action = self.action()
+
         if action == 'touch door':
-            print "A door has no right to feel this good."
+            print "\nNo door has the right to feel this good."
+            sleep(4)
+            print "\nReluctantly, you back away."
+            sleep(2)
             return self.enter()
+
         if action == 'place stones':
             placed = False
             for stone in self.stones.keys():
@@ -196,10 +210,37 @@ there is nothing at all. It is empty. How silly of you."""
                 sleep(4)
                 return self.enter()
 
-
         if (action == 'go south' or action == 'go back' or
             action == 'back away' or action == 'walk south'):
             return 'middle'
+
+        if action == 'take bag':
+            print """
+There is something sticky under the bag so you have to really give it a tug
+before you can lift it up."""
+            sleep(3)
+            print """
+Upon closer inspection, it doesn't look half bad! Rough, rugged, tough, serious.
+The bag reminds you enough of your childhood that you think it's best if you
+hold onto it. Might come in handy."""
+            inv.add('dirty bag')
+            self.bag = False
+            self.bag_info = """
+Ah, good! That dirty bag is no longer messing up the look of the sweet, sweet
+door. All is well."""
+            sleep(6)
+            return self.enter()
+
+        if action == 'open door':
+            pass
+
+    def stone_count(self):
+        count = 0
+        for stone in self.stones.keys():
+            if self.stones[stone]:
+                count += 1
+        return count
+
 
 
 class Map(object):
@@ -222,3 +263,6 @@ game.play('start')
 # information should be accessible using some kind of function.
 # TODO: Opening mattress bit has to be just for the first instance of the room,
 # it shouldn't even be accessible with intro
+# TODO: Make the sleep() between turns in the action method 1 second when done
+# testing everything
+# TODO: Make sure the inventory is clear for the start of the game.
