@@ -23,8 +23,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = ['Stone of Peace', 'Stone of Silence', 'Stone of Respect',
-            'Stone of Practice', 'Stone of Friendship', 'Stone of Connection']
+    items = []
 
     def show(self):
         print "\nYour inventory:"
@@ -155,9 +154,11 @@ class TheDoor(Room):
 
     door_open = False
     attempted_door = False
+    touched_indentations = False
     good_moves = ['touch door', 'place stones', 'back away', 'go back',
                     'walk south', 'go south', 'take bag', 'open door',
-                    'go north', 'walk north', 'touch indentations']
+                    'go north', 'walk north', 'touch indentations',
+                    'place stone', 'touch indentation']
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
@@ -168,7 +169,11 @@ the nicest door you ever saw. That's what this looks like. It has three small
 indentations on either side of it."""
     extra = """
 There is a bag made out of fabric on the floor next to the door. It is seriously
-messing up how cool this door looks."""
+messing up how cool this door looks.
+
+The door looks so beautiful that you would love to touch it, not that you'd
+expect to learn anything. There are also some more useful looking indentations
+that are within reach."""
     bearings = """
 You are in front of the immaculate door. Behind you, to the south, is the big,
 dripping room.
@@ -184,12 +189,32 @@ What do you do?\n"""
 
         if action == 'touch door':
             print "\nNo door has the right to feel this good."
-            sleep(4)
+            sleep(3)
             print "\nReluctantly, you back away."
             sleep(2)
             return self.enter()
 
-        if action == 'place stones':
+        if action == 'touch indentation' or action == 'touch indentations':
+            self.touched_indentations = True
+            print "\nThese indentations are cold."
+            sleep(2)
+            have_stone = False
+            for stone in self.stones.keys():
+                if stone in inv.items:
+                    have_stone = True
+            sleep(2)
+            if have_stone:
+                print """
+It seems like you could place some of these riddle stones into some of these
+indentations."""
+                return self.enter()
+            else:
+                print """
+You wonder what these might be for. Perhaps they are meant to hold something?
+But what? You'll have to look around."""
+                return self.enter()
+
+        if action == 'place stones' or action == 'place stone':
             placed = False
             for stone in self.stones.keys():
                 if stone in inv.items:
@@ -198,7 +223,7 @@ What do you do?\n"""
 You take The %s out of the bag and place it the indentation where it fits best.""" % stone
                     self.stones[stone] = True
                     placed = True
-                    sleep(1.25)
+                    sleep(2.2)
             if placed:
                 return self.enter()
             if not placed:
@@ -225,7 +250,11 @@ hold onto it. Might come in handy."""
             self.bag = False
             self.extra = """
 Ah, good! That dirty bag is no longer messing up the look of the sweet, sweet
-door. All is well."""
+door. All is well.
+
+The door looks so beautiful that you would love to touch it, not that you'd
+expect to learn anything. There are also some more useful looking indentations
+that are within reach."""
             sleep(6)
             return self.enter()
 
@@ -302,3 +331,4 @@ game.play('start')
 # TODO: Make the sleep() between turns in the action method 1 second when done
 # testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
+# TODO: Fix opening so that the dream waking up parts actually display
