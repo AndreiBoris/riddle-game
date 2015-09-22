@@ -47,13 +47,15 @@ class Room(object):
     vague_moves = ['walk', 'go', 'take']
     bad_moves = []
     good_moves = []
+    extra = ""
     helper ="""
 Here are some actions that you can take:
-- walk (must qualify with a compass direction, i.e. north/south/east/west)
+- walk (somewhere)
 - inventory (or inv)
 - look around
 - intro
-- touch
+- touch (something)
+- take (something)
 """
     bearings = """
 There appears to be no way to get your bearings in this generic room.
@@ -74,10 +76,8 @@ What do you do?
                 print "\nCommunication is important. Please be more specific!\n"
             if action == 'help':
                 print self.helper
-            if action == 'look around' and 'take bag' in self.good_moves:
-                print self.bag_info
-                print self.bearings
-            if action == 'look around' and 'take bag' not in self.good_moves:
+            if action == 'look around':
+                print self.extra
                 print self.bearings
             if action == "intro":
                 print self.intro
@@ -152,7 +152,6 @@ What do you do?\n"""
 
 class TheDoor(Room):
 
-    bag = True
     good_moves = ['touch door', 'place stones', 'back away', 'go back',
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations']
@@ -164,7 +163,7 @@ class TheDoor(Room):
 This door is beautiful. It is probably the best door you have ever seen. Picture
 the nicest door you ever saw. That's what this looks like. It has three small
 indentations on either side of it."""
-    bag_info = """
+    extra = """
 There is a bag made out of fabric on the floor next to the door. It is seriously
 messing up how cool this door looks."""
     bearings = """
@@ -177,8 +176,6 @@ What do you do?\n"""
         if self.visited == False:
             print self.intro
         self.visited = True
-        if self.bag == True:
-            print self.bag_info
         print self.bearings
         action = self.action()
 
@@ -223,7 +220,7 @@ The bag reminds you enough of your childhood that you think it's best if you
 hold onto it. Might come in handy."""
             inv.add('dirty bag')
             self.bag = False
-            self.bag_info = """
+            self.extra = """
 Ah, good! That dirty bag is no longer messing up the look of the sweet, sweet
 door. All is well."""
             sleep(6)
