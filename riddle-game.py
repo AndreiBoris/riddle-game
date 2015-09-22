@@ -25,7 +25,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = []
+    items = ['Stone of Peace', 'Stone of Silence']
 
     def show(self):
         print "\nYour inventory:"
@@ -84,9 +84,8 @@ What do you do?
             if action == "inventory" or action == "inv":
                 inv.show()
                 print "\nWhat do you do? \n"
-        print "\nYou %s." % action
+        print "\nYou attempt to %s." % action
         sleep(1)
-        print "\n" * 35
         return action
 
 class StartingRoom(Room):
@@ -156,9 +155,9 @@ class TheDoor(Room):
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations']
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
-    stones = {'stone of peace': False, 'stone of silence': False,
-            'stone of respect': False, 'stone of practice': False,
-            'stone of friendship': False, 'stone of connection': False}
+    stones = {'Stone of Peace': False, 'Stone of Silence': False,
+            'Stone of Respect': False, 'Stone of Practice': False,
+            'Stone of Friendship': False, 'Stone of Connection': False}
     intro = """
 This door is beautiful. It is probably the best door you have ever seen. Picture
 the nicest door you ever saw. That's what this looks like. It has three small
@@ -179,9 +178,25 @@ What do you do?\n"""
             print "A door has no right to feel this good."
             return self.enter()
         if action == 'place stones':
+            placed = False
             for stone in self.stones.keys():
                 if stone in inv.items:
-                    pass
+                    inv.remove(stone)
+                    print """
+You take The %s out of the bag and place it the indentation where it fits best.""" % stone
+                    self.stones[stone] = True
+                    placed = True
+                    sleep(1.25)
+            if placed:
+                return self.enter()
+            if not placed:
+                print """
+You pull out a stone and get ready to place it on the wall. Except in your hand
+there is nothing at all. It is empty. How silly of you."""
+                sleep(4)
+                return self.enter()
+
+
         if (action == 'go south' or action == 'go back' or
             action == 'back away' or action == 'walk south'):
             return 'middle'
@@ -192,6 +207,7 @@ class Map(object):
     rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor()}
 
     def play(self, next_room):
+        print "\n" * 35
         return self.rooms[next_room].enter()
 
 the_map = Map()
