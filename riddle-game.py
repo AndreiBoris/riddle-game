@@ -2,6 +2,8 @@ from sys import exit
 #from time import sleep
 from fakesleep import sleep
 
+line_break = "--------------------------------"
+
 class Engine(object):
 
     def __init__(self, a_map):
@@ -21,7 +23,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = []
+    items = ['ballpoint pen']
 
     def show(self):
         print "\nYour inventory:"
@@ -45,6 +47,7 @@ class Inventory(object):
 
 class Room(object):
 
+    guesses_left = 5
     solved = False
     stone_here = False
     visited = False
@@ -57,6 +60,7 @@ class Room(object):
     extra = ""
     helper ="""
 Here are some actions that you can take:
+
 - walk (somewhere)
 - inventory (or inv)
 - look around
@@ -83,14 +87,22 @@ What do you do?
             if action in self.vague_moves:
                 print "\nCommunication is important. Please be more specific!\n"
             if action == 'help':
+                print line_break
+                print "\n" * 6
                 print self.helper
             if action == 'look around':
+                print line_break
+                print "\n" * 8
                 print self.extra
                 print self.bearings
             if action == "intro":
+                print line_break
+                print "\n" * 6
                 print self.intro
                 print self.bearings
             if action == "inventory" or action == "inv":
+                print line_break
+                print "\n" * 4
                 inv.show()
                 print "\nWhat do you do? \n"
         print "\nYou attempt to %s." % action
@@ -454,7 +466,6 @@ It seems like the computer is sleeping, so you give the mouse a shake."""
 
 class Battlefield(Room):
 
-    guesses_left = 5
     stone_here = True
     good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
                 'talk to her']
@@ -562,8 +573,7 @@ carry them in, that would probably make things easier too."""
                 self.good_moves.remove("take stone")
                 print"""
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
-wouldn't mind for you to take this. On the stone you see the word 'RESPECT', you
-place it in your bag."""
+wouldn't mind for you to take this. On the stone you see the word 'RESPECT'."""
                 sleep(5)
                 if TheDoor.touched_indentations:
                     print """
@@ -578,7 +588,131 @@ The soldier lies peacefully."""
                 return self.enter()
 
 class DiningRoom(Room):
-    pass
+
+    stone_here = True
+    good_moves = ['go east', 'walk east', 'read note']
+    bad_moves = ['go north', 'walk north', 'walk south', 'walk east', 'walk west',
+                'go south', 'go east', 'go west', ]
+    intro = """
+This room is extremely gaudy. They've got little fountains with little rocks and
+fishies. The sofa is upholstered with some fancy fabric that probably costs more
+per square foot and the an ordinary 2500 square foot house in the suburbs. They
+even got one of the grandfather clocks with the pendulum swinging back and
+forth. The window at the back of the dining room is open and the gorgeous silk
+curtains are floating lyrically along. You half-expect a wild butler to appear."""
+    extra = """
+Something about this place seems off but you feel it's safest to just not
+mention it.
+
+There is a note on the table that is perhaps worth reading."""
+    bearings = """
+There are some things the dining table. To the east is that tunnel, the one
+where your frog buddy is probably still croaking along.
+
+What do you do?\n"""
+    def enter(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        print self.bearings
+        action = self.action()
+        if action == "go east" or action == "walk east":
+            return "left"
+
+        if action == "read note":
+            print """
+You walk over to the table and take a look at the note. The script it's written
+in is exquisite. It reminds you of what you imagined Lev Nikolayevich Myshkin's
+calligraphy would look like. But then you realize that you had never read The
+Idiot, and just heard that one pretentious gentlemen mention it once. You
+applaud your selective memory."""
+            sleep(5)
+            print "\nThe note has only a short phrase written on it:"
+            sleep(2)
+            print """
+'What is so delicate that even mentioning it breaks it?'"""
+            sleep(3)
+            if "ballpoint pen" in inv.items:
+                solution = ""
+                while self.guesses_left > 0 and not self.solved:
+                    print """
+Below the note there are still %d lines that are not used up.""" % self.guesses_left
+                    self.guesses_left -= 1
+                    solution = raw_input("\nWhat do you write? > ").lower()
+                    if solution == "silence":
+                        self.solved = True
+                    if self.guesses_left == 1:
+                        print """
+There is only one line left,
+
+You start to feel a bit nervous and can hear your heart beating in your chest.
+It's really damn quiet in this weird place."""
+            self.bearings = """
+The dining table stands as eerily as ever. To the east is that tunnel, the one
+where your frog buddy is probably still croaking along, might be nice to hear
+some of that sweet frog sound right about now.
+
+What do you do?\n"""
+            if self.solved:
+                self.extra = """
+Yes, this place is definitely unnaturally quiet. The clock moves without a
+noise, the curtains dance soundlessly.
+
+By the window you hear a slight tapping, a stone seems to be moving almost
+imperceptibly as it is grazed by a silk curtain. Maybe it's worth taking?"""
+                self.stone_available()
+                print """
+You suddenly realize just how quiet this place is. Apart from the noises made by
+your body, there does seem to be one other sound in the room."""
+            else:
+                self.extra = """
+This place gives you the creeps.
+
+You've scribbled all over the note on the table with no good result."""
+                print """
+For some reason your heart is beating extremely loudly. You feel pretty sick.
+Maybe it's best to get out of here?"""
+            print """
+You decide to leave the pen here, you don't think you'll be needing it anymore."""
+            inv.remove("ballpoint pen")
+            self.good_moves.remove("read note")
+            sleep(4.5)
+            return self.enter()
+
+        if action == "take stone":
+
+            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+                print """
+You don't think you can carry any more of these stones at once. Maybe it makes
+sense to drop them off somewhere. Or maybe if you had some kind of container to
+carry them in, that would probably make things easier too."""
+                sleep(5)
+                return self.enter()
+
+            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
+                self.stone_here == False
+                inv.items.append("Stone of Silence")
+                self.good_moves.remove("take stone")
+                print"""
+You pick up the stone. The room is now entirely quiet. Somehow, even your own
+body has seeemed to slow down and ease into the silence of this room. You feel
+well. On the stone you see the word 'SILENCE'."""
+                sleep(5)
+                if TheDoor.touched_indentations:
+                    print """
+This stone seems like it might fit into one of those indentations you felt
+earlier at that beautiful door."""
+                    sleep(4)
+                self.extra = """
+You somehow feel at ease in the silence of this room.
+
+The pendulum swings and the curtains dance. You feel you are not unlike them.
+The thought give you a sense of a ease."""
+                self.bearings = """
+The dining table is still. To the east is that tunnel with the frog.
+
+What do you do?\n"""
+                return self.enter()
 
 class Butcher(Room):
     pass
@@ -627,3 +761,6 @@ game.play('start')
 # appropriate response
 # TODO: Make it so you need the bag to carry more than 1 stone around
 # TODO: Make sure "real" sleep is turned on
+# TODO: Define certains actions like wait
+# TODO: Add sense of ease when you get the Silence stone, making you not want
+# to flip comptuters over.
