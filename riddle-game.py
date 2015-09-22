@@ -1,5 +1,6 @@
 from sys import exit
-from time import sleep
+#from time import sleep
+from fakesleep import sleep
 
 class Engine(object):
 
@@ -211,7 +212,7 @@ What do you do?\n"""
             return self.enter()
 
         if action == 'touch indentation' or action == 'touch indentations':
-            self.touched_indentations = True
+            TheDoor.touched_indentations = True
             print "\nThese indentations are cold."
             sleep(2)
             have_stone = False
@@ -548,6 +549,12 @@ and she clutches both hands together.
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
 wouldn't mind for you to take this. On the stone you see the word 'RESPECT', you
 place it in your bag."""
+            sleep(5)
+            if TheDoor.touched_indentations:
+                print """
+This stone seems like it might fit into one of those indentations you felt
+earlier at that beautiful door."""
+                sleep(4)
             self.extra = """
 Looking around a little wider, the scene is actually not so pitiful! There are
 flourishing trees nearby with some birds chirping cheerily. How fun.
@@ -604,3 +611,4 @@ game.play('start')
 # TODO: Make it so take stone after a stone has been taken give a more
 # appropriate response
 # TODO: Make it so you need the bag to carry more than 1 stone around
+# TODO: Make sure "real" sleep is turned on
