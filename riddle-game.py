@@ -23,7 +23,8 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = ['Stone of Peace', 'Stone of Silence']
+    items = ['Stone of Peace', 'Stone of Silence', 'Stone of Respect',
+            'Stone of Practice', 'Stone of Friendship', 'Stone of Connection']
 
     def show(self):
         print "\nYour inventory:"
@@ -152,6 +153,8 @@ What do you do?\n"""
 
 class TheDoor(Room):
 
+    door_open = False
+    attempted_door = False
     good_moves = ['touch door', 'place stones', 'back away', 'go back',
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations']
@@ -228,8 +231,36 @@ door. All is well."""
 
         if action == 'open door':
             if self.stone_count() > 3:
-                # this will lead to the door opening and going to the final room
-                return self.enter()
+                if self.attempted_door:
+                    print """
+Using your past failure to open the door to your advantage, you waste no time
+and pull on the door after turning the handle."""
+                    sleep(4)
+                    print "\nSuccess!"
+                    self.door_open = True
+                    return self.enter()
+                else:
+                    print """
+You turn the handle and give the door a good push. Nothing. What? But the
+stones! You had hoped that this would be enough?"""
+                    sleep(4)
+                    print "\nWhat is missing? What needs be done?"
+                    sleep(3)
+                    print "\nYour mind spins around in despair..."
+                    sleep(4)
+                    action = "sink into deeper despair"
+                    door_count = 0
+                    while action != "pull door" and door_count < 6:
+                        door_count += 1
+                        print "I guess you might as well %s." % action
+                        action = raw_input("\nBut would you also like to try to do something else? > ")
+                    print "In a desperate effort, you pull on the door handle."
+                    sleep(2)
+                    print "\nNice."
+                    sleep(2)
+                    print "\nThe door is now open."
+                    self.door_open = True
+                    return self.enter()
             else:
                 print """
 You turn the handle and give the door a good push. Nothing. You give up,
@@ -242,6 +273,7 @@ the door!"""
                 print "\nNope. Definitely not opening. At least you gave it your all!"
                 sleep(2.5)
                 print "\n(It wasn't enough.)"
+                self.attempted_door = True
                 sleep (1.5)
                 return self.enter()
 
@@ -267,16 +299,6 @@ inv = Inventory()
 game = Engine(the_map)
 game.play('start')
 
-
-# TODO: if returning to starting room, there shouldn't be the wake-up intro
-# message
-# TODO: change messages after the first time being in the room, though this
-# information should be accessible using some kind of function.
-# TODO: Opening mattress bit has to be just for the first instance of the room,
-# it shouldn't even be accessible with intro
 # TODO: Make the sleep() between turns in the action method 1 second when done
 # testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
-# TODO: Make an extra attribute for Room subclasses that look around can read
-# and add the bag_info to it so that it doesn't automatically play upon entering
-# the room
