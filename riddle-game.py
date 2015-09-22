@@ -180,8 +180,8 @@ The door looks so beautiful that you would love to touch it, not that you'd
 expect to learn anything. There are also some more useful looking indentations
 that are within reach."""
     bearings = """
-You are in front of the immaculate door. Behind you, to the south, is the big,
-dripping room.
+An immaculate door is just to the north of you. Behind you, to the south, is the
+big, dripping room.
 
 What do you do?\n"""
 
@@ -311,6 +311,20 @@ the door!"""
                 sleep (1.5)
                 return self.enter()
 
+        if action == 'go north' or action == 'walk north':
+            if self.door_open:
+                return 'end'
+            else:
+                print "\n'Believe,' you whisper to yourself and march toward the door."
+                sleep(3)
+                print "\n'Ouch!'"
+                sleep(2.5)
+                print """
+Yes, this door really is there. Maybe it's worth trying to open it before
+attempting to channel Houdini some more."""
+                sleep(2)
+                return self.enter()
+
     def stone_count(self):
         count = 0
         for stone in self.stones.keys():
@@ -318,6 +332,8 @@ the door!"""
                 count += 1
         return count
 
+class End(Room):
+    pass
 
 
 class Map(object):
@@ -338,3 +354,6 @@ game.play('start')
 # TODO: Make sure the inventory is clear for the start of the game.
 # TODO: make sure the touched_indentations attribute actually helps to give clues
 # TODO: Add extras for all rooms
+# TODO: Add the rooms left and right
+# TODO: Add the puzzle rooms
+# TODO: Flush out the end room
