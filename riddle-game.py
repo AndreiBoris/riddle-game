@@ -21,9 +21,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = ['Stone of Peace', 'Stone of Silence',
-            'Stone of Practice',
-            'Stone of Friendship', 'Stone of Connection']
+    items = []
 
     def show(self):
         print "\nYour inventory:"
@@ -244,7 +242,7 @@ But what? You'll have to look around."""
                 if stone in inv.items:
                     inv.remove(stone)
                     print """
-You take The %s out of the bag and place it the indentation where it fits best.""" % stone
+You take The %s and place it the indentation where it fits best.""" % stone
                     self.stones[stone] = True
                     placed = True
                     sleep(2.2)
@@ -558,7 +556,7 @@ carry them in, that would probably make things easier too."""
                 sleep(5)
                 return self.enter()
 
-            if inv.stones_carried == 0 or "dirty bag" in inv.items:
+            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here == False
                 inv.items.append("Stone of Respect")
                 self.good_moves.remove("take stone")
