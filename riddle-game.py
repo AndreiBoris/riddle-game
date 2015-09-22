@@ -24,6 +24,7 @@ class Engine(object):
 class Inventory(object):
 
     items = []
+    failed_puzzles = 0
 
     def show(self):
         print "\nYour inventory:"
@@ -47,6 +48,13 @@ class Inventory(object):
             if item.split()[0] == "Stone":
                 count += 1
         return count
+
+    def end_if_failed(self):
+        if self.failed_puzzles >= 3:
+            print """
+None of these rooms seem to make any sense. 'Why am I here?!' you call out.
+You receive no answer. You have no answer. There is nothing."""
+            exit(1)
 
 class Room(object):
 
@@ -568,6 +576,8 @@ The soldier stares at your fixedly. Her body becomes rigid. Her left hand drops
 and she clutches both hands together.
 
 'Leave me,' she whispers."""
+                inv.failed_puzzles += 1
+                inv.end_if_failed()
             self.good_moves.remove("talk")
             self.good_moves.remove("talk to her")
             self.good_moves.remove("talk to soldier")
@@ -677,7 +687,7 @@ It's really damn quiet in this weird place."""
             self.bearings = """
 The dining table stands as eerily as ever. To the east is that tunnel, the one
 where your frog buddy is probably still croaking along, might be nice to hear
-some of that sweet frog sound right about now.
+some of those sweet frog sounds right about now.
 
 What do you do?\n"""
             if self.solved:
@@ -699,6 +709,8 @@ You've scribbled all over the note on the table with no good result."""
                 print """
 For some reason your heart is beating extremely loudly. You feel pretty sick.
 Maybe it's best to get out of here?"""
+                inv.failed_puzzles += 1
+                inv.end_if_failed()
             print """
 You decide to leave the pen here, it seems somehow appropriate."""
             inv.remove("ballpoint pen")
@@ -884,6 +896,8 @@ The man gives a cool laugh. Maybe he likes you after all! He gives you a nod.
 
 Suddenly he seems to lose most of his interest in you and goes back to
 sharpening the knife."""
+                inv.failed_puzzles += 1
+                inv.end_if_failed()
             self.good_moves.remove("talk")
             self.good_moves.remove("talk to him")
             self.good_moves.remove("talk to butcher")
