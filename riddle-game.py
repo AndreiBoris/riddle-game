@@ -17,8 +17,6 @@ class Engine(object):
 
         while next_room != 'end':
             next_room = self.map.play(next_room)
-            # intro doesn't automatically play after a room has been visited
-            #self.map.rooms[next_room].visited = True
         if next_room == 'end':
             self.map.play(next_room)
 
@@ -232,7 +230,23 @@ door. All is well."""
             return self.enter()
 
         if action == 'open door':
-            pass
+            if self.stone_count() > 3:
+                # this will lead to the door opening and going to the final room
+                return self.enter()
+            else:
+                print """
+You turn the handle and give the door a good push. Nothing. You give up,
+defeated."""
+                sleep(4)
+                print """
+OF COURSE! This door is a 'pull'! You turn the handle and triumphantly pull on
+the door!"""
+                sleep(5)
+                print "\nNope. Definitely not opening. At least you gave it your all!"
+                sleep(2.5)
+                print "\n(It wasn't enough.)"
+                sleep (1.5)
+                return self.enter()
 
     def stone_count(self):
         count = 0
@@ -266,3 +280,6 @@ game.play('start')
 # TODO: Make the sleep() between turns in the action method 1 second when done
 # testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
+# TODO: Make an extra attribute for Room subclasses that look around can read
+# and add the bag_info to it so that it doesn't automatically play upon entering
+# the room
