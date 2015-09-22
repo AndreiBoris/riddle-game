@@ -53,7 +53,7 @@ class Room(object):
     visited = False
     valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
             'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
-            'inv', 'intro', 'look around', 'take']
+            'inv', 'intro', 'look around', 'look', 'take']
     vague_moves = ['walk', 'go', 'take']
     bad_moves = []
     good_moves = []
@@ -63,7 +63,7 @@ Here are some actions that you can take:
 
 - walk (somewhere)
 - inventory (or inv)
-- look around
+- look around (or look)
 - intro
 - touch (something)
 - take (something)
@@ -80,7 +80,9 @@ What do you do?
         action = None
         while action not in self.good_moves:
             action = raw_input("> ").lower()
-            if action not in self.valid and action not in self.good_moves:
+            if action == 'touch stone' and 'take stone' in self.good_moves:
+                print "\nHard.\n"
+            elif action not in self.valid and action not in self.good_moves:
                 print "\nI'm sorry, but you can't %r.\n" % action
             if action in self.bad_moves:
                 print "\nYou can't go there from here.\n"
@@ -90,7 +92,7 @@ What do you do?
                 print line_break
                 print "\n" * 6
                 print self.helper
-            if action == 'look around':
+            if action == 'look around' or action == 'look':
                 print line_break
                 print "\n" * 8
                 print self.extra
@@ -481,8 +483,8 @@ class Battlefield(Room):
     stone_here = True
     good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
                 'talk to her']
-    bad_moves = ['go east', 'walk east', 'walk south', 'walk east', 'walk west',
-                'go south', 'go east', 'go west', ]
+    bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
+                'go south', 'go west', ]
     intro = """
 After walking south from the dark tunnel you come across a pretty grim scene.
 It looks like a soldier had been hit by the bomb or whatever it was that created
@@ -547,7 +549,7 @@ Looking around a little wider, the scene is actually not so pitiful! There are
 flourishing trees nearby with some birds chirping cheerily. How fun.
 
 There is a fairly sizeable stone in the soldier's relaxed right hand, perhaps
-it's something worth picking up?"""
+it's something worth taking?"""
                 self.stone_available()
                 print """
 The soldier appears relieved. Her left hand drops. You can see she the ghost is
@@ -603,8 +605,8 @@ class DiningRoom(Room):
 
     stone_here = True
     good_moves = ['go east', 'walk east', 'read note']
-    bad_moves = ['go north', 'walk north', 'walk south', 'walk east', 'walk west',
-                'go south', 'go east', 'go west', ]
+    bad_moves = ['go north', 'walk north', 'walk south', 'walk west',
+                'go south', 'go west' ]
     intro = """
 This room is extremely gaudy. They've got little fountains with little rocks and
 fishies. The sofa is upholstered with some fancy fabric that probably costs more
@@ -649,8 +651,12 @@ applaud your selective memory."""
 What an interesting question. Well, without a nice pen to respond to the
 inquiry it is probably best to just back away. Heck, even a ballpoint pen would
 have done the job."""
+                sleep(4.5)
                 return self.enter()
             elif "ballpoint pen" in inv.items:
+                print """
+Hmmm. Good thing you had the foresight to pick up this trusty ballpoint pen."""
+                sleep(2)
                 solution = ""
                 while self.guesses_left > 0 and not self.solved:
                     print """
@@ -691,7 +697,7 @@ You've scribbled all over the note on the table with no good result."""
 For some reason your heart is beating extremely loudly. You feel pretty sick.
 Maybe it's best to get out of here?"""
             print """
-You decide to leave the pen here, you don't think you'll be needing it anymore."""
+You decide to leave the pen here, it seems somehow appropriate."""
             inv.remove("ballpoint pen")
             self.good_moves.remove("read note")
             sleep(4.5)
@@ -733,7 +739,189 @@ What do you do?\n"""
                 return self.enter()
 
 class Butcher(Room):
-    pass
+
+    stone_here = True
+    good_moves = ['go south', 'walk south', 'talk to butcher', 'talk',
+                    'talk to man', 'talk to him', 'touch pig', 'take meat',
+                    'take cut', 'take pig', 'touch meat', 'touch cut',
+                    'take cuts', 'touch cuts', 'talk to the man']
+    bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
+                'go west']
+    intro = """
+A fairly standard-looking butcher shop. There is metal counter over a glass
+display where certain cuts of meat are shown. A smooth, trim man with glasses
+stands behind the counter. He is manually sharpening a knife with a stone. The
+knife is not, in fact, a butcher's cleaver. Somehow this fact doesn't give you
+any deep sense of comfort. Behind the man you see a skinned pig hanging from a
+hook. How quaint."""
+    extra = """
+The pig swings invitingly in the back room. There are some cuts of meat lying
+about. The butcher glances at you periodically as he is sharpening the knife.
+Perhaps you could talk to him?"""
+    bearings = """
+The man doesn't appear to be terribly busy and there are no other patrons. To
+the south is the dark tunnel, which in some ways is more welcoming than this
+cold butcher shop.
+
+What do you do?\n"""
+    def enter(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        print self.bearings
+        action = self.action()
+        if action == "go south" or action == "walk south":
+            return "left"
+
+        if action == "touch pig":
+            print """
+Yes, the pig really does look like it would enjoy the smooth touch of a caring
+human. Unfortunately, it's behind the counter and you don't feel the man
+sharpening the knife would appreciate you going back there."""
+            sleep(4)
+            return self.enter()
+
+        if (action == "touch cut" or action == "touch meat" or
+            action == "touch cuts"):
+            print "\nSquishy."
+            sleep(3)
+            print """
+The butcher doesn't seem to like you touching the meat. Probably best to not do
+that anymore."""
+            self.good_moves.remove("touch cut")
+            self.good_moves.remove("touch cuts")
+            self.good_moves.remove("touch meat")
+            return self.enter()
+
+        if action == "take pig":
+            print """
+The urge is to take this pig and rescue it from this cold, cold place."""
+            sleep(3)
+            print """
+But after a few seconds of reflection the notion seems a bit silly. You wouldn't
+even be able to carry the thing without chopping it up first, and that just
+seems counter-intuitive to your whole plan."""
+            sleep(4)
+            print "\nYou give it up."
+            self.good_moves.remove("take pig")
+            sleep(2)
+            return self.enter()
+
+        if (action == "take meat" or action == "take cut" or
+            action == "take cuts"):
+            print """
+The butcher sees you reaching for one of the cuts of meat. He clears his throat
+to catch you attention and then shakes his head prohibitively.
+
+Maybe it's best to listen to the man with the knives. You leave the cuts alone."""
+            self.good_moves.remove("take cut")
+            self.good_moves.remove("take meat")
+            self.good_moves.remove("take cuts")
+            sleep(4.5)
+            return self.enter()
+
+        if (action == "talk" or action == "talk to man" or
+            action == "talk to butcher" or action == "talk to him" or
+            action == "talk to the man"):
+            print """
+You look at the man and indicate that you would like his attention. He puts his
+knife down firmly, perhaps a tad too firlmy, and he walks to the end of his side
+of the counter and gives you a fake smile."""
+            sleep(3)
+            print "\nAfter a few awkward moments, he speaks in a gentle voice:"
+            sleep(2)
+            print """
+'What loses its head in the morning and gets it back at night?'"""
+            sleep(3)
+            solution = ""
+            while self.guesses_left > 0 and not self.solved:
+                if self.guesses_left == 5:
+                    print """
+The man uses a small knife to carve a line into the wall behind him. There is
+%d line in the wall. His lips seem to curl involuntarily.""" % (6 - self.guesses_left)
+                else:
+                    print """
+The man uses a small knife to carve a line into the wall behind him. There are
+%d lines in the wall. His lips seem to curl involuntarily.""" % (6 - self.guesses_left)
+                self.guesses_left -= 1
+                solution = raw_input("\nHow do you answer? > ").lower()
+                if solution == "pillow" or solution == "a pillow":
+                    self.solved = True
+                if self.guesses_left == 1:
+                    print """
+The man laughs a kind-sounding laugh,
+
+'Maybe you 'ought to have a rest,' he says."""
+            self.bearings = """
+The man regards you as an entity of no greater interest than any of the
+displayed pieces of meat below the counter. To the south is the dark tunnel,
+maybe it's best to head back and get away from this vaguely uncomfortable place.
+
+What do you do?\n"""
+            if self.solved:
+                self.extra = """
+After watching you look around nervously, the butcher catches your attention and
+indicates a tray at the end of the counter. The tray is labeled 'gratis'. There
+are some lumpy looking cuts in there, but also what appears to be a stone. Maybe
+the stone could be worth taking?"""
+                self.stone_available()
+                print """
+The man gives a cool laugh. Maybe he likes you after all! He looks across the
+room to the end of the counter and then back at you, giving a nod.
+
+Suddenly he seems to lose most of his interest in you and goes back to
+sharpening the knife."""
+            else:
+                self.extra = """
+The man has gone back to sharpening his knife. He doesn't seem to really be
+all that interested in you. Maybe its best to just get out of here and be by
+yourself in the dark tunnel. Alone. Like always."""
+                print """
+The man gives a cool laugh. Maybe he likes you after all! He gives you a nod.
+
+Suddenly he seems to lose most of his interest in you and goes back to
+sharpening the knife."""
+            self.good_moves.remove("talk")
+            self.good_moves.remove("talk to him")
+            self.good_moves.remove("talk to butcher")
+            self.good_moves.remove("talk to man")
+            self.good_moves.remove("talk to the man")
+            sleep(4.5)
+            return self.enter()
+
+        if action == "take stone":
+
+            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+                print """
+You don't think you can carry any more of these stones at once. Maybe it makes
+sense to drop them off somewhere. Or maybe if you had some kind of container to
+carry them in, that would probably make things easier too."""
+                sleep(5)
+                return self.enter()
+
+            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
+                self.stone_here == False
+                inv.items.append("Stone of Peace")
+                self.good_moves.remove("take stone")
+                print"""
+You pick up the stone. The man doesn't seem to notice at all. Somehow that's
+okay. You wonder why he seemed to exact such an influence on you. You feel more
+connected to yourself. Looking at the stone, you see the word 'PEACE' written
+on it."""
+                sleep(5)
+                if TheDoor.touched_indentations:
+                    print """
+This stone seems like it might fit into one of those indentations you felt
+earlier at that beautiful door."""
+                    sleep(3)
+                self.extra = """
+The man continues to sharpen the knife. He is part of the room. You feel whole."""
+                self.bearings = """
+There doesn't appear to be much of particular interest around here. To the south
+is the dim tunnel. Go or stay, you feel quite comfortable.
+
+What do you do?\n"""
+                return self.enter()
 
 class Racetrack(Room):
     pass
@@ -782,3 +970,7 @@ game.play('start')
 # TODO: Define certains actions like wait
 # TODO: Add sense of ease when you get the Silence stone, making you not want
 # to flip comptuters over.
+# TODO: Have a counter that checks how many puzzles were failed. If 3 are
+# failed, make the game fail in despair.
+# TODO: Make the dirty bag appear the first item in the inventory (append it to
+# the beginning of the items list)
