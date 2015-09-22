@@ -100,6 +100,9 @@ You are in a blue-tinted room surrounded by what seems to be drywall. You are
 lying on a mattress sprawled in the middle of the room. You're dressed normally.
 Nothing seems to have gone wrong but you don't have a clear idea of where you
 are or why."""
+    extra = """
+This looks like the sloppy apartment of a lazy bachelor. This is
+really as good as it gets."""
     intro = """
 This is the room you woke up in. Apart from the spartan set up and the random
 mattress placement, it's not so bad."""
@@ -129,6 +132,8 @@ designed to hold such a mammoth. Despite its awe-inspiring size, the upkeep
 leaves much to be desired. It dripping with old newspapers that have been left
 lying around and in various makeshift beddings. Dripping because the ceiling is
 soaked - evidently the roof doesn't do such a great job keeping the rain out."""
+    extra = """
+The smell of singed hair and old rubber is not exactly comforting."""
     bearings = """
 To the north there is a door that is in incongruously good condition. To the
 east is some sort of office wing. To the west there is a dark tunnel. To the
@@ -332,3 +337,4 @@ game.play('start')
 # testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
 # TODO: make sure the touched_indentations attribute actually helps to give clues
+# TODO: Add extras for all rooms
