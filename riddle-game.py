@@ -20,7 +20,9 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = []
+    items = ['Stone of Peace', 'Stone of Silence',
+            'Stone of Respect', 'Stone of Practice',
+            'Stone of Friendship', 'Stone of Connection']
 
     def show(self):
         print "\nYour inventory:"
@@ -53,6 +55,7 @@ Here are some actions that you can take:
 - intro
 - touch (something)
 - take (something)
+- place (something)
 """
     bearings = """
 There appears to be no way to get your bearings in this generic room.
@@ -169,16 +172,16 @@ class TheDoor(Room):
             'Stone of Respect': False, 'Stone of Practice': False,
             'Stone of Friendship': False, 'Stone of Connection': False}
     intro = """
-This door is beautiful. It is probably the best door you have ever seen. Picture
-the nicest door you ever saw. That's what this looks like. It has three small
-indentations on either side of it."""
+This door is incredible. It is probably the best door you have ever seen.
+Picture the nicest door you ever saw. That's what this looks like. It has three
+indentations to either side of it."""
     extra = """
 There is a bag made out of fabric on the floor next to the door. It is seriously
 messing up how cool this door looks.
 
 The door looks so beautiful that you would love to touch it, not that you'd
-expect to learn anything. There are also some more useful looking indentations
-that are within reach."""
+expect to learn anything. There are also some slightly more useful looking
+indentations that are within reach."""
     bearings = """
 An immaculate door is just to the north of you. Behind you, to the south, is the
 big, dripping room.
@@ -207,11 +210,11 @@ What do you do?\n"""
             for stone in self.stones.keys():
                 if stone in inv.items:
                     have_stone = True
-            sleep(2)
             if have_stone:
                 print """
-It seems like you could place some of these riddle stones into some of these
+It seems like you could place some of these stones into some of these
 indentations."""
+                sleep(3.5)
                 return self.enter()
             else:
                 print """
@@ -272,6 +275,12 @@ and pull on the door after turning the handle."""
                     sleep(4)
                     print "\nSuccess!"
                     self.door_open = True
+                    self.bearings = """
+The immaculate door is open! Beyond it, to the north, is one of those weird
+foggy screens that you can't see behind but can probably walk through without
+getting terribly hurt. Behind you, to the south, is the big, dripping room.
+
+What do you do?\n"""
                     return self.enter()
                 else:
                     print """
@@ -294,6 +303,12 @@ stones! You had hoped that this would be enough?"""
                     sleep(2)
                     print "\nThe door is now open."
                     self.door_open = True
+                    self.bearings = """
+The immaculate door is open! Beyond it, to the north, is one of those weird
+foggy screens that you can't see behind but can probably walk through without
+getting terribly hurt. Behind you, to the south, is the big, dripping room.
+
+What do you do?\n"""
                     return self.enter()
             else:
                 print """
@@ -301,8 +316,8 @@ You turn the handle and give the door a good push. Nothing. You give up,
 defeated."""
                 sleep(4)
                 print """
-OF COURSE! This door is a 'pull'! You turn the handle and triumphantly pull on
-the door!"""
+'Of course! This door is a pull!' you say. You turn the handle and triumphantly
+pull on the door!"""
                 sleep(5)
                 print "\nNope. Definitely not opening. At least you gave it your all!"
                 sleep(2.5)
@@ -322,7 +337,7 @@ the door!"""
                 print """
 Yes, this door really is there. Maybe it's worth trying to open it before
 attempting to channel Houdini some more."""
-                sleep(2)
+                sleep(3.5)
                 return self.enter()
 
     def stone_count(self):
