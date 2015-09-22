@@ -1,6 +1,7 @@
 from sys import exit
 #from time import sleep
 from fakesleep import sleep
+from random import randint
 
 line_break = "--------------------------------"
 
@@ -70,7 +71,7 @@ class Room(object):
     good_moves = []
     extra = ""
     helper ="""
-Here are some actions that you can take:
+Here are some actions that you might be able to take:
 
 - walk (somewhere)
 - inventory (or inv)
@@ -79,6 +80,7 @@ Here are some actions that you can take:
 - touch (something)
 - take (something)
 - place (something)
+- throw (something)
 """
     bearings = """
 There appears to be no way to get your bearings in this generic room.
@@ -119,7 +121,7 @@ What do you do?
                 inv.show()
                 print "\nWhat do you do? \n"
         print "\nYou attempt to %s." % action
-        sleep(0)
+        sleep(1)
         return action
 
     def stone_available(self):
@@ -221,7 +223,7 @@ class TheDoor(Room):
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
-            'Stone of Friendship': False, 'Stone of Connection': False}
+            'Stone of Friendship': False, 'Stone of Compassion': False}
     intro = """
 This door is incredible. It is probably the best door you have ever seen.
 Picture the nicest door you ever saw. That's what this looks like. It has three
@@ -438,6 +440,7 @@ What do you do?\n"""
 
 class Right(Room):
 
+    racetrack_open = True
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'touch computer', 'touch computers']
@@ -467,8 +470,15 @@ What do you do?\n"""
         action = self.action()
         if action == "go south" or action == "walk south":
             return "world"
-        if action == "go east" or action == "walk east":
+        if (action == "go east" or action == "walk east") and Right.racetrack_open:
             return "racetrack"
+        if (action == "go east" or action == "walk east" and
+            not Right.racetrack_open):
+            print """
+You start walking toward the racetrack when you realize what awaits you there
+after that episode with the rock and the human ... Perhaps it is best to just
+stay right where you are."""
+            return self.enter()
         if action == "go west" or action == "walk west":
             return "middle"
         if action == "go north" or action == "walk north":
@@ -941,7 +951,259 @@ What do you do?\n"""
                 return self.enter()
 
 class Racetrack(Room):
-    pass
+
+    stone_here = True
+    good_moves = ['go west', 'walk west', 'talk', 'take rock', 'talk to robot',
+                    'talk to human', 'talk to the robot', 'talk to the person',
+                    'talk to the human', 'talk to human', 'talk to person',
+                    'touch rock']
+    bad_moves = ['go north', 'walk north', 'walk east', 'walk south', 'go east',
+                'go south']
+    intro = """
+This is no ordinary racetrack. You spot some kind of machine - a hugbot on
+tanktreads with 'Happy Birthday' written on its back and 'You'll get yours'
+written on the front. Its face reminds you of the Cheshire Cat except extremely
+tall instead of wide. The eyes pop out of its face and sharply looking around
+the track. There are a number of ragged people at the edges of the track,
+evidently trying to get as far away from the hugbot as they can. The hugbot
+appears to be deciding who to go after next."""
+    extra = """
+There is small rock on the ground next to you. A person is cowering a few feet
+away from you. The robot is directly in front of you, paying most of its
+attetion in the opposite direction."""
+    bearings = """
+The hugbot and the scared humans are scattered through the track. To the west is
+that office, it's looking mighty comfy right about now - no need to deal with
+life's problems there!
+
+What do you do?\n"""
+    def enter(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        print self.bearings
+        action = self.action()
+        if action == "go west" or action == "walk west":
+            return "right"
+
+        if action == "touch rock":
+            print """
+Good thing that you tried to touch that rock before taking it. Now you can
+confirm without a doubt that it is a rock."""
+            sleep(3)
+            return self.enter()
+
+        if action == "talk":
+            print "Who would you like to talk to, exactly?"
+            sleep(2)
+            return self.enter()
+
+        if action == "take rock":
+            print """
+You pick up the rock. Hefty."""
+            self.good_moves.remove("take rock")
+            inv.add('rock')
+            self.good_moves.remove("touch rock")
+            self.good_moves.append("throw rock")
+            self.good_moves.append("throw rock at person")
+            self.good_moves.append("throw rock at human")
+            self.good_moves.append("throw rock at the human")
+            self.good_moves.append("throw rock at the person")
+            self.good_moves.append("throw rock at the robot")
+            self.good_moves.append("throw rock at robot")
+            sleep(3)
+            self.extra = """
+A person is cowering a few feet away from you. The robot is directly in front of
+you, paying most of its attetion in the opposite direction."""
+            return self.enter()
+
+        if action == "throw rock":
+            print """
+Uh. This is kind of the only rock you see around. So maybe you should think
+about where the best place to throw it might be."""
+            sleep(3)
+            return self.enter()
+
+        if action == "throw rock at human" or action == "throw rock at person":
+            print """
+In a fit of wickedness you throw a rock at the cowering human. You feel
+deviously sinister as you let go of the rock."""
+            sleep(3)
+            print """
+BAM! It's like you've been throwing stones at defenseless cowering humans all your
+life."""
+            sleep(3)
+            print """
+The person seems to be legitimately knocked out and potentially bleeding. Wow."""
+            sleep(3)
+            print """
+Suddently the hugbot spins around and seems to notice you. The other cowering
+humans are also taking note of you, the rock slinging bad-ass."""
+            sleep(3)
+            print """
+Oh god! Everyone starts running at full speed to get you. The hugbot's 'You'll
+get yours' sign is particularly sinister as it approaches at such a high speed."""
+            sleep(4)
+            print """
+You quickly back up out of the racetrack and lock the door behind you. That was
+pretty convenient. Probably best if you don't try going back in there anymore."""
+            sleep(5)
+            inv.failed_puzzles += 1
+            inv.end_if_failed()
+            inv.remove('rock')
+            Right.racetrack_open = False
+            return "right"
+
+        if action == "talk to robot" or action == "talk to the robot":
+            print """
+Talk to the robot? What is your problem? That is a machine bent on killing
+people foolish enough to try reasoning with it! No way! Why don't you go try
+talking to a wall or something."""
+            sleep(4)
+            return self.enter()
+
+        if (action == "talk to human" or action == "talk to the human" or
+            action == "talk to person" or action == "talk to the person"):
+            print """
+You approach the person with the intention to speak with him."""
+            sleep(3)
+            print """
+'Hello,' you say."""
+            sleep(4)
+            print """
+A fit of loud sobbing comes over the person. Maybe its best just to leave him
+alone."""
+            sleep(4)
+            return self.enter()
+
+        if action == "throw rock at robot":
+            inv.remove('rock')
+            self.good_moves.remove("throw rock")
+            self.good_moves.remove("throw rock at person")
+            self.good_moves.remove("throw rock at human")
+            self.good_moves.remove("throw rock at the human")
+            self.good_moves.remove("throw rock at the person")
+            self.good_moves.remove("throw rock at the robot")
+            self.good_moves.remove("throw rock at robot")
+            print """
+You hurl the rock at the robot. If you had a killer arm you might have actually
+gotten it somewhat close to the robot, which is a fair bit further away than you
+had judged."""
+            sleep(4)
+            print """
+Luckily (?) the robot seems to have noticed you regardless. It turns around and
+whips over to you."""
+            sleep(2)
+            print """
+The robot approaches very quickly and gets menacingly close to you. The exhaust
+that oddly appears have been designed to point forward makes it feel like the
+Cheshire face sending hot air straight to your face."""
+            sleep(4)
+            print """
+'You look lonesome,' the robot drones. 'Care for a hug?'"""
+            sleep(3)
+            print """
+Before you can respond the robot hugs you. The embrace is tight but not painful.
+It's robot arms are made of some kind of impossibly comfortable material.
+Something cracks inside and you feel yourself on the verge of tears, but you
+restrain yourself. 'This is just a robot!' you think to yourself."""
+            sleep(7)
+            print """
+'Remember you can always say the safeword if you feel you cannot accept the love
+that you deserve,' the robot says."""
+            sleep(5)
+            print """
+'Safeword?' you hear yourself ask."""
+            sleep(3)
+            print """
+'Yes, friend,' the robot says.
+
+'I have a few points, but we're not competing, and I'll help you win when you
+are eating. What I am, the safeword be.'"""
+            robot_clock = randint(1446, 1899)
+            while self.guesses_left > 0 and not self.solved:
+                self.guesses_left -= 1
+                print """
+'It's okay my friend, you are loved,' the hugbot says. You see the number %d
+quickly counting down on the display that's (gently) pressing into your face.
+""" % (self.guesses_left * robot_clock)
+                solution = raw_input("\nWhat is the safeword? > ").lower()
+                if solution == "fork" or solution == "a fork":
+                    self.solved = True
+                if self.guesses_left == 1:
+                    print """
+'If I am a spoon in hugging you, the safeword be a different hue,' the hugbot
+says."""
+            self.bearings = """
+The robot is looking at you.
+
+What do you do?\n"""
+            if self.solved:
+                self.extra = """
+You see now that the hugbot had just been seeing who was most in need of a hug.
+
+It seems that the robot had dropped some kind of stone. Maybe you should take
+it?"""
+                self.stone_available()
+                print """
+The hugbot backs away suddenly.
+
+'If you feel you don't need my acceptance I can only hope it is because you have
+dear friends of your own,' it says."""
+                sleep(5)
+                print """
+'I will leave this here, if you choose to pick it up, may be a reminder for you
+of what is essential for happiness.'
+
+You hear something drop on the other side of the robot. The robot then drives
+away, presumably to give some robot loving to these other humans."""
+            else:
+                self.extra = """
+There doesn't appear to be anything else that's interesting around here.
+Everyone is just sad and mopey."""
+                print """
+Well, that was a long hug. You're not quite sure why that was necessary. The
+robot backs away slightly and its Cheshire cat face 'smiles.'
+
+'Bye-bye for now, sweet friend, others do have need of me.'"""
+                inv.failed_puzzles += 1
+                inv.end_if_failed()
+            sleep(4.5)
+            return self.enter()
+
+        if action == "take stone":
+
+            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+                print """
+You don't think you can carry any more of these stones at once. Maybe it makes
+sense to drop them off somewhere. Or maybe if you had some kind of container to
+carry them in, that would probably make things easier too."""
+                sleep(5)
+                return self.enter()
+
+            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
+                self.stone_here == False
+                inv.items.append("Stone of Friendship")
+                self.good_moves.remove("take stone")
+                print"""
+You pick up the stone. It is warm to the touch. Probably had that hugbot's
+exhaust blowing on it too. Somehow this stone reminds you of some of the
+happiest times you've had with some close friends, along ago. Looking at the
+stone, you see the word 'FRIENDSHIP' written on it."""
+                sleep(5)
+                if TheDoor.touched_indentations:
+                    print """
+This stone seems like it might fit into one of those indentations you felt
+earlier at that beautiful door."""
+                    sleep(3)
+                self.extra = """
+You feel loved."""
+                self.bearings = """
+These people are in good hands, you feel. Good, comfortable robot hands. To the
+west is that lonesome office, but that's okay, it is only one room.
+
+What do you do?\n"""
+                return self.enter()
 
 class Alone(Room):
     pass
@@ -971,21 +1233,13 @@ inv = Inventory()
 game = Engine(the_map)
 game.play('start')
 
-# TODO: Make the sleep() between turns in the action method 1 second when done
-# testing everything
 # TODO: Make sure the inventory is clear for the start of the game.
-# TODO: make sure the touched_indentations attribute actually helps to give clues
-# TODO: Add the puzzle rooms
-# TODO: Flush out the end room
-# TODO: Work out what happens with the soldier and how you get the stone and also
-# add the touched_indentations advantage for when the stone is actually picked up
+# TODO: Add the right side puzzle rooms
+# TODO: Add the end room
 # TODO: Get rid of string literals
-# TODO: Make it so take stone after a stone has been taken give a more
-# appropriate response
-# TODO: Make it so you need the bag to carry more than 1 stone around
 # TODO: Make sure "real" sleep is turned on
 # TODO: Define certains actions like wait
 # TODO: Add sense of ease when you get the Silence stone, making you not want
 # to flip comptuters over.
-# TODO: Have a counter that checks how many puzzles were failed. If 3 are
-# failed, make the game fail in despair.
+# TODO: Some way to lock the racetrack after killing the human there
+# TODO: Get rid of automatic bearings messages, they are annoying
