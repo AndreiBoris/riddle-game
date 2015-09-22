@@ -23,7 +23,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = ['ballpoint pen']
+    items = []
 
     def show(self):
         print "\nYour inventory:"
@@ -118,7 +118,7 @@ What do you do?
 class StartingRoom(Room):
 
     start_of_game = True
-    good_moves = ['go north', 'walk north']
+    good_moves = ['go north', 'walk north', 'take pen']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
     wake_up = """You wake up.
@@ -130,13 +130,14 @@ lying on a mattress sprawled in the middle of the room. You're dressed normally.
 Nothing seems to have gone wrong but you don't have a clear idea of where you
 are or why."""
     extra = """
-This looks like the sloppy apartment of a lazy bachelor. This is
-really as good as it gets."""
+This looks like the sloppy apartment of a bachelor. How lovely.
+
+There appears to be a pen on the floor near to the mattress."""
     intro = """
 This is the room you woke up in. Apart from the spartan set up and the random
 mattress placement, it's not so bad."""
     bearings = """
-There is a hallway to the north.
+There is some junk lying around. There is a hallway to the north.
 
 What do you do?\n"""
 
@@ -148,6 +149,17 @@ What do you do?\n"""
         action = self.action()
         if action == "go north" or action == "walk north":
             return "middle"
+        if action == "take pen":
+            print """
+You pick up the pen. It is a blue ballpoint. Can never have enough pens."""
+            self.good_moves.remove("take pen")
+            inv.items.append("ballpoint pen")
+            sleep(3)
+            self.extra = """
+This looks like the sloppy apartment of a bachelor. How lovely.
+
+The rest of the junk on the floor is junk."""
+            return self.enter()
 
 class MiddleRoom(Room):
 
@@ -606,7 +618,7 @@ mention it.
 
 There is a note on the table that is perhaps worth reading."""
     bearings = """
-There are some things the dining table. To the east is that tunnel, the one
+There are some things on the dining table. To the east is that tunnel, the one
 where your frog buddy is probably still croaking along.
 
 What do you do?\n"""
@@ -632,7 +644,13 @@ applaud your selective memory."""
             print """
 'What is so delicate that even mentioning it breaks it?'"""
             sleep(3)
-            if "ballpoint pen" in inv.items:
+            if "ballpoint pen" not in inv.items:
+                print """
+What an interesting question. Well, without a nice pen to respond to the
+inquiry it is probably best to just back away. Heck, even a ballpoint pen would
+have done the job."""
+                return self.enter()
+            elif "ballpoint pen" in inv.items:
                 solution = ""
                 while self.guesses_left > 0 and not self.solved:
                     print """
@@ -707,7 +725,7 @@ earlier at that beautiful door."""
 You somehow feel at ease in the silence of this room.
 
 The pendulum swings and the curtains dance. You feel you are not unlike them.
-The thought give you a sense of a ease."""
+The thought give you a sense of ease."""
                 self.bearings = """
 The dining table is still. To the east is that tunnel with the frog.
 
