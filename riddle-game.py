@@ -21,7 +21,7 @@ class Engine(object):
 class Inventory(object):
 
     items = ['Stone of Peace', 'Stone of Silence',
-            'Stone of Respect', 'Stone of Practice',
+            'Stone of Practice',
             'Stone of Friendship', 'Stone of Connection']
 
     def show(self):
@@ -39,6 +39,8 @@ class Inventory(object):
 
 class Room(object):
 
+    solved = False
+    stone_here = False
     visited = False
     valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
             'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
@@ -88,6 +90,12 @@ What do you do?
         print "\nYou attempt to %s." % action
         sleep(0)
         return action
+
+    def stone_available(self):
+        if self.stone_here and self.solved and "take stone" not in self.good_moves:
+            self.good_moves.append("take stone")
+        else:
+            pass
 
 class StartingRoom(Room):
 
@@ -441,6 +449,7 @@ It seems like the computer is sleeping, so you give the mouse a shake."""
 class Battlefield(Room):
 
     guesses_left = 5
+    stone_here = True
     good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
                 'talk to her']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk east', 'walk west',
@@ -452,14 +461,14 @@ this ruin. The soldier is clearly in excrutiating pain and is doing what she can
 to stay conscious for as long as possible. It doesn't seem like that will be for
 much longer. You might say she's on her last legs. But that would seem a bit
 disrespectful as it seems that bomb had dismembered her of exactly those legs
-that the phrase seems to be referring to. She notices you."""
+that the phrase seems to be referring to."""
     extra = """
 Looking around a little wider, the scene is actually not so pitiful! There are
 flourishing trees nearby with some birds chirping cheerily. How fun.
 
 The soldier wants you to talk to her."""
     bearings = """
-The dismembered soldier on the ground is shaking and beckoning you to come
+The soldier on the ground notices you. She's shaking and beckoning you to come
 closer. To the north is the dark tunnel.
 
 What do you do?\n"""
@@ -478,32 +487,72 @@ What do you do?\n"""
 You approach the soldier and she looks you right in the eyes. As you approach
 you notice that her eyelids have been torn off in the twisted explosion. She
 doesn't appear to ever blink and you feel very uneasy."""
+            sleep(5)
+            print "\nThe soldier appears to be disoriented. She speaks"
             sleep(2)
             print """
-The soldier appears to be disoriented. She speaks
-
-'You use a knife to slice my head, and weep beside me when I am dead.
-
-What am I?'"""
+'You use a knife to slice my head, and weep beside me when I am dead.'"""
+            sleep(3)
+            print "\n'What am I?'"
+            sleep(1.5)
             solution = ""
-            solved = False
-            while (self.guesses_left > 0 and (solution != "onion" and
-            solution != "an onion")):
+            while self.guesses_left > 0 and not self.solved:
+                print """
+The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
                 solution = raw_input("\nHow do you answer? > ").lower()
-                print solution
                 if solution == "onion" or solution == "an onion":
-                    solved = True
+                    self.solved = True
                 if self.guesses_left == 1:
                     print """
 The soldier whispers,
 
 'Don't let all my layers whither and die.'"""
-            if solved:
-                print "Got it!"
+            self.bearings = """
+The soldier lies still. To the north is the dark tunnel.
+
+What do you do?\n"""
+            if self.solved:
+                self.extra = """
+Looking around a little wider, the scene is actually not so pitiful! There are
+flourishing trees nearby with some birds chirping cheerily. How fun.
+
+There is a fairly sizeable stone in the soldier's relaxed right hand, perhaps
+it's something worth picking up?"""
+                self.stone_available()
+                print """
+The soldier appears relieved. Her left hand drops. You can see she the ghost is
+passing. You notice that her right hand also relaxes revealing something inside."""
             else:
-                print "Nope."
-            sleep(5)
+                self.extra = """
+Looking around a little wider, the scene is actually not so pitiful! There are
+flourishing trees nearby with some birds chirping cheerily. How fun.
+
+The soldier is certainly in agony. Maybe it is best to leave her alone."""
+                print """
+The soldier stares at your fixedly. Her body becomes rigid. Her left hand drops
+and she clutches both hands together.
+
+'Leave me,' she whispers."""
+            self.good_moves.remove("talk")
+            self.good_moves.remove("talk to her")
+            self.good_moves.remove("talk to soldier")
+            sleep(4.5)
+            return self.enter()
+
+        if action == "take stone":
+            self.stone_here == False
+            inv.items.append("Stone of Respect")
+            self.good_moves.remove("take stone")
+            print"""
+You pick up the stone. Perhaps you are imagining this, but you feel the soldier
+wouldn't mind for you to take this. On the stone you see the word 'RESPECT', you
+place it in your bag."""
+            self.extra = """
+Looking around a little wider, the scene is actually not so pitiful! There are
+flourishing trees nearby with some birds chirping cheerily. How fun.
+
+The soldier lies peacefully."""
             return self.enter()
 
 class DiningRoom(Room):
@@ -549,5 +598,9 @@ game.play('start')
 # TODO: make sure the touched_indentations attribute actually helps to give clues
 # TODO: Add the puzzle rooms
 # TODO: Flush out the end room
-# TODO: puzzle rooms need to have counters that give 5 attempts and a hint for
-# the 5th and final attempts
+# TODO: Work out what happens with the soldier and how you get the stone and also
+# add the touched_indentations advantage for when the stone is actually picked up
+# TODO: Get rid of string literals
+# TODO: Make it so take stone after a stone has been taken give a more
+# appropriate response
+# TODO: Make it so you need the bag to carry more than 1 stone around
