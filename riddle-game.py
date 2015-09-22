@@ -35,6 +35,9 @@ class Inventory(object):
     def add(self, new_item):
         self.items.append(new_item)
 
+    def add_to_top(self, new_item):
+        self.items.insert(0, new_item)
+
     def remove(self, old_item):
         self.items.remove(old_item)
 
@@ -294,7 +297,7 @@ before you can lift it up."""
 Upon closer inspection, it doesn't look half bad! Rough, rugged, tough, serious.
 The bag reminds you enough of your childhood that you think it's best if you
 hold onto it. Might come in handy."""
-            inv.add('dirty bag')
+            inv.add_to_top('dirty bag')
             self.bag = False
             self.extra = """
 Ah, good! That dirty bag is no longer messing up the look of the sweet, sweet
@@ -972,5 +975,3 @@ game.play('start')
 # to flip comptuters over.
 # TODO: Have a counter that checks how many puzzles were failed. If 3 are
 # failed, make the game fail in despair.
-# TODO: Make the dirty bag appear the first item in the inventory (append it to
-# the beginning of the items list)
