@@ -102,6 +102,164 @@ battlefield_solved = """
 The soldier appears relieved. Her left hand drops. You can see she the ghost is
 passing. You notice that her right hand also relaxes revealing something inside."""
 
+def battlefield_take_soldier():
+    print """
+You aren't whisking anybody away today, buster."""
+    sleep(2)
+
+def battlefield_touch_soldier():
+    print """
+You decide not to do it at the last moment."""
+    sleep(2)
+
+dining_room_bearings_after = """
+The dining table stands as eerily as ever. To the east is that tunnel, the one
+where your frog buddy is probably still croaking along, might be nice to hear
+some of those sweet frog sounds right about now.
+
+What do you do?\n"""
+
+dining_room_bearings_start = """
+There are some things on the dining table. To the east is that tunnel, the one
+where your frog buddy is probably still croaking along.
+
+What do you do?\n"""
+
+dining_room_bearings_final = """
+The dining table is still. To the east is that tunnel with the frog.
+
+What do you do?\n"""
+
+dining_room_extra_fail = """
+This place gives you the creeps.
+
+You've scribbled all over the note on the table with no good result."""
+
+dining_room_extra_final = """
+You somehow feel at ease in the silence of this room.
+
+The pendulum swings and the curtains dance. You feel you are not unlike them.
+The thought give you a sense of ease."""
+
+dining_room_extra_start = """
+Something about this place seems off but you feel it's safest to just not
+mention it.
+
+There is a note on the table that is perhaps worth reading."""
+
+dining_room_extra_win = """
+Yes, this place is definitely unnaturally quiet. The clock moves without a
+noise, the curtains dance soundlessly.
+
+By the window you hear a slight tapping, a stone seems to be moving almost
+imperceptibly as it is grazed by a silk curtain. Maybe it's worth taking?"""
+
+dining_room_failed = """
+For some reason your heart is beating extremely loudly. You feel pretty sick.
+Maybe it's best to get out of here?"""
+
+def dining_room_hint():
+    print """
+There is only one line left,
+
+You start to feel a bit nervous and can hear your heart beating in your chest.
+It's really damn quiet in this weird place."""
+    sleep(2)
+
+dining_room_intro = """
+This room is extremely gaudy. They've got little fountains with little rocks and
+fishies. The sofa is upholstered with some fancy fabric that probably costs more
+per square foot and the an ordinary 2500 square foot house in the suburbs. They
+even got one of the grandfather clocks with the pendulum swinging back and
+forth. The window at the back of the dining room is open and the gorgeous silk
+curtains are floating lyrically along. You half-expect a wild butler to appear."""
+
+def dining_room_leave_pen():
+    print """
+You decide to leave the pen here, it seems somehow appropriate."""
+    sleep(4.5)
+
+def dining_room_look_outside():
+    print """
+You see nothing but brightness. Your corneas protests."""
+    sleep(2)
+
+def dining_room_no_pen():
+    print """
+What an interesting question. Well, without a nice pen to respond to the
+inquiry it is probably best to just back away. Heck, even a ballpoint pen would
+have done the job."""
+    sleep(4.5)
+
+def dining_room_quiet():
+    print """
+You suddenly realize just how quiet this place is. Apart from the noises made by
+your body, there does seem to be one other sound in the room."""
+    sleep(1.5)
+
+def dining_room_riddle():
+    print """
+You walk over to the table and take a look at the note. The script it's written
+in is exquisite. It reminds you of what you imagined Lev Nikolayevich Myshkin's
+calligraphy would look like. But then you realize that you had never read The
+Idiot, and just heard that one pretentious gentlemen mention it once. You
+applaud your selective memory."""
+    sleep(5)
+    print "\nThe note has only a short phrase written on it:"
+    sleep(2)
+    print """
+'What is so delicate that even mentioning it breaks it?'"""
+    sleep(3)
+
+def dining_room_sit():
+    print """
+On second thought, your clothes are probably too dirty. Wouldn't want to get
+anyone mad for dirtying their million dollar sofa. You decide to keep standing."""
+    sleep(4)
+
+def dining_room_take_big():
+    print """
+It is bigger than you are."""
+    sleep(2)
+
+def dining_room_take_curtain():
+    print """
+You don't feel like being a common criminal."""
+    sleep(2)
+    print """
+Right now."""
+    sleep(2)
+
+def dining_room_take_water():
+    print """
+... And how would you like to do that, exactly?"""
+    sleep(2)
+
+def dining_room_touch_clock():
+    print """
+It's made of some pretty nice wood."""
+    sleep(2)
+
+def dining_room_touch_curtain():
+    print """
+Silk feels nice."""
+    sleep(2)
+
+def dining_room_touch_sofa():
+    print """
+Soft, smooth, and snobby."""
+    sleep(2)
+
+def dining_room_touch_water():
+    print """
+Water feels nice."""
+    sleep(2)
+
+def dining_room_yes_pen():
+    print """
+Hmmm. Good thing you had the foresight to pick up this trusty ballpoint pen."""
+    sleep(2)
+
 empty_inv = "Just the clothes on your back."
 
 helper = """
@@ -123,7 +281,7 @@ def indentation_hint():
     print """
 This stone seems like it might fit into one of those indentations you felt
 earlier at that beautiful door."""
-    sleep(4)
+    sleep(2.5)
 
 left_bearing = """
 To the north appears to be a butcher shop. To the west you see the glimmer of a
@@ -329,6 +487,13 @@ def stone_of_respect_pickup():
     print"""
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
 wouldn't mind for you to take this. On the stone you see the word 'RESPECT'."""
+    sleep(5)
+
+def stone_of_silence_pickup():
+    print"""
+You pick up the stone. The room is now entirely quiet. Somehow, even your own
+body has seeemed to slow down and ease into the silence of this room. You feel
+well. On the stone you see the word 'SILENCE'."""
     sleep(5)
 
 talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
