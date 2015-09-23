@@ -839,55 +839,14 @@ class Alone(Room):
                     'unplug projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
-    intro = """
-The place is horribly unkempt. It smells of sweat, tears, and stale urine. A
-young woman is sitting behind a table with a laptop open in front of her. She is
-facing away from you. You can tell that she notices that you entered, but she
-doesn't move very much. A small, modern projector is to your right. It is
-pointing across the room to the wall on your left."""
-    extra = """
-The young lady is in evident distress but is bearing it very quietly. Maybe it's
-also worth taking a look at the projector. Not that it has anything to do with
-the lady or her distress. """
-    bearings = """
-To the south is the office, which suddenly seems a lot less depressing than it
-once did.
-
-What do you do?\n"""
+    intro = all_strings.alone_intro
+    extra = all_strings.alone_extra_start
+    bearings = all_strings.alone_bearings_start
     def enter(self):
         self.correct_intro()
 
         if (self.projector_on and self.projector_open and self.not_chatted):
-            print """
-An image displays on the projector screen on the left side of the room.
-Something is loading."""
-            sleep(6)
-            self.loading(4)
-            print """
-An empty text document appears on the screen. Then you hear the soft sounds of
-typing on the young lady's keyboard."""
-            sleep(6)
-            self.loading(2)
-            print "\nhi"
-            self.loading(1)
-            print "\nnot sure why your here"
-            self.loading(3)
-            print "\nwhat do you want"
-            sleep(1.5)
-            print "\n" *5
-            print """
-Before you have a chance to respond she goes on."""
-            sleep(1.5)
-            self.loading(3)
-            print "k my friend is having some kind of breakdown"
-            self.loading(3)
-            print "mby you can help"
-            self.loading(5)
-            print "he says he feels like that which has a tongue but cannot taste"
-            self.loading(1)
-            print "has a soul but cannot feel"
-            self.loading(2)
-            print "what is he talking about??"
+            all_strings.alone_riddle()
             while self.guesses_left > 0 and not self.solved:
                 self.loading(self.guesses_left)
                 self.guesses_left -= 1
@@ -895,63 +854,16 @@ Before you have a chance to respond she goes on."""
                 if solution == "shoe" or solution == "a shoe":
                     self.solved = True
                 if self.guesses_left == 1:
-                    self.loading(2)
-                    print "lol i don't think any of those are it.."
-                    self.loading(3)
-                    print "he says he feels worn out"
-                    self.loading(2)
-                    print "and that hes tired of trampling on others"
-                    self.loading(1)
+                    all_strings.alone_hint()
             if self.solved:
                 self.good_text_up = True
-                self.extra = """
-.
-
-.
-
-.
-
-.
-thanks for your help
-
-.
-there's a stone under the projector
-
-.
-
-.
-i think someone like you could do some good with it"""
+                self.extra = all_strings.alone_extra_win
                 self.stone_available()
-                self.loading(5)
-                print "yeah"
-                self.loading(1)
-                print "he said yeah"
-                self.loading(2)
-                print "thank you"
-                self.loading(3)
-                print "check under the projector, theres something you should take"
+                all_strings.alone_solved()
             else:
                 self.sad_text_up = True
-                self.extra = """
-.
-
-.
-
-.
-
-.
-
-.
-turn off the projector and stuff please
-
-.
-
-.
-i don't really want to talk to anyone"""
-                self.loading(1)
-                print "hmmm i don't think thats right"
-                self.loading(2)
-                print "don't worry about it"
+                self.extra = all_strings.alone_extra_lose
+                all_strings.alone_failed()
                 inv.failed_puzzles += 1
                 inv.end_if_failed()
             sleep(3)
@@ -966,202 +878,88 @@ i don't really want to talk to anyone"""
 
         if (action == "talk" or action == "talk to lady" or
             action == "talk to her" or action == "talk to woman"):
-            print """
-'Hey,' you say. The lady doesn't move."""
-            sleep(2)
-            print """
-'Are you alright?' Nothing."""
-            sleep(2)
-            print """
-You take the cue. You'd probably have better luck talking to the projector."""
-            sleep(3)
+            all_strings.alone_talk_to_lady()
             return self.enter()
 
         if action == "talk to projector" or action == "talk to the projector":
-            print """
-You see that the projector might be in emotional stress."""
-            sleep(3)
-            print """
-'It's going to okay. You will make it through this,' you tell it."""
-            sleep(3)
-            print """
-Deep down, you feel the projector heard you. It will be okay."""
-            sleep(3)
+            all_strings.alone_talk_to_projector()
             return self.enter()
 
         if action == "talk to girl":
-            print """
-Oh, I'm sorry. Did I mention that there was a girl here?"""
-            sleep(3)
-            print """
-Right, I don't think I did. Why don't you take your patronizing tone out of
-here, bud."""
+            all_strings.alone_talk_to_girl()
             return self.enter()
 
         if action == "plug in projector" or action == "plug in the projector":
             if self.projector_power:
-                print """
-You had never unplugged the projector. Is that what you want to do?"""
+                all_strings.alone_projector_powered()
                 return self.enter()
             self.projector_power = True
-            print """
-You walk over to the projector plug, pick it up, and plug it into the wall
-socket over on the wall to your right."""
-            sleep(3)
-            print """
-The projector probably has some power now."""
-            sleep(2.5)
+            all_strings.alone_projector_power_on()
             return self.enter()
 
         if action == "unplug projector" or action == "unplug the projector":
             if not self.projector_power:
-                print """
-You had never plugged in the projector. You can't double unplug it, that would
-be madness."""
-                sleep(2)
+                all_strings.alone_projector_unpowered()
                 return self.enter()
             self.projector_power = False
             self.projector_on = False
-            print """
-You guess that it's best to unplug the projector so that it doesn't suck any
-ghost power. Saving electricty is important, it means less combustible fuel
-needs to be burned to produce it... somewhere."""
-            sleep(5)
+            all_strings.alone_projector_power_off()
             if self.stone_here:
-                self.extra = """
-The young lady is in evident distress but is bearing it very quietly. Maybe it's
-also worth taking a look at the projector. Not that it has anything to do with
-the lady or her distress. """
+                self.extra = all_strings.alone_extra_proj_off
             return self.enter()
 
         if action == "turn on projector" or action == "turn on the projector":
             if self.projector_on:
-                print """
-Good news! The projector was already on. Saves you the energy from having to
-reach over and press the power button. Congratulations!"""
-                sleep(3)
+                all_strings.alone_projector_running()
                 return self.enter()
             if self.projector_power:
-                print """
-The projector fan whirs into life and some blinkies come on. All systems are go."""
-                sleep(3)
+                all_strings.alone_projector_turn_on()
                 self.projector_on = True
                 if self.final_response:
-                    self.extra = """
-You feel it would probably be best to leave. There might be others, elsewhere,
-who could use your help."""
+                    self.extra = all_strings.alone_extra_final
                 elif self.good_text_up:
-                    self.extra = """
-.
-
-.
-
-.
-
-.
-thanks for your help
-
-.
-there's a stone under the projector
-
-.
-
-.
-i think someone like you could do some good with it"""
+                    self.extra = all_strings.alone_extra_win
                 elif self.sad_text_up:
-                    self.extra = """
-.
-
-.
-
-.
-
-.
-
-.
-turn off the projector and stuff please
-
-.
-
-.
-i don't really want to talk to anyone"""
+                    self.extra = all_strings.alone_extra_lose
                 return self.enter()
             elif not self.projector_power:
-                print """
-It doesn't seem like the projector has any power. Is it plugged in?"""
-                sleep(2)
+                all_strings.alone_projector_no_power()
                 return self.enter()
 
         if action == "turn off projector" or action == "turn off the projector":
             if not self.projector_on:
-                print """
-You reach to turn the projector off."""
-                sleep(2)
-                print """
-The projector was already off. You self-reflect on whether or not you might just
-be a hater."""
-                sleep(2)
-                print "\nNah."
-                sleep(2)
+                all_strings.alone_projector_was_off()
                 return self.enter()
             self.projector_on = False
-            print """
-If you're not going to use the projector, why waste electricity? Best to power
-it off. You do just that and the world feels slightly greener already."""
-            sleep(5)
+            all_strings.alone_projector_turn_off()
             if self.stone_here:
-                self.extra = """
-The young lady is in evident distress but is bearing it very quietly. Maybe it's
-also worth taking a look at the projector. Not that it has anything to do with
-the lady or her distress. """
+                self.extra = all_strings.alone_extra_proj_off
             return self.enter()
 
         if action == "look at projector" or action == "look at the projector":
-            print """
-There seems to be a wire connecting the projector to the laptop in front of the
-lady at the desk."""
-            sleep(3)
+            all_strings.alone_proj_look_basic()
             if not self.projector_open:
-                print """
-It seems like the projector lid isn't open."""
-                sleep(3)
+                all_strings.alone_proj_look_lid()
             if not self.projector_on:
-                print """
-Upon closer inspection you realize that the projector isn't on."""
-                sleep(3)
+                all_strings.alone_proj_look_on()
             if not self.projector_power:
-                print """
-Wow, yeah. This projector isn't even plugged in."""
-                sleep(2)
+                all_strings.alone_proj_look_power()
             return self.enter()
 
         if action == "open lid" or action == "open projector lid":
             if self.projector_open:
-                print """
-You reach for the lid only to realize that its not there! Where is it?!"""
-                sleep(2)
-                print """
-Right. It's next to the projector where you left it. It probably won't be
-necessary to open the lens lid when it is already open. You may rest."""
-                sleep(3)
+                all_strings.alone_projector_no_lid()
                 return self.enter()
             self.projector_open = True
-            print """
-You go to front of the projector and pop open the cap. You set it down nicely
-next to the projector."""
-            sleep(3.5)
+            all_strings.alone_projector_open()
             return self.enter()
 
         if action == "close lid" or action == "close projector lid":
             if not self.projector_open:
-                print """
-You shouldn't have worried about it. The lid was already closed. Simple amazing
-how things work out like that."""
+                all_strings.alone_projector_lid()
                 return self.enter()
             self.projector_open = False
-            print """
-No sense exposing the lens to unnecessary damage. You pick up the lid and
-secure it on top of the projection lens."""
+            all_strings.alone_projector_close()
             return self.enter()
 
 
@@ -1175,22 +973,12 @@ secure it on top of the projection lens."""
                 self.stone_here = False
                 inv.items.append("Stone of Compassion")
                 self.good_moves.remove("take stone")
-                print"""
-You pick up the stone. It is a bit dusty. But once your brush it off gently you
-notice that the stone is as brilliant as any you have ever looked on. Looking at
-the stone, you see the word 'COMPASSION' written on it."""
-                sleep(5)
+                all_strings.stone_of_compassion_pickup()
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
                 self.final_response = True
-                self.extra = """
-You feel it would probably be best to leave. There might be others, elsewhere,
-who could use your help."""
-                self.bearings = """
-To the south is the office. You wonder how many others are logged in, accessible
-and in need of help you could provide by being there and listening.
-
-What do you do?\n"""
+                self.extra = all_strings.alone_extra_final
+                self.bearings = all_strings.alone_bearings_final
                 return self.enter()
 
     def loading(self, count):
@@ -1531,3 +1319,6 @@ game.play('start')
 # TODO: Get rid of string literals
 # TODO: Refactor the stone pick ups to take the message upon pick up and the
 # particular stone picked up to maybe avoid the large amounts of duplicate code
+# TODO: Get the riddles failed counter to give some kind of message to indicate
+# that players should try to not fail puzzles
+# TODO: Add a way to save the game... its a bit long.

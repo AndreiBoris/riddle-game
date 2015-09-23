@@ -1,5 +1,10 @@
 from time import sleep
 
+def loading(count):
+    for i in xrange(count):
+        sleep(1)
+        print "\n."
+
 action_go = "\nWhere to go?\n"
 
 action_lie = "\nHere? I think not!\n"
@@ -19,6 +24,269 @@ action_touch = "\nFeel.\n"
 action_wait = "\nWhy wait?\n"
 
 action_walk = "\nYou pace around the room and end up where you started.\n"
+
+alone_bearings_final = """
+To the south is the office. You wonder how many others are logged in, accessible
+and in need of help you could provide by being there and listening.
+
+What do you do?\n"""
+
+alone_bearings_start = """
+To the south is the office, which suddenly seems a lot less depressing than it
+once did.
+
+What do you do?\n"""
+
+alone_extra_final = """
+You feel it would probably be best to leave. There might be others, elsewhere,
+who could use your help."""
+
+alone_extra_lose = """
+.
+
+.
+
+.
+
+.
+
+.
+turn off the projector and stuff please
+
+.
+
+.
+i don't really want to talk to anyone"""
+
+alone_extra_proj_off = """
+The young lady is in evident distress but is bearing it very quietly. You
+have turned off the projector. Maybe its worth looking at?""""
+
+alone_extra_start = """
+The young lady is in evident distress but is bearing it very quietly. Maybe it's
+also worth taking a look at the projector. Not that it has anything to do with
+the lady or her distress. """
+
+alone_extra_win = """
+.
+
+.
+
+.
+
+.
+thanks for your help
+
+.
+there's a stone under the projector
+
+.
+
+.
+i think someone like you could do some good with it"""
+
+def alone_failed():
+    loading(1)
+    print "hmmm i don't think thats right"
+    loading(2)
+    print "don't worry about it"
+
+alone_intro = """
+The place is horribly unkempt. It smells of sweat, tears, and stale urine. A
+young woman is sitting behind a table with a laptop open in front of her. She is
+facing away from you. You can tell that she notices that you entered, but she
+doesn't move very much. A small, modern projector is to your right. It is
+pointing across the room to the wall on your left."""
+
+def alone_hint():
+    loading(2)
+    print "lol i don't think any of those are it.."
+    loading(3)
+    print "he says he feels worn out"
+    loading(2)
+    print "and that hes tired of trampling on others"
+    loading(1)
+
+def alone_proj_look_basic():
+    print """
+There seems to be a wire connecting the projector to the laptop in front of the
+lady at the desk."""
+    sleep(3)
+
+def alone_proj_look_lid():
+    print """
+It seems like the projector lid isn't open."""
+    sleep(3)
+
+def alone_proj_look_on():
+    print """
+Upon closer inspection you realize that the projector isn't on."""
+    sleep(3)
+
+def alone_proj_look_power():
+    print """
+Wow, yeah. This projector isn't even plugged in."""
+    sleep(2)
+
+def alone_projector_close():
+    print """
+No sense exposing the lens to unnecessary damage. You pick up the lid and
+secure it on top of the projection lens."""
+    sleep(2)
+
+def alone_projector_lid():
+    print """
+You shouldn't have worried about it. The lid was already closed. Simple amazing
+how things work out like that."""
+    sleep(2)
+
+def alone_projector_no_lid():
+    print """
+You reach for the lid only to realize that its not there! Where is it?!"""
+    sleep(2)
+    print """
+Right. It's next to the projector where you left it. It probably won't be
+necessary to open the lens lid when it is already open. You may rest."""
+    sleep(3)
+
+def alone_projector_no_power():
+    print """
+It doesn't seem like the projector has any power. Is it plugged in?"""
+    sleep(2)
+
+def alone_projector_open():
+    print """
+You go to front of the projector and pop open the cap. You set it down nicely
+next to the projector."""
+    sleep(3.5)
+
+def alone_projector_powered():
+    print """
+You had never unplugged the projector. Is that what you want to do?"""
+    sleep(2)
+
+def alone_projector_power_off():
+    print """
+You guess that it's best to unplug the projector so that it doesn't suck any
+ghost power. Saving electricty is important, it means less combustible fuel
+needs to be burned to produce it... somewhere."""
+    sleep(5)
+
+def alone_projector_power_on():
+    print """
+You walk over to the projector plug, pick it up, and plug it into the wall
+socket over on the wall to your right."""
+    sleep(3)
+    print """
+The projector probably has some power now."""
+    sleep(2.5)
+
+def alone_projector_running():
+    print """
+Good news! The projector was already on. Saves you the energy from having to
+reach over and press the power button. Congratulations!"""
+    sleep(3)
+
+def alone_projector_turn_off():
+    print """
+If you're not going to use the projector, why waste electricity? Best to power
+it off. You do just that and the world feels slightly greener already."""
+    sleep(5)
+
+def alone_projector_turn_on():
+    print """
+The projector fan whirs into life and some blinkies come on. All systems are go."""
+    sleep(3)
+
+def alone_projector_unpowered():
+    print """
+You had never plugged in the projector. You can't double unplug it, that would
+be madness."""
+    sleep(2)
+
+def alone_projector_was_off():
+    print """
+You reach to turn the projector off."""
+    sleep(2)
+    print """
+The projector was already off. You self-reflect on whether or not you might just
+be a hater."""
+    sleep(2)
+    print "\nNah."
+    sleep(2)
+
+def alone_riddle():
+    print """
+An image displays on the projector screen on the left side of the room.
+Something is loading."""
+    sleep(6)
+    loading(4)
+    print """
+An empty text document appears on the screen. Then you hear the soft sounds of
+typing on the young lady's keyboard."""
+    sleep(6)
+    loading(2)
+    print "\nhi"
+    loading(1)
+    print "\nnot sure why your here"
+    loading(3)
+    print "\nwhat do you want"
+    sleep(1.5)
+    print "\n" *5
+    print """
+Before you have a chance to respond she goes on."""
+    sleep(1.5)
+    loading(3)
+    print "k my friend is having some kind of breakdown"
+    loading(3)
+    print "mby you can help"
+    loading(5)
+    print "he says he feels like that which has a tongue but cannot taste"
+    loading(1)
+    print "has a soul but cannot feel"
+    loading(2)
+    print "what is he talking about??"
+
+def alone_solved():
+    loading(5)
+    print "yeah"
+    loading(1)
+    print "he said yeah"
+    loading(2)
+    print "thank you"
+    loading(3)
+    print "check under the projector, theres something there you should take"
+
+def alone_talk_to_girl():
+    print """
+Oh, I'm sorry. Did I mention that there was a girl here?"""
+    sleep(3)
+    print """
+Right, I don't think I did. Why don't you take your patronizing tone out of
+here, bud."""
+    sleep(3)
+
+def alone_talk_to_lady():
+    print """
+'Hey,' you say. The lady doesn't move."""
+    sleep(2)
+    print """
+'Are you alright?' Nothing."""
+    sleep(2)
+    print """
+You take the cue. You'd probably have better luck talking to the projector."""
+    sleep(3)
+
+def alone_talk_to_projector():
+    print """
+You see that the projector might be in emotional stress."""
+    sleep(3)
+    print """
+'It's going to okay. You will make it through this,' you tell it."""
+    sleep(3)
+    print """
+Deep down, you feel the projector heard you. It will be okay."""
+    sleep(3)
 
 bad_moves = "\nYou can't go there from here.\n"
 
@@ -777,6 +1045,13 @@ You are in a blue-tinted room surrounded by what seems to be drywall. You are
 lying on a mattress sprawled in the middle of the room. You're dressed normally.
 Nothing seems to have gone wrong but you don't have a clear idea of where you
 are or why."""
+
+def stone_of_compassion_pickup():
+    print"""
+You pick up the stone. It is a bit dusty. But once your brush it off gently you
+notice that the stone is as brilliant as any you have ever looked on. Looking at
+the stone, you see the word 'COMPASSION' written on it."""
+    sleep(5)
 
 def stone_of_friendship_pickup():
     print"""
