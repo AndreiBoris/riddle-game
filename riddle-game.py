@@ -433,24 +433,9 @@ class Battlefield(Room):
                 'talk to her']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
-    intro = """
-After walking south from the dark tunnel you come across a pretty grim scene.
-It looks like a soldier had been hit by the bomb or whatever it was that created
-this ruin. The soldier is clearly in excrutiating pain and is doing what she can
-to stay conscious for as long as possible. It doesn't seem like that will be for
-much longer. You might say she's on her last legs. But that would seem a bit
-disrespectful as it seems that bomb had dismembered her of exactly those legs
-that the phrase seems to be referring to."""
-    extra = """
-Looking around a little wider, the scene is actually not so pitiful! There are
-flourishing trees nearby with some birds chirping cheerily. How fun.
-
-The soldier wants you to talk to her."""
-    bearings = """
-The soldier on the ground notices you. She's shaking and beckoning you to come
-closer. To the north is the dark tunnel.
-
-What do you do?\n"""
+    intro = all_strings.battlefield_intro
+    extra = all_strings.battlefield_extra_start
+    bearings = all_strings.battlefield_bearings1
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -460,18 +445,7 @@ What do you do?\n"""
 
         if (action == "talk" or action == "talk to soldier" or
             action == "talk to her"):
-            print """
-You approach the soldier and she looks you right in the eyes. As you approach
-you notice that her eyelids have been torn off in the twisted explosion. She
-doesn't appear to ever blink and you feel very uneasy."""
-            sleep(5)
-            print "\nThe soldier appears to be disoriented. She speaks"
-            sleep(2)
-            print """
-'You use a knife to slice my head, and weep beside me when I am dead.'"""
-            sleep(3)
-            print "\n'What am I?'"
-            sleep(1.5)
+            all_strings.battlefield_riddle()
             solution = ""
             while self.guesses_left > 0 and not self.solved:
                 print """
@@ -481,36 +455,15 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 if solution == "onion" or solution == "an onion":
                     self.solved = True
                 if self.guesses_left == 1:
-                    print """
-The soldier whispers,
-
-'Don't let all my layers whither and die.'"""
-            self.bearings = """
-The soldier lies still. To the north is the dark tunnel.
-
-What do you do?\n"""
+                    all_strings.battlefield_hint()
+            self.bearings = all_strings.battlefield_bearings2
             if self.solved:
-                self.extra = """
-Looking around a little wider, the scene is actually not so pitiful! There are
-flourishing trees nearby with some birds chirping cheerily. How fun.
-
-There is a fairly sizeable stone in the soldier's relaxed right hand, perhaps
-it's something worth taking?"""
+                self.extra = all_strings.battlefield_extra_win
                 self.stone_available()
-                print """
-The soldier appears relieved. Her left hand drops. You can see she the ghost is
-passing. You notice that her right hand also relaxes revealing something inside."""
+                print all_strings.battlefield_solved
             else:
-                self.extra = """
-Looking around a little wider, the scene is actually not so pitiful! There are
-flourishing trees nearby with some birds chirping cheerily. How fun.
-
-The soldier is certainly in agony. Maybe it is best to leave her alone."""
-                print """
-The soldier stares at your fixedly. Her body becomes rigid. Her left hand drops
-and she clutches both hands together.
-
-'Leave me,' she whispers."""
+                self.extra = all_strings.battlefield_extra_fail
+                print all_strings.battlefield_failed
                 inv.failed_puzzles += 1
                 inv.end_if_failed()
             self.good_moves.remove("talk")
@@ -522,32 +475,19 @@ and she clutches both hands together.
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                print """
-You don't think you can carry any more of these stones at once. Maybe it makes
-sense to drop them off somewhere. Or maybe if you had some kind of container to
-carry them in, that would probably make things easier too."""
-                sleep(5)
+                all_strings.no_bag()
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Respect")
                 self.good_moves.remove("take stone")
-                print"""
-You pick up the stone. Perhaps you are imagining this, but you feel the soldier
-wouldn't mind for you to take this. On the stone you see the word 'RESPECT'."""
-                sleep(5)
+                all_strings.stone_of_respect_pickup()
                 if TheDoor.touched_indentations:
-                    print """
-This stone seems like it might fit into one of those indentations you felt
-earlier at that beautiful door."""
-                    sleep(4)
-                self.extra = """
-Looking around a little wider, the scene is actually not so pitiful! There are
-flourishing trees nearby with some birds chirping cheerily. How fun.
-
-The soldier lies peacefully."""
+                    all_strings.indentation_hint()
+                self.extra = all_strings.battlefield_extra_final
                 return self.enter()
+
 
 class DiningRoom(Room):
 
@@ -708,11 +648,7 @@ You decide to leave the pen here, it seems somehow appropriate."""
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                print """
-You don't think you can carry any more of these stones at once. Maybe it makes
-sense to drop them off somewhere. Or maybe if you had some kind of container to
-carry them in, that would probably make things easier too."""
-                sleep(5)
+                all_strings.no_bag()
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
@@ -894,11 +830,7 @@ sharpening the knife."""
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                print """
-You don't think you can carry any more of these stones at once. Maybe it makes
-sense to drop them off somewhere. Or maybe if you had some kind of container to
-carry them in, that would probably make things easier too."""
-                sleep(5)
+                all_strings.no_bag()
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
@@ -1150,11 +1082,7 @@ robot backs away slightly and its Cheshire cat face 'smiles.'
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                print """
-You don't think you can carry any more of these stones at once. Maybe it makes
-sense to drop them off somewhere. Or maybe if you had some kind of container to
-carry them in, that would probably make things easier too."""
-                sleep(5)
+                all_strings.no_bag()
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
@@ -1531,11 +1459,7 @@ secure it on top of the projection lens."""
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                print """
-You don't think you can carry any more of these stones at once. Maybe it makes
-sense to drop them off somewhere. Or maybe if you had some kind of container to
-carry them in, that would probably make things easier too."""
-                sleep(5)
+                all_strings.no_bag()
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
@@ -1782,11 +1706,7 @@ greens, light blues and everything in between mixed in."""
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                print """
-You don't think you can carry any more of these stones at once. Maybe it makes
-sense to drop them off somewhere. Or maybe if you had some kind of container to
-carry them in, that would probably make things easier too."""
-                sleep(5)
+                all_strings.no_bag()
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:

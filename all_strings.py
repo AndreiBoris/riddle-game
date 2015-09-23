@@ -22,6 +22,85 @@ action_walk = "\nYou pace around the room and end up where you started.\n"
 
 bad_moves = "\nYou can't go there from here.\n"
 
+battlefield_bearings1 = """
+The soldier on the ground notices you. She's shaking and beckoning you to come
+closer. To the north is the dark tunnel.
+
+What do you do?\n"""
+
+battlefield_bearings2 = """
+The soldier lies still. To the north is the dark tunnel.
+
+What do you do?\n"""
+
+battlefield_extra_start = """
+Looking around a little wider, the scene is actually not so pitiful! There are
+flourishing trees nearby with some birds chirping cheerily. How fun.
+
+The soldier wants you to talk to her."""
+
+battlefield_extra_win = """
+Looking around a little wider, the scene is actually not so pitiful!
+There are flourishing trees nearby with some birds chirping cheerily.
+How fun.
+
+There is a fairly sizeable stone in the soldier's relaxed right hand,
+perhaps it's something worth taking?"""
+
+battlefield_extra_fail = """
+Looking around a little wider, the scene is actually not so pitiful!
+There are flourishing trees nearby with some birds chirping cheerily.
+How fun.
+
+The soldier is certainly in agony. Maybe it is best to leave her alone."""
+
+battlefield_extra_final = """
+Looking around a little wider, the scene is actually not so pitiful!
+There are flourishing trees nearby with some birds chirping cheerily.
+How fun.
+
+The soldier lies peacefully."""
+
+battlefield_failed = """
+The soldier stares at your fixedly. Her body becomes rigid. Her left hand drops
+and she clutches both hands together.
+
+'Leave me,' she whispers."""
+
+def battlefield_hint():
+    print """
+The soldier whispers,
+
+'Don't let all my layers whither and die.'"""
+    sleep(1)
+
+battlefield_intro = """
+After walking south from the dark tunnel you come across a pretty grim scene.
+It looks like a soldier had been hit by the bomb or whatever it was that created
+this ruin. The soldier is clearly in excrutiating pain and is doing what she can
+to stay conscious for as long as possible. It doesn't seem like that will be for
+much longer. You might say she's on her last legs. But that would seem a bit
+disrespectful as it seems that bomb had dismembered her of exactly those legs
+that the phrase seems to be referring to."""
+
+def battlefield_riddle():
+    print """
+You approach the soldier and she looks you right in the eyes. As you approach
+you notice that her eyelids have been torn off in the twisted explosion. She
+doesn't appear to ever blink and you feel very uneasy."""
+    sleep(5)
+    print "\nThe soldier appears to be disoriented. She speaks"
+    sleep(2)
+    print """
+'You use a knife to slice my head, and weep beside me when I am dead.'"""
+    sleep(3)
+    print "\n'What am I?'"
+    sleep(1.5)
+
+battlefield_solved = """
+The soldier appears relieved. Her left hand drops. You can see she the ghost is
+passing. You notice that her right hand also relaxes revealing something inside."""
+
 empty_inv = "Just the clothes on your back."
 
 helper = """
@@ -38,6 +117,12 @@ Here are some actions that you might be able to take:
 
 Perhaps looking around can help you find some other possible actions to take?
 """
+
+def indentation_hint():
+    print """
+This stone seems like it might fit into one of those indentations you felt
+earlier at that beautiful door."""
+    sleep(4)
 
 left_bearing = """
 To the north appears to be a butcher shop. To the west you see the glimmer of a
@@ -114,6 +199,13 @@ def middle_room_touch_newspaper():
 def middle_room_touch_rubber():
     print "\nUh... no."
     sleep(1.5)
+
+def no_bag():
+    print """
+You don't think you can carry any more of these stones at once. Maybe it makes
+sense to drop them off somewhere. Or maybe if you had some kind of container to
+carry them in, that would probably make things easier too."""
+    sleep(5)
 
 right_bearings = """
 To the north appears to be another bachelor's apartment. You wonder what the
@@ -231,6 +323,12 @@ You are in a blue-tinted room surrounded by what seems to be drywall. You are
 lying on a mattress sprawled in the middle of the room. You're dressed normally.
 Nothing seems to have gone wrong but you don't have a clear idea of where you
 are or why."""
+
+def stone_of_respect_pickup():
+    print"""
+You pick up the stone. Perhaps you are imagining this, but you feel the soldier
+wouldn't mind for you to take this. On the stone you see the word 'RESPECT'."""
+    sleep(5)
 
 talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
             "'Can I stop talking now?'",
