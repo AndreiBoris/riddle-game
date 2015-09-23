@@ -708,6 +708,10 @@ The man uses a small knife to carve a line into the wall behind him. There are
 
 class Racetrack(Room):
 
+    throw_options = ["throw rock", "throw rock at person",
+                    "throw rock at human", "throw rock at the person",
+                    "throw rock at the robot", "throw rock at robot",
+                    "throw rock at hugbot", "throw rock at the human"]
     stone_here = True
     good_moves = ['go west', 'walk west', 'talk', 'take rock', 'talk to robot',
                     'talk to human', 'talk to the robot', 'talk to the person',
@@ -738,10 +742,7 @@ class Racetrack(Room):
             inv.add('rock')
             for option in ["take rock", "take small rock", "touch rock"]:
                 self.good_moves.remove(option)
-            for option in ["throw rock", "throw rock at person",
-            "throw rock at human", "throw rock at the person",
-            "throw rock at the robot", "throw rock at robot",
-            "throw rock at hugbot"]:
+            for option in self.throw_options:
                 self.good_moves.append(option)
             self.extra = all_strings.racetrack_extra_no_rock
             return self.enter()
@@ -773,10 +774,7 @@ class Racetrack(Room):
         action == "throw rock at the robot" or
         action == "throw rock at hugbot"):
             inv.remove('rock')
-            for option in ["throw rock", "throw rock at human",
-            "throw rock at person", "throw rock at the human",
-            "throw rock at the person", "throw rock at the robot",
-            "throw rock at robot", "throw rock at hugbot"]:
+            for option in self.throw_options:
                 self.good_moves.remove(option)
             all_strings.racetrack_riddle()
             robot_clock = randint(1446, 1899)
