@@ -1196,6 +1196,11 @@ class Map(object):
 
 class Loader(object):
 
+    rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor(),
+            'left': Left(), 'right': Right(), 'butcher': Butcher(),
+            'dining room': DiningRoom(), 'battlefield': Battlefield(),
+            'racetrack': Racetrack(), 'alone': Alone(), 'world': World()}
+
     def __init__(self, save, inventory):
         self.info = save
         self.inv = inventory
@@ -1203,7 +1208,8 @@ class Loader(object):
     def load_it(self):
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
-        
+        for room in self.rooms.keys():
+            self.rooms[room].intro
         return self.info.starting
 
 if __name__ == "__main__":
