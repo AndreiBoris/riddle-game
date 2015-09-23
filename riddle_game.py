@@ -8,11 +8,11 @@ import main
 
 class Engine(object):
 
-    def __init__(self, a_map, the_menu, new_game, fake_game):
+    def __init__(self, a_map, the_menu, new_game, loader):
         self.map = a_map
         self.menu = the_menu
         self.game = new_game
-        self.load = fake_game
+        self.loader = loader
 
     def play(self):
         # this will run for the duration of the game, using self.map to
@@ -23,7 +23,7 @@ class Engine(object):
         if first_option == "new":
             first_room = "start"
         elif first_option == "load":
-            first_room = self.load.starting
+            first_room = self.loader.load_it()
 
         next_room = self.map.play(first_room)
 
@@ -1194,13 +1194,22 @@ class Map(object):
         print "\n" * 35
         return self.rooms[next_room].enter()
 
+class Loader(object):
+
+    def __init__(self, save):
+        self.info = save
+
+    def load_it(self):
+        return self.info.starting
+
 if __name__ == "__main__":
     the_map = Map()
     the_menu = main.Menu()
     new_game = main.SavedGame()
     load_game = main.FakeGame()
+    loader = Loader(load_game)
     inv = Inventory()
-    game = Engine(the_map, the_menu, new_game, load_game)
+    game = Engine(the_map, the_menu, new_game, loader)
     game.play()
 
 # TODO: Get rid of string literals
