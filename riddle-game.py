@@ -1411,15 +1411,15 @@ the lady or her distress. """
             print """
 There seems to be a wire connecting the projector to the laptop in front of the
 lady at the desk."""
-            sleep(2)
+            sleep(3)
             if not self.projector_open:
                 print """
 It seems like the projector lid isn't open."""
-                sleep(2)
+                sleep(3)
             if not self.projector_on:
                 print """
 Upon closer inspection you realize that the projector isn't on."""
-                sleep(2)
+                sleep(3)
             if not self.projector_power:
                 print """
 Wow, yeah. This projector isn't even plugged in."""
