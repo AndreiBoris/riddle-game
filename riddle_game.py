@@ -415,7 +415,6 @@ class Right(Room):
     bearings = all_strings.right_bearings
 
     def enter(self):
-        print "you have failed", inv.failed_puzzles
         self.correct_intro()
         action = self.action()
         if action == "go south" or action == "walk south":
@@ -1181,14 +1180,26 @@ class End(Room):
         print all_strings.end_message
         exit(1)
 
+start_room = StartingRoom()
+middle_room = MiddleRoom()
+door_room = TheDoor()
+left_room = Left()
+right_room = Right()
+butcher_room = Butcher()
+dining_room = DiningRoom()
+battlefield_room = Battlefield()
+racetrack_room = Racetrack()
+alone_room = Alone()
+world_room = World()
+end_room = End()
 
 class Map(object):
 
-    rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor(),
-            'left': Left(), 'right': Right(), 'butcher': Butcher(),
-            'dining room': DiningRoom(), 'battlefield': Battlefield(),
-            'racetrack': Racetrack(), 'alone': Alone(), 'world': World(),
-            'end': End()}
+    rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
+            'left': left_room, 'right': right_room, 'butcher': butcher_room,
+            'dining room': dining_room, 'battlefield': battlefield_room,
+            'racetrack': racetrack_room, 'alone': alone_room,
+            'world': world_room, 'end': end_room}
 
     def play(self, next_room):
         print "\n" * 35
@@ -1196,10 +1207,11 @@ class Map(object):
 
 class Loader(object):
 
-    rooms = {'start': StartingRoom(), 'middle': MiddleRoom(), 'door': TheDoor(),
-            'left': Left(), 'right': Right(), 'butcher': Butcher(),
-            'dining room': DiningRoom(), 'battlefield': Battlefield(),
-            'racetrack': Racetrack(), 'alone': Alone(), 'world': World()}
+    rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
+            'left': left_room, 'right': right_room, 'butcher': butcher_room,
+            'dining room': dining_room, 'battlefield': battlefield_room,
+            'racetrack': racetrack_room, 'alone': alone_room,
+            'world': world_room}
 
     def __init__(self, save, inventory):
         self.info = save
@@ -1209,7 +1221,10 @@ class Loader(object):
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
         for room in self.rooms.keys():
-            self.rooms[room].intro
+            #each = self.rooms[room]
+            #print each.intro
+            target = self.rooms[room]
+            target.intro = self.info.room_by_room[room]['intro']
         return self.info.starting
 
 if __name__ == "__main__":

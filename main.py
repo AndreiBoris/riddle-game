@@ -167,7 +167,7 @@ class FakeGame(object):
                     "right":
                             {'visited': False,
                             'racetrack open': True,
-                            'intro': "fake intro yo!",
+                            'intro': all_strings.right_extra,
                             'extra': all_strings.right_extra,
                             'bearings': all_strings.right_bearings},
                     "battlefield":
