@@ -1,6 +1,6 @@
 from sys import exit
-#from time import sleep
-from fakesleep import sleep
+from time import sleep
+#from fakesleep import sleep
 from random import randint
 
 line_break = "--------------------------------"
@@ -1497,7 +1497,7 @@ You reach to turn the projector off."""
 The projector was already off. You self-reflect on whether or not you might just
 be a hater."""
                 sleep(2)
-                print "Nah."
+                print "\nNah."
                 sleep(2)
                 return self.enter()
             self.projector_on = False
@@ -1602,7 +1602,258 @@ What do you do?\n"""
             print "\n."
 
 class World(Room):
-    pass
+
+    stone_here = True
+    good_moves = ['go north', 'walk north', 'talk', 'talk to elephant',
+                'talk to it', 'sit', 'sit cross-legged', 'sit on rock',
+                'touch elephant', 'touch rock', 'talk to rock',
+                'enjoy the view', 'look at mountains', 'fan yourself',
+                'enjoy the amazing view']
+    bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
+                'go south', 'go west', ]
+    intro = """
+Incredible. This passage somehow led to the top of a mountain. The view is
+better than any you have ever experienced. You feel miniscule. The mountains
+speak of something out of The Cossacks by Tolstoy. The palette has oranges, deep
+greens, light blues and everything in between mixed in. Perhaps more striking
+is the tiny (relatively speaking) elephant sitting cross-legged in loose
+clothing. The elephant is facing you, but its eyes do not open as you enter."""
+    extra = """
+There is an elephant sitting cross-legged in front of you. To your left is a
+sizable rock. There is an amazing view to enjoy and many mountains to look at.
+It is very hot."""
+    bearings = """
+To the north is the strangely incongruous passage that leads back to the office
+from which you came.
+
+What do you do?\n"""
+    def enter(self):
+        self.correct_intro()
+        action = self.action()
+        if action == "go north" or action == "walk north":
+            self.current_room = False
+            return "right"
+
+        if action == "sit":
+            if self.stone_here:
+                print """
+The ground is very hot from the sun."""
+                sleep(3)
+                print "\nThis sucks."
+                sleep(2)
+                print "\nYou get up."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nNot right now."
+                sleep(2)
+                return self.enter()
+
+        if action == "sit cross-legged":
+            if self.stone_here:
+                print """
+Trying to mirror the elephant exactly, you sit on the ground and cross your
+legs."""
+                sleep(4.5)
+                print "\nYour right leg starts to cramp up."
+                sleep(3)
+                print "\nYou get up."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nThere is much to do."
+                sleep(2)
+                return self.enter()
+
+        if action == "sit on rock":
+            if self.stone_here:
+                print """
+It is pretty comfortable."""
+                sleep(3)
+                print "\nYou wonder what else you can see if you go walk around a bit."
+                sleep(2)
+                print "\nYou get up."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nYou don't feel tired."
+                sleep(2)
+                return self.enter()
+
+        if action == "enjoy the view" or action == "enjoy the amazing view":
+            if self.stone_here:
+                print """
+Simply breathtaking..."""
+                sleep(6)
+                print "\nYou wonder if some of the computers in the office have cable internet."
+                sleep(2)
+                print "\nYou're not really paying much attention any more."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nThe world is rich."
+                sleep(2)
+                return self.enter()
+
+        if action == "look at mountains":
+            if self.stone_here:
+                print """
+You feel tiny."""
+                sleep(3)
+                print "\nYou wonder how easy it would be to climb up one of those mountaints."
+                sleep(2)
+                print "\nYou'll do it someday."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\n..."
+                sleep(2)
+                return self.enter()
+
+        if action == "touch rock":
+            if self.stone_here:
+                print "\nJust another rock."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nIt feels as it should."
+                sleep(2)
+                return self.enter()
+
+        if action == "talk to rock":
+            if self.stone_here:
+                print """
+'How are you doing, rock?' you say."""
+                sleep(3)
+                print "\nOk..."
+                sleep(1.5)
+                return self.enter()
+            else:
+                print "\nWord are not what will help your mutual communication."
+                sleep(3)
+                return self.enter()
+
+        if action == "fan yourself":
+            if self.stone_here:
+                print """
+The effect is not worth the effort"""
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nAs hot as it is, you know that you will survive."
+                sleep(3)
+                return self.enter()
+
+        if action == "touch rock":
+            if self.stone_here:
+                print "\nJust another rock."
+                sleep(2)
+                return self.enter()
+            else:
+                print "\nIt feels as it should."
+                sleep(2)
+                return self.enter()
+
+        if action == "touch elephant":
+            print "\nSeems like a bad idea."
+            sleep(2)
+            return self.enter()
+
+        if (action == "talk" or action == "talk to elephant" or
+            action == "talk to it"):
+            self.good_moves.remove("talk")
+            self.good_moves.remove("talk to it")
+            self.good_moves.remove("talk to elephant")
+            self.good_moves.remove("touch elephant")
+            print "\n'Hello,' you say."
+            sleep(3)
+            print "\nThe elephant opens its eyes."
+            sleep(2)
+            print """
+'I am heavy but not backwards,' it intones."""
+            sleep(3)
+            print """
+'What am I?'"""
+            sleep(2)
+            print "\nYou feel compelled to answer."
+            sleep(1.5)
+            solution = ""
+            while self.guesses_left > 0 and not self.solved:
+                sleep(1)
+                self.overheating(self.guesses_left)
+                self.guesses_left -= 1
+                sleep(1)
+                solution = raw_input("\nYou speak > ").lower()
+                if solution == "ton":
+                    self.solved = True
+            if self.solved:
+                self.extra = """
+In front of you is a stone lying on the ground. Perhaps the stone is worth
+picking up. To your left is a sizable rock. There is an amazing view to enjoy
+and many mountains to look at. It is very hot."""
+                self.stone_available()
+                sleep(1)
+                print """
+You blink and the elephant is gone. It seems like there is hardly a trace of it.
+There is some small object where it elephant appeared to be."""
+            else:
+                self.extra = """
+Where the elephant was there is now nothing. To your left is a sizable rock.
+There is an amazing view to enjoy and many mountains to look at. It is very hot."""
+                print """
+You blink and the elephant is gone. There is no trace of it."""
+                inv.failed_puzzles += 1
+                inv.end_if_failed()
+            sleep(2.5)
+            self.intro = """
+Incredible. This passage somehow led to the top of a mountain. The view in
+better than any you have ever experienced. You feel miniscule. The mountains
+speak of something out of The Cossacks by Tolstoy. The palette has oranges, deep
+greens, light blues and everything in between mixed in."""
+            return self.enter()
+
+        if action == "take stone":
+
+            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+                print """
+You don't think you can carry any more of these stones at once. Maybe it makes
+sense to drop them off somewhere. Or maybe if you had some kind of container to
+carry them in, that would probably make things easier too."""
+                sleep(5)
+                return self.enter()
+
+            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
+                self.stone_here = False
+                inv.items.append("Stone of Practice")
+                self.good_moves.remove("take stone")
+                print"""
+You pick up the stone. You feel more sure of yourself. There is much that you
+do not know, but there is much that can be seen, experienced and learned. On the
+stone you see the word 'PRACTICE'."""
+                sleep(5)
+                if TheDoor.touched_indentations:
+                    print """
+This stone seems like it might fit into one of those indentations you felt
+earlier at that beautiful door."""
+                    sleep(4)
+                return self.enter()
+
+    def overheating(self, count):
+        if count == 5:
+            print "\nYou feel sweat building up on your brow."
+        if count == 4:
+            print "\nYour clothes are starting to be sweat through."
+        if count == 3:
+            print "\nYou starting to feel like you're swimming in your clothes."
+        if count == 2:
+            print "\nThe heat is becoming oppressive."
+        if count == 1:
+            print "\nYou feel close to passing out."
+        if count == 0:
+            print "\nYou feel nauseous."
+        else:
+            pass
+
 
 class End(Room):
 
@@ -1631,7 +1882,7 @@ game.play('start')
 # TODO: Add the end room
 # TODO: Get rid of string literals
 # TODO: Make sure "real" sleep is turned on
-# TODO: Define certains actions like wait
+# TODO: Define certains actions like wait, sit
 # TODO: Add sense of ease when you get the Silence stone, making you not want
 # to flip comptuters over.
 # TODO: Refactor the stone pick ups to take the message upon pick up and the
