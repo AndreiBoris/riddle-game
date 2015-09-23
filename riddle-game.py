@@ -202,20 +202,9 @@ class MiddleRoom(Room):
                     'take newspaper', 'take newspapers', 'touch rubber',
                     'take rubber']
     bad_moves = []
-    intro = """
-This room is huge - remarkably so. It makes one wonder what kind of building was
-designed to hold such a mammoth. Despite its awe-inspiring size, the upkeep
-leaves much to be desired. It dripping with old newspapers that have been left
-lying around and in various makeshift beddings. Dripping because the ceiling is
-soaked - evidently the roof doesn't do such a great job keeping the rain out."""
-    extra = """
-The smell of singed hair and old rubber is not exactly comforting."""
-    bearings = """
-To the north there is a door that is in incongruously good condition. To the
-east is some sort of office wing. To the west there is a dark tunnel. To the
-south is a short hallway leading to a small apartment room.
-
-What do you do?\n"""
+    intro = all_strings.middle_room_intro
+    extra = all_strings.middle_room_extra
+    bearings = all_strings.middle_room_bearings
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -233,27 +222,19 @@ What do you do?\n"""
             return "door"
 
         if action == "touch newspapers" or action == "touch newspaper":
-            print "\nSoggy.\n"
-            sleep(1.5)
+            all_strings.middle_room_touch_newspaper()
             return self.enter()
 
         if action == "take newspapers" or action == "take newspaper":
-            print """
-As you pick up a newspaper up, it falls apart in your hand in a sloppy mess."""
-            sleep(2.5)
-            print """
-It hits the ground with a wet sound."""
-            sleep(1.5)
+            all_strings.middle_room_take_newspaper()
             return self.enter()
 
         if action == "touch rubber":
-            print "\nUh, no."
-            sleep(1.5)
+            all_strings.middle_room_touch_rubber()
             return self.enter()
 
         if action == "take rubber":
-            print "\nSomehow you don't think it will come in handy."
-            sleep(1.5)
+            all_strings.middle_room_take_rubber()
             return self.enter()
 
 class TheDoor(Room):

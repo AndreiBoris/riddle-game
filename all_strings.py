@@ -45,6 +45,43 @@ lose_game = """
 None of these rooms seem to make any sense. 'Why am I here?!' you call out.
 You receive no answer. You have no answer. There is nothing."""
 
+middle_room_bearings ="""
+To the north there is a door that is in incongruously good condition. To the
+east is some sort of office wing. To the west there is a dark tunnel. To the
+south is a short hallway leading to a small apartment room.
+
+What do you do?\n"""
+
+middle_room_extra ="""
+The smell of singed hair and old rubber is not exactly comforting."""
+
+middle_room_intro = """
+This room is huge - remarkably so. It makes one wonder what kind of building was
+designed to hold such a mammoth. Despite its awe-inspiring size, the upkeep
+leaves much to be desired. It dripping with old newspapers that have been left
+lying around and in various makeshift beddings. Dripping because the ceiling is
+soaked - evidently the roof doesn't do such a great job keeping the rain out."""
+
+def middle_room_take_newspaper():
+    print """
+As you pick up a newspaper up, it falls apart in your hand in a sloppy mess."""
+    sleep(2.5)
+    print """
+It hits the ground with a wet sound."""
+    sleep(1.5)
+
+def middle_room_take_rubber():
+    print "\nSomehow you don't think it will come in handy."
+    sleep(1.5)
+
+def middle_room_touch_newspaper():
+    print "\nSoggy.\n"
+    sleep(1.5)
+
+def middle_room_touch_rubber():
+    print "\nUh... no."
+    sleep(1.5)
+
 room_bearings = """
 There appears to be no way to get your bearings in this generic room.
 
