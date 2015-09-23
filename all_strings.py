@@ -23,8 +23,8 @@ action_walk = "\nYou pace around the room and end up where you started.\n"
 bad_moves = "\nYou can't go there from here.\n"
 
 battlefield_bearings1 = """
-The soldier on the ground notices you. She's shaking and beckoning you to come
-closer. To the north is the dark tunnel.
+The soldier on the ground notices you. She's shaking and beckoning you
+to come closer. To the north is the dark tunnel.
 
 What do you do?\n"""
 
@@ -34,8 +34,9 @@ The soldier lies still. To the north is the dark tunnel.
 What do you do?\n"""
 
 battlefield_extra_start = """
-Looking around a little wider, the scene is actually not so pitiful! There are
-flourishing trees nearby with some birds chirping cheerily. How fun.
+Looking around a little wider, the scene is actually not so pitiful!
+There are flourishing trees nearby with some birds chirping cheerily.
+How fun.
 
 The soldier wants you to talk to her."""
 
@@ -62,8 +63,8 @@ How fun.
 The soldier lies peacefully."""
 
 battlefield_failed = """
-The soldier stares at your fixedly. Her body becomes rigid. Her left hand drops
-and she clutches both hands together.
+The soldier stares at your fixedly. Her body becomes rigid. Her left hand
+drops and she clutches both hands together.
 
 'Leave me,' she whispers."""
 
@@ -89,7 +90,7 @@ You approach the soldier and she looks you right in the eyes. As you approach
 you notice that her eyelids have been torn off in the twisted explosion. She
 doesn't appear to ever blink and you feel very uneasy."""
     sleep(5)
-    print "\nThe soldier appears to be disoriented. She speaks"
+    print "\nThe soldier appears to be disoriented. She speaks:"
     sleep(2)
     print """
 'You use a knife to slice my head, and weep beside me when I am dead.'"""
@@ -333,7 +334,7 @@ wouldn't mind for you to take this. On the stone you see the word 'RESPECT'."""
 talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
             "'Can I stop talking now?'",
             "'Am I supposed to say anything in particular?'", "'La la la.'",
-            "'The power of human expression is being tapped right now.'",
+            "'The power of human expression is being tapped into right now.'",
             "'I don't have a whole lot more that I can say.'", "'Yup.'",
             "'Good. Good.'", "'Lovely weather...'"]
 
