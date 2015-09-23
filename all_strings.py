@@ -480,6 +480,187 @@ sense to drop them off somewhere. Or maybe if you had some kind of container to
 carry them in, that would probably make things easier too."""
     sleep(5)
 
+racetrack_bearings_after = """
+The robot has gone off to survey the other people. You are out of rocks. To the
+west is the office, it seems a lot less crazy than this place.
+
+What do you do?\n"""
+
+racetrack_bearings_final = """
+These people are in good hands, you feel. Good, comfortable robot hands. To the
+west is that lonesome office, but that's okay, it is only one room.
+
+What do you do?\n"""
+
+racetrack_bearings_start = """
+The hugbot and the scared humans are scattered through the track. To the west is
+that office, it's looking mighty comfy right about now - no need to deal with
+life's problems there!
+
+What do you do?\n"""
+
+racetrack_extra_final = """
+You feel loved."""
+
+racetrack_extra_lose = """
+There doesn't appear to be anything else that's interesting around here.
+Everyone is just sad and mopey."""
+
+racetrack_extra_no_rock = """
+A person is cowering a few feet away from you. The robot is directly in front of
+you, paying most of its attetion in the opposite direction."""
+
+racetrack_extra_start = """
+There is small rock on the ground next to you. A person is cowering a few feet
+away from you. The robot is directly in front of you, paying most of its
+attention in the opposite direction."""
+
+racetrack_extra_win = """
+You see now that the hugbot had just been looking for the person who was most in
+need of a hug. Apparentely it calculated that this person was you.
+
+It seems that the robot had dropped some kind of stone. The idea is kind of
+gross but the stone looks clean and harmless. Maybe you should take it?"""
+
+racetrack_failed = """
+Well, that was a long hug. You're not quite sure why that was necessary. The
+robot backs away slightly and its Cheshire cat face 'smiles.'
+
+'Bye-bye for now, sweet friend, others do have need of me.'"""
+
+def racetrack_hint():
+    print """
+'If I am a spoon in hugging you, the safeword be a different hue,' the hugbot
+says."""
+    sleep(3)
+
+racetrack_intro = """
+This is no ordinary racetrack. You spot some kind of machine - a hugbot on
+tanktreads with 'Happy Birthday' written on its back and 'You'll get yours'
+written on the front. Its face reminds you of the Cheshire Cat except extremely
+tall instead of wide. The eyes pop out of its face and sharply looking around
+the track. There are a number of ragged people at the edges of the track,
+evidently trying to get as far away from the hugbot as they can. The hugbot
+appears to be deciding who to go after next."""
+
+def racetrack_riddle():
+    print """
+You hurl the rock at the robot. If you had a killer arm you might have actually
+gotten it somewhat close to the robot, which is a fair bit further away than you
+had judged."""
+    sleep(4)
+    print """
+Luckily (?) the robot seems to have noticed you regardless. It turns around and
+whips over to you."""
+    sleep(2)
+    print """
+The robot approaches very quickly and gets menacingly close to you. The exhaust
+that oddly appears have been designed to point forward makes it feel like the
+Cheshire face sending hot air straight to your face."""
+    sleep(4)
+    print """
+'You look lonesome,' the robot drones. 'Care for a hug?'"""
+    sleep(3)
+    print """
+Before you can respond the robot hugs you. The embrace is tight but not painful.
+It's robot arms are made of some kind of impossibly comfortable material.
+Something cracks inside and you feel yourself on the verge of tears, but you
+restrain yourself. 'This is just a robot!' you think to yourself."""
+    sleep(7)
+    print """
+'Remember you can always say the safeword if you feel you cannot accept the love
+that you deserve,' the robot says."""
+    sleep(5)
+    print """
+'Safeword?' you hear yourself ask."""
+    sleep(3)
+    print """
+'Yes, friend,' the robot says.
+
+'I have a few points, but we're not competing, and I'll help you win when you
+are eating. What I am, the safeword be.'"""
+    sleep(4)
+
+def racetrack_solved():
+    print """
+The hugbot backs away suddenly.
+
+'If you feel you don't need my acceptance I can only hope it is because you have
+dear friends of your own,' it says."""
+    sleep(5)
+    print """
+'I will leave this here, if you choose to pick it up, may be a reminder for you
+of what is essential for happiness.'
+
+You hear something drop on the other side of the robot. The robot then drives
+away, presumably to give some robot loving to these other humans."""
+
+def racetrack_talk():
+    print "Who would you like to talk to, exactly?"
+    sleep(2)
+
+def racetrack_take_rock():
+    print """
+You pick up the rock. Hefty."""
+    sleep(3)
+
+def racetrack_talk_to_robot():
+    print """
+Talk to the robot? What is your problem? That is a machine bent on killing
+people foolish enough to try reasoning with it! No way! Why don't you go try
+talking to a wall or something."""
+    sleep(4)
+
+def racetrack_talk_to_human():
+    print """
+You approach the person with the intention to speak with him."""
+    sleep(3)
+    print """
+'Hello,' you say."""
+    sleep(4)
+    print """
+A fit of loud sobbing comes over the person. Maybe its best just to leave him
+alone."""
+    sleep(4)
+
+def racetrack_throw_rock():
+    print """
+Uh. This is kind of the only rock you see around. So maybe you should think
+about where the best place to throw it might be."""
+    sleep(3)
+
+def racetrack_throw_rock_at_human():
+    print """
+In a fit of wickedness you throw a rock at the cowering human. You feel
+deviously sinister as you let go of the rock."""
+    sleep(4)
+    print """
+BAM! It's like you've been throwing stones at defenceless cowering humans all
+your life."""
+    sleep(5)
+    print """
+The person seems to be legitimately knocked out and potentially bleeding. Wow."""
+    sleep(5)
+    print """
+Suddently the hugbot spins around and seems to notice you. The other cowering
+humans are also taking note of you, the rock slinging bad-ass."""
+    sleep(5)
+    print """
+Oh god! Everyone starts running at full speed to get you. The hugbot's 'You'll
+get yours' sign is particularly sinister as it approaches at such a high speed."""
+    sleep(6)
+    print """
+You quickly back up out of the racetrack and lock the door behind you. That was
+pretty convenient. Probably best if you don't try going back in there anymore.\n"""
+    sleep(3)
+    raw_input("Press ENTER to escape. > ")
+
+def racetrack_touch_rock():
+    print """
+Good thing that you tried to touch that rock before taking it. Now you can
+confirm without a doubt that it is a rock."""
+    sleep(3)
+
 right_bearings = """
 To the north appears to be another bachelor's apartment. You wonder what the
 rent is around this place. To the east seems to be the entryway to a racetrack.
@@ -596,6 +777,14 @@ You are in a blue-tinted room surrounded by what seems to be drywall. You are
 lying on a mattress sprawled in the middle of the room. You're dressed normally.
 Nothing seems to have gone wrong but you don't have a clear idea of where you
 are or why."""
+
+def stone_of_friendship_pickup():
+    print"""
+You pick up the stone. It is warm to the touch. It probably had that hugbot's
+exhaust blowing on it too. Somehow this stone reminds you of some of the
+happiest times you've had with some close friends, along ago. Looking at the
+stone, you see the word 'FRIENDSHIP' written on it."""
+    sleep(5)
 
 def stone_of_peace_pickup():
     print"""
