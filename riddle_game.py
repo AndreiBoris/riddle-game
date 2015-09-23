@@ -1,8 +1,9 @@
-from sys import exit
 from time import sleep
 from random import randint
 from random import choice
+from sys import exit
 import all_strings
+import main
 
 
 class Engine(object):
@@ -1183,10 +1184,13 @@ class Map(object):
         print "\n" * 35
         return self.rooms[next_room].enter()
 
-the_map = Map()
-inv = Inventory()
-game = Engine(the_map)
-game.play('start')
+if __name__ == "__main__":
+    the_map = Map()
+    menu = main.Menu()
+    inv = Inventory()
+    game = Engine(the_map)
+    menu.run(1)
+    #game.play('start')
 
 # TODO: Get rid of string literals
 # TODO: Refactor the stone pick ups to take the message upon pick up and the

@@ -1,11 +1,57 @@
 import all_strings
+import riddle_game
 
-class MainMenu(object):
+class Menu(object):
 
-    options = {"New Game": pass, "Save Game": pass, "Load Game": pass}
+    menu_options = ["1. New", "2. Save", "3. Load"]
+    ingame_menu_options = ["1. New", "2. Save", "3. Load", "4. Continue"]
+    menu = {1: ["Start a New Game", "pam"], 2: ["Save Game", "bam"],
+     3: ["Load Game", "uncle sam"]}
+    ingame_menu = {1: ["Start a New Game", "pam"], 2: ["Save Game", "bam"],
+                    3: ["Load Game", "uncle sam"],
+                    4: ["Continue Game", "roger roger"]}
 
-    def run(self):
-        pass
+    def run(self, version):
+        if version == 1:
+            self.print_menu(1)
+            confirmed = False
+            while not confirmed:
+                try:
+                    num = int(raw_input("\nUse a number to pick > "))
+                except ValueError:
+                    continue
+                if num not in range(1, 4):
+                    continue
+                print "Are you sure you want to %s?" % self.menu[num][0]
+                confirm = raw_input("Type 'yes' to confirm > ")
+                if confirm.lower() == 'yes':
+                    confirmed = True
+            print self.menu[num][1]
+            return
+        if version == 2:
+            self.print_menu(2)
+            confirmed = False
+            while not confirmed:
+                try:
+                    num = int(raw_input("\nUse a number to pick > "))
+                except ValueError:
+                    continue
+                if num not in range(1, 5):
+                    continue
+                print "Are you sure you want to %s?" % self.ingame_menu[num][0]
+                confirm = raw_input("Type 'yes' to confirm > ")
+                if confirm.lower() == 'yes':
+                    confirmed = True
+            print self.ingame_menu[num][1]
+            return
+
+    def print_menu(self, version):
+        if version == 1:
+            for option in self.menu_options:
+                print option
+        if version == 2:
+            for option in self.ingame_menu_options:
+                print option
 
 class SavedGame(object):
 
@@ -59,7 +105,7 @@ class SavedGame(object):
                             {'current': False, 'solved': False,
                             'stone here': True, 'touched meat': False,
                             'took pig': False, 'took meat': False,
-                            'talked' False,
+                            'talked': False,
                             'intro': all_strings.butcher_intro,
                             'extra': all_strings.butcher_extra_start,
                             'bearings': all_strings.butcher_bearings_start},
@@ -87,3 +133,7 @@ class SavedGame(object):
                             'extra': all_strings.world_extra_start,
                             'bearings': all_strings.world_bearings_start}
                     }
+
+if __name__ == "__main__":
+    tester = Menu()
+    tester.run(2)
