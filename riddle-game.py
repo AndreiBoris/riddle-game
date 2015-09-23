@@ -21,6 +21,12 @@ class Engine(object):
         if next_room == 'end':
             self.map.play(next_room)
 
+class MainMenu(object):
+
+    options = {"New Game": pass, "Save Game": pass, "Load Game": pass}
+
+    def run(self):
+        pass
 
 class Inventory(object):
 
