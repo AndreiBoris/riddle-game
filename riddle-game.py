@@ -836,7 +836,8 @@ class Alone(Room):
                     'close projector lid', 'turn on the projector',
                     'turn off the projector', 'plug in the projector',
                     'unplug the projector', 'talk to the projector',
-                    'unplug projector']
+                    'unplug projector', 'look under projector',
+                    'look under the projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
     intro = all_strings.alone_intro
@@ -858,7 +859,6 @@ class Alone(Room):
             if self.solved:
                 self.good_text_up = True
                 self.extra = all_strings.alone_extra_win
-                self.stone_available()
                 all_strings.alone_solved()
             else:
                 self.sad_text_up = True
@@ -962,6 +962,18 @@ class Alone(Room):
             all_strings.alone_projector_close()
             return self.enter()
 
+        if (action == "look under projector" or
+        action == "look under the projector"):
+            if not self.solved:
+                all_strings.alone_look_under_start()
+                return self.enter()
+            elif self.stone_here and self.solved:
+                self.stone_available()
+                all_strings.alone_look_under_solved()
+                return self.enter()
+            else:
+                all_strings.alone_look_under_final()
+                return self.enter()
 
         if action == "take stone":
 

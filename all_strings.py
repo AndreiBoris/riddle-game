@@ -60,7 +60,7 @@ i don't really want to talk to anyone"""
 
 alone_extra_proj_off = """
 The young lady is in evident distress but is bearing it very quietly. You
-have turned off the projector. Maybe its worth looking at?""""
+have turned off the projector. Maybe its worth looking at?"""
 
 alone_extra_start = """
 The young lady is in evident distress but is bearing it very quietly. Maybe it's
@@ -78,7 +78,7 @@ alone_extra_win = """
 thanks for your help
 
 .
-there's a stone under the projector
+theres something under the projector
 
 .
 
@@ -106,6 +106,22 @@ def alone_hint():
     loading(2)
     print "and that hes tired of trampling on others"
     loading(1)
+
+def alone_look_under_final():
+    print """
+There's nothing else there."""
+    sleep(2)
+
+def alone_look_under_solved():
+    print """
+You crouch down beside the projector and take a look beneath it. There is a
+a stone lying there, collecting dust. Perhaps it'd be a good idea to take it?"""
+    sleep(4)
+
+def alone_look_under_start():
+    print """
+You would. But why bother?"""
+    sleep(2)
 
 def alone_proj_look_basic():
     print """
@@ -255,7 +271,7 @@ def alone_solved():
     loading(2)
     print "thank you"
     loading(3)
-    print "check under the projector, theres something there you should take"
+    print "look under the projector, theres something there you should take"
 
 def alone_talk_to_girl():
     print """
@@ -966,9 +982,9 @@ It seems like the computer is sleeping, so you give the mouse a shake."""
     sleep(3)
     print "\nIt works!"
     sleep(3)
-    print "\nHmmm, it seems like all the networks works are passworded."
+    print "\nHmmm, it seems like all the networks are passworded."
     sleep(4)
-    print "\nAfter trying a few easy ones, you decide it is hopeless."
+    print "\nAfter failing with some predictable guesses, you decide it is hopeless."
     sleep(4)
 
 room_bearings = """
