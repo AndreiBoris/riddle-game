@@ -358,23 +358,9 @@ class Left(Room):
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'take frog', 'touch frog', 'catch frog']
     bad_moves = []
-    intro = """
-After walking through the dark tunnel for a while you begin to feel quite
-certain of one thing: it is very dark here. Not that that's a problem or
-anything. Though if it wasn't for the faint glimmers of other places peaking
-through in the distance you would probably begin to lose your mind right now
-about. Hey, maybe you'll be doing that regardless, why not!"""
-    extra = """
-The sounds made by a croaking frog are somehow comforting. Why it is here, you
-do not ask, only that you are not alone and perhaps the world is not as scary
-a place as you once thought it was."""
-    bearings = """
-To the north appears to be a butcher shop. To the west you see the glimmer of a
-upperclass dining room, complete with fine china and ornamental lamps. The the
-south are some sort of ruins, seemingly made by a bomb explosion. To the east is
-the dumpy, drippy room.
-
-What do you do?\n"""
+    intro = all_strings.left_intro
+    extra = all_strings.left_extra
+    bearings = all_strings.left_bearing
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -392,18 +378,11 @@ What do you do?\n"""
             return "butcher"
 
         if action == "take frog" or action == "touch frog":
-            print """
-You would have to catch it first."""
-            sleep(2)
+            all_strings.left_take_frog()
             return self.enter()
 
-        if action == "catch frog" or action == "touch frog":
-            print """
-You wander in the darkness trying to echo-locate the frog."""
-            sleep(3)
-            print """
-The frog has fallen annoying silent."""
-            sleep(2)
+        if action == "catch frog":
+            all_strings.left_catch_frog()
             return self.enter()
 
 

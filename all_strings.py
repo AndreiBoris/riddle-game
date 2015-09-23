@@ -39,6 +39,39 @@ Here are some actions that you might be able to take:
 Perhaps looking around can help you find some other possible actions to take?
 """
 
+left_bearing = """
+To the north appears to be a butcher shop. To the west you see the glimmer of a
+upperclass dining room, complete with fine china and ornamental lamps. The the
+south are some sort of ruins, seemingly made by a bomb explosion. To the east is
+the dumpy, drippy room.
+
+What do you do?\n"""
+
+def left_catch_frog():
+    print """
+You wander in the darkness trying to echo-locate the frog."""
+    sleep(3)
+    print """
+The frog has fallen annoying silent."""
+    sleep(2)
+
+left_extra = """
+The sounds made by a croaking frog are somehow comforting. Why it is here, you
+do not ask, only that you are not alone and perhaps the world is not as scary
+a place as you once thought it was."""
+
+left_intro = """
+After walking through the dark tunnel for a while you begin to feel quite
+certain of one thing: it is very dark here. Not that that's a problem or
+anything. Though if it wasn't for the faint glimmers of other places peaking
+through in the distance you would probably begin to lose your mind right now
+about. Hey, maybe you'll be doing that regardless, why not!"""
+
+def left_take_frog():
+    print """
+You would have to catch it first."""
+    sleep(2)
+
 line_break = "--------------------------------"
 
 lose_game = """
