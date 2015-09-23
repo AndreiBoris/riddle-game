@@ -415,6 +415,7 @@ class Right(Room):
     bearings = all_strings.right_bearings
 
     def enter(self):
+        print "you have failed", inv.failed_puzzles
         self.correct_intro()
         action = self.action()
         if action == "go south" or action == "walk south":
@@ -1201,6 +1202,7 @@ class Loader(object):
 
     def load_it(self):
         self.inv.items = self.info.items
+        self.inv.failed_puzzles = self.info.failed_puzzles
         return self.info.starting
 
 if __name__ == "__main__":
