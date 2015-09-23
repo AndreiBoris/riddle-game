@@ -1203,6 +1203,7 @@ class Loader(object):
     def load_it(self):
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
+        
         return self.info.starting
 
 if __name__ == "__main__":
