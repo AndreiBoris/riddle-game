@@ -2,14 +2,7 @@ from sys import exit
 from time import sleep
 from random import randint
 from random import choice
-
-line_break = "--------------------------------"
-talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
-            "'Can I stop talking now?'",
-            "'Am I supposed to say anything in particular?'", "'La la la.'",
-            "'The power of human expression is being tapped right now.'",
-            "'I don't have a whole lot more that I can say.'", "'Yup.'",
-            "'Good. Good.'", "'Lovely weather...'"]
+import all_strings
 
 class Engine(object):
 
@@ -38,7 +31,7 @@ class Inventory(object):
         for item in self.items:
             print item
         if not self.items:
-            print "Just the clothes on your back."
+            print all_strings.empty_inv
 
     def add(self, new_item):
         self.items.append(new_item)
@@ -58,9 +51,8 @@ class Inventory(object):
 
     def end_if_failed(self):
         if self.failed_puzzles >= 3:
-            print """
-None of these rooms seem to make any sense. 'Why am I here?!' you call out.
-You receive no answer. You have no answer. There is nothing."""
+            print all_strings.lose_game
+            sleep(1.5)
             exit(1)
 
 class Room(object):
@@ -105,7 +97,7 @@ What do you do?
             elif action == "take":
                 print "\nTake! Take! Take! Do you even know what you want?\n"
             elif action == "talk":
-                print "\n%s\n" % choice(talking)
+                print "\n%s\n" % choice(all_strings.talking)
             elif action == "go":
                 print "\nWhere to go?\n"
             elif action == "walk":
@@ -115,21 +107,21 @@ What do you do?
             elif action == "sleep":
                 print "\nYou don't feel tired enough.\n"
             elif action == 'help':
-                print line_break
+                print all_strings.line_break
                 print "\n" * 6
                 print self.helper
             elif action == 'look around' or action == 'look':
-                print line_break
+                print all_strings.line_break
                 print "\n" * 8
                 print self.extra
                 print self.bearings
             elif action == "intro":
-                print line_break
+                print all_strings.line_break
                 print "\n" * 6
                 print self.intro
                 print self.bearings
             elif action == "inventory" or action == "inv":
-                print line_break
+                print all_strings.line_break
                 print "\n" * 4
                 inv.show()
                 print "\nWhat do you do? \n"
@@ -251,7 +243,7 @@ nothing."""
 You pick up the pen. It is a blue ballpoint. Can never have enough pens."""
             self.good_moves.remove("take pen")
             inv.items.append("ballpoint pen")
-            sleep(3)
+            sleep(2)
             self.extra = """
 This looks like the sloppy apartment of a bachelor. How lovely.
 
@@ -328,7 +320,8 @@ class TheDoor(Room):
     good_moves = ['touch door', 'place stones', 'back away', 'go back',
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations',
-                    'place stone', 'touch indentation']
+                    'place stone', 'touch indentation', 'take indentations',
+                    'take indentation']
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
@@ -359,6 +352,11 @@ What do you do?\n"""
             sleep(3)
             print "\nReluctantly, you back away."
             sleep(2)
+            return self.enter()
+
+        if action == "take indentation" or action == "take indentations":
+            print "\nIt would be very impressive if you could actually do that."
+            sleep(3)
             return self.enter()
 
         if action == 'touch indentation' or action == 'touch indentations':
@@ -518,7 +516,7 @@ class Left(Room):
 
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
-                    'walk north']
+                    'walk north', 'take frog', 'touch frog', 'catch frog']
     bad_moves = []
     intro = """
 After walking through the dark tunnel for a while you begin to feel quite
@@ -552,6 +550,23 @@ What do you do?\n"""
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "butcher"
+
+        if action == "take frog" or action == "touch frog":
+            print """
+You would have to catch it first."""
+            sleep(2)
+            return self.enter()
+
+        if action == "catch frog" or action == "touch frog":
+            print """
+You wander in the darkness trying to echo-locate the frog."""
+            sleep(3)
+            print """
+The frog has fallen annoying silent."""
+            sleep(2)
+            return self.enter()
+
+
 
 class Right(Room):
 
@@ -741,7 +756,11 @@ The soldier lies peacefully."""
 class DiningRoom(Room):
 
     stone_here = True
-    good_moves = ['go east', 'walk east', 'read note']
+    good_moves = ['go east', 'walk east', 'read note', 'touch fountain',
+                    'touch fountains', 'take fountain', 'take fountains',
+                    'touch clock', 'touch grandfather clock', 'touch sofa',
+                    'take sofa', 'look outside', 'touch curtains',
+                    'touch curtain', 'sit on sofa']
     bad_moves = ['go north', 'walk north', 'walk south', 'walk west',
                 'go south', 'go west' ]
     intro = """
@@ -767,6 +786,56 @@ What do you do?\n"""
         if action == "go east" or action == "walk east":
             self.current_room = False
             return "left"
+
+        if action == "touch fountains" or action == "touch fountain":
+            print """
+Water feels nice."""
+            sleep(2)
+            return self.enter()
+
+        if action == "touch curtains" or action == "touch curtain":
+            print """
+Silk feels nice."""
+            sleep(2)
+            return self.enter()
+
+        if action == "sit on sofa":
+            print """
+On second thought, your clothes are probably too dirty. Wouldn't want to get
+anyone mad for dirtying their million dollar sofa. You decide to keep standing."""
+            sleep(4)
+            return self.enter()
+
+        if action == "take fountains" or action == "take fountain":
+            print """
+Seems like a bit of a challenging venture."""
+            sleep(2)
+            return self.enter()
+
+        if action == "look outside":
+            print """
+You see nothing but brightness."""
+            sleep(2)
+            return self.enter()
+
+        if action == "touch clock" or action == "touch grandfather clock":
+            print """
+It's made of some pretty nice wood."""
+            sleep(2)
+            return self.enter()
+
+        if (action == "take clock" or action == "take grandfather clock" or
+            action == "take sofa"):
+            print """
+It is bigger than you are."""
+            sleep(2)
+            return self.enter()
+
+        if action == "touch sofa":
+            print """
+Soft, smooth, and snobby."""
+            sleep(2)
+            return self.enter()
 
         if action == "read note":
             print """
@@ -960,7 +1029,7 @@ Maybe it's best to listen to the man with the knives. You leave the cuts alone."
             action == "talk to the man"):
             print """
 You look at the man and indicate that you would like his attention. He puts his
-knife down firmly, perhaps a tad too firlmy, and he walks to the end of his side
+knife down firmly, perhaps a tad too firmly, and he walks to the end of his side
 of the counter and gives you a fake smile."""
             sleep(3)
             print "\nAfter a few awkward moments, he speaks in a gentle voice:"
@@ -2041,8 +2110,5 @@ game = Engine(the_map)
 game.play('start')
 
 # TODO: Get rid of string literals
-# TODO: Define certains actions like wait, sit
-# TODO: Add sense of ease when you get the Silence stone, making you not want
-# to flip comptuters over.
 # TODO: Refactor the stone pick ups to take the message upon pick up and the
 # particular stone picked up to maybe avoid the large amounts of duplicate code
