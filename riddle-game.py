@@ -21,13 +21,6 @@ class Engine(object):
         if next_room == 'end':
             self.map.play(next_room)
 
-class MainMenu(object):
-
-    options = {"New Game": pass, "Save Game": pass, "Load Game": pass}
-
-    def run(self):
-        pass
-
 class Inventory(object):
 
     items = []
@@ -374,6 +367,7 @@ class Left(Room):
     intro = all_strings.left_intro
     extra = all_strings.left_extra
     bearings = all_strings.left_bearing
+
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -409,6 +403,7 @@ class Right(Room):
     intro = all_strings.right_intro
     extra = all_strings.right_extra
     bearings = all_strings.right_bearings
+
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -428,6 +423,7 @@ class Right(Room):
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "alone"
+
         if action == "touch computer" or action == "touch computers":
             all_strings.right_touch_computer()
             return self.enter()
