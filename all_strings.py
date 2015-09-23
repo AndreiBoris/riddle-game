@@ -164,4 +164,135 @@ talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
             "'I don't have a whole lot more that I can say.'", "'Yup.'",
             "'Good. Good.'", "'Lovely weather...'"]
 
+the_door_already_open = """
+Good thing the door is already open. You felt certain that another struggle with
+an opponent this powerful would have resulted in grievious injury."""
+
+def the_door_experienced():
+    print """
+Using your past failure to open the door to your advantage, you waste no time
+and pull on the door after turning the handle."""
+    sleep(4)
+    print "\nSuccess!"
+    sleep(1.5)
+
+the_door_bearings1 = """
+An immaculate door is just to the north of you. Behind you, to the south, is the
+big, dripping room.
+
+What do you do?\n"""
+
+the_door_bearings2 = """
+The immaculate door is open! Beyond it, to the north, is one of those weird
+foggy screens that you can't see behind but can probably walk through without
+getting terribly hurt. Behind you, to the south, is the big, dripping room.
+
+What do you do?\n"""
+
+def the_door_believe():
+    print "\n'Believe,' you whisper to yourself and march toward the door."
+    sleep(3)
+    print "\n'Ouch!'"
+    sleep(2.5)
+    print """
+Yes, this door really is there. Maybe it's worth trying to open it before
+attempting to channel Houdini some more."""
+    sleep(3.5)
+
+def the_door_can_pull():
+    print "In a desperate effort, you pull on the door handle."
+    sleep(2)
+    print "\nNice."
+    sleep(2)
+    print "\nThe door is now open."
+    sleep(1.5)
+
+def the_door_cant_push():
+    print """
+You turn the handle and give the door a good push. Nothing. What? But the
+stones! You had hoped that this would be enough?"""
+    sleep(4)
+    print "\nWhat is missing? What needs be done?"
+    sleep(3)
+    print "\nYour mind spins around in despair..."
+    sleep(4)
+
+the_door_extra1 = """
+There is a bag made out of fabric on the floor next to the door. It is seriously
+messing up how cool this door looks.
+
+The door looks so beautiful that you would love to touch it, not that you'd
+expect to learn anything. There are also some slightly more useful looking
+indentations that are within reach."""
+
+the_door_extra2 = """
+Ah, good! That dirty bag is no longer messing up the look of the sweet, sweet
+door. All is well.
+
+The door looks so beautiful that you would love to touch it, not that you'd
+expect to learn anything. There are also some more useful looking indentations
+that are within reach."""
+
+the_door_intro = """
+This door is incredible. It is probably the best door you have ever seen.
+Picture the nicest door you ever saw. That's what this looks like. It has three
+indentations to either side of it."""
+
+def the_door_struggles():
+    print """
+You turn the handle and give the door a good push. Nothing. You give up,
+defeated."""
+    sleep(4)
+    print """
+'Of course! This door is a pull!' you say. You turn the handle and triumphantly
+pull on the door!"""
+    sleep(5)
+    print "\nNope. Definitely not opening. At least you gave it your all!"
+    sleep(2.5)
+    print "\n(It wasn't enough.)"
+    sleep (1.5)
+
+def the_door_take_indentations():
+    print "\nIt would be very impressive if you could actually do that."
+    sleep(3)
+
+def the_door_touch_indentations1():
+    print "\nThese indentations are cold."
+    sleep(2)
+
+def the_door_have_stone():
+    print """
+It seems like a stone that you have might fit into one of these indentations.
+Maybe you could try placing the stone?"""
+    sleep(3.5)
+
+def the_door_no_stone():
+    print """
+You wonder what these indentations might be for. Perhaps they are meant to hold
+something? But what? You'll have to look around."""
+    sleep(3)
+
+def the_door_not_placed():
+    print """
+You pull out a stone and get ready to place it on the wall. Except in your hand
+there is nothing at all. It is empty. How silly of you."""
+    sleep(4)
+
+def the_door_take_bag():
+    print """
+There is something sticky under the bag so you have to really give it a tug
+before you can lift it up."""
+    sleep(3)
+    print """
+Upon closer inspection, it doesn't look half bad! Rough, rugged, tough, serious.
+The bag reminds you enough of your childhood that you think it's best if you
+hold onto it. Might come in handy."""
+    sleep(6)
+
+def the_door_touch_door():
+    print "\nNo door has the right to feel this good."
+    sleep(3)
+    print "\nReluctantly, you back away."
+    sleep(2)
+
 touch_stone = "\nHard.\n"

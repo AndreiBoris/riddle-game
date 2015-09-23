@@ -251,57 +251,34 @@ class TheDoor(Room):
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
             'Stone of Friendship': False, 'Stone of Compassion': False}
-    intro = """
-This door is incredible. It is probably the best door you have ever seen.
-Picture the nicest door you ever saw. That's what this looks like. It has three
-indentations to either side of it."""
-    extra = """
-There is a bag made out of fabric on the floor next to the door. It is seriously
-messing up how cool this door looks.
-
-The door looks so beautiful that you would love to touch it, not that you'd
-expect to learn anything. There are also some slightly more useful looking
-indentations that are within reach."""
-    bearings = """
-An immaculate door is just to the north of you. Behind you, to the south, is the
-big, dripping room.
-
-What do you do?\n"""
+    intro = all_strings.the_door_intro
+    extra = all_strings.the_door_extra1
+    bearings = all_strings.the_door_bearings1
 
     def enter(self):
         self.correct_intro()
         action = self.action()
 
         if action == 'touch door':
-            print "\nNo door has the right to feel this good."
-            sleep(3)
-            print "\nReluctantly, you back away."
-            sleep(2)
+            all_strings.the_door_touch_door()
             return self.enter()
 
         if action == "take indentation" or action == "take indentations":
-            print "\nIt would be very impressive if you could actually do that."
-            sleep(3)
+            all_strings.the_door_take_indentations()
             return self.enter()
 
         if action == 'touch indentation' or action == 'touch indentations':
+            all_strings.the_door_touch_indentations1()
             TheDoor.touched_indentations = True
-            print "\nThese indentations are cold."
-            sleep(2)
             have_stone = False
             for stone in self.stones.keys():
                 if stone in inv.items:
                     have_stone = True
             if have_stone:
-                print """
-It seems like you could place some of these stones into some of these
-indentations."""
-                sleep(3.5)
+                all_strings.the_door_have_stone()
                 return self.enter()
             else:
-                print """
-You wonder what these might be for. Perhaps they are meant to hold something?
-But what? You'll have to look around."""
+                all_strings.the_door_no_stone()
                 return self.enter()
 
         if action == 'place stones' or action == 'place stone':
@@ -317,10 +294,7 @@ You take The %s and place it the indentation where it fits best.""" % stone
             if placed:
                 return self.enter()
             if not placed:
-                print """
-You pull out a stone and get ready to place it on the wall. Except in your hand
-there is nothing at all. It is empty. How silly of you."""
-                sleep(4)
+                all_strings.the_door_not_placed()
                 return self.enter()
 
         if (action == 'go south' or action == 'go back' or
@@ -329,56 +303,24 @@ there is nothing at all. It is empty. How silly of you."""
             return 'middle'
 
         if action == 'take bag':
-            print """
-There is something sticky under the bag so you have to really give it a tug
-before you can lift it up."""
-            sleep(3)
-            print """
-Upon closer inspection, it doesn't look half bad! Rough, rugged, tough, serious.
-The bag reminds you enough of your childhood that you think it's best if you
-hold onto it. Might come in handy."""
+            all_strings.the_door_take_bag()
             inv.add_to_top('dirty bag')
             self.bag = False
-            self.extra = """
-Ah, good! That dirty bag is no longer messing up the look of the sweet, sweet
-door. All is well.
-
-The door looks so beautiful that you would love to touch it, not that you'd
-expect to learn anything. There are also some more useful looking indentations
-that are within reach."""
-            sleep(6)
+            self.extra = all_strings.the_door_extra2
             return self.enter()
 
         if action == 'open door':
             if self.door_open:
-                print """
-Good thing the door is already open. You felt certain that another struggle with
-an opponent this powerful would have resulted in grievious injury."""
+                print all_strings.the_door_already_open
                 return self.enter()
             if self.stone_count() > 3:
                 if self.attempted_door:
-                    print """
-Using your past failure to open the door to your advantage, you waste no time
-and pull on the door after turning the handle."""
-                    sleep(4)
-                    print "\nSuccess!"
+                    all_strings.the_door_experienced()
                     self.door_open = True
-                    self.bearings = """
-The immaculate door is open! Beyond it, to the north, is one of those weird
-foggy screens that you can't see behind but can probably walk through without
-getting terribly hurt. Behind you, to the south, is the big, dripping room.
-
-What do you do?\n"""
+                    self.bearings = all_strings.the_door_bearings2
                     return self.enter()
                 else:
-                    print """
-You turn the handle and give the door a good push. Nothing. What? But the
-stones! You had hoped that this would be enough?"""
-                    sleep(4)
-                    print "\nWhat is missing? What needs be done?"
-                    sleep(3)
-                    print "\nYour mind spins around in despair..."
-                    sleep(4)
+                    all_strings.the_door_cant_push()
                     action = "sink into deeper despair"
                     door_count = 0
                     while (action != "pull door" and action != "pull"
@@ -386,33 +328,13 @@ stones! You had hoped that this would be enough?"""
                         door_count += 1
                         print "I guess you might as well %s." % action
                         action = raw_input("\nBut would you also like to try to do something else? > ")
-                    print "In a desperate effort, you pull on the door handle."
-                    sleep(2)
-                    print "\nNice."
-                    sleep(2)
-                    print "\nThe door is now open."
+                    all_strings.the_door_can_pull()
                     self.door_open = True
-                    self.bearings = """
-The immaculate door is open! Beyond it, to the north, is one of those weird
-foggy screens that you can't see behind but can probably walk through without
-getting terribly hurt. Behind you, to the south, is the big, dripping room.
-
-What do you do?\n"""
+                    self.bearings = all_strings.the_door_bearings2
                     return self.enter()
             else:
-                print """
-You turn the handle and give the door a good push. Nothing. You give up,
-defeated."""
-                sleep(4)
-                print """
-'Of course! This door is a pull!' you say. You turn the handle and triumphantly
-pull on the door!"""
-                sleep(5)
-                print "\nNope. Definitely not opening. At least you gave it your all!"
-                sleep(2.5)
-                print "\n(It wasn't enough.)"
+                all_strings.the_door_struggles()
                 self.attempted_door = True
-                sleep (1.5)
                 return self.enter()
 
         if action == 'go north' or action == 'walk north':
@@ -420,14 +342,7 @@ pull on the door!"""
                 self.current_room = False
                 return 'end'
             else:
-                print "\n'Believe,' you whisper to yourself and march toward the door."
-                sleep(3)
-                print "\n'Ouch!'"
-                sleep(2.5)
-                print """
-Yes, this door really is there. Maybe it's worth trying to open it before
-attempting to channel Houdini some more."""
-                sleep(3.5)
+                all_strings.the_door_believe()
                 return self.enter()
 
     def stone_count(self):
