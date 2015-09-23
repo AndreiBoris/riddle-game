@@ -61,11 +61,12 @@ class SavedGame(object):
                             'extra': all_strings.starting_room_extra1,
                             'bearings': all_strings.starting_room_bearings1},
                     "middle":
-                            {'intro': all_strings.middle_room_intro,
+                            {'visited': False,
+                            'intro': all_strings.middle_room_intro,
                             'extra': all_strings.middle_room_extra,
                             'bearings': all_strings.middle_room_bearings},
                     "door":
-                            {'door_open': False,
+                            {'door_open': False, 'visited': False,
                             'attempted_door': False,
                             'touched_indentations': False, 'bag here': True,
                             'intro': all_strings.the_door_intro,
@@ -77,28 +78,29 @@ class SavedGame(object):
                             'Stone of Friendship': False,
                             'Stone of Compassion': False},
                     "left":
-                            {'intro': all_strings.left_intro,
+                            {'visited': False,
+                            'intro': all_strings.left_intro,
                             'extra': all_strings.left_extra,
                             'bearings': all_strings.left_bearing},
                     "right":
-                            {'racetrack open': True,
+                            {'racetrack open': True, 'visited': False,
                             'intro': all_strings.right_intro,
                             'extra': all_strings.right_extra,
                             'bearings': all_strings.right_bearings},
                     "battle":
-                            {'solved': False,
+                            {'solved': False, 'visited': False,
                             'stone_here': True, 'talked': False,
                             'intro': all_strings.battlefield_intro,
                             'extra': all_strings.battlefield_extra_start,
                             'bearings': all_strings.battlefield_bearings1},
                     "dining":
-                            {'solved': False,
+                            {'solved': False, 'visited': False,
                             'stone_here': True, 'read': False,
                             'intro': all_strings.dining_room_intro,
                             'extra': all_strings.dining_room_extra_start,
                             'bearings': all_strings.dining_room_bearings_start},
                     "butcher":
-                            {'solved': False,
+                            {'solved': False, 'visited': False,
                             'stone here': True, 'touched meat': False,
                             'took pig': False, 'took meat': False,
                             'talked': False,
@@ -106,14 +108,14 @@ class SavedGame(object):
                             'extra': all_strings.butcher_extra_start,
                             'bearings': all_strings.butcher_bearings_start},
                     "race":
-                            {'solved': False,
+                            {'solved': False, 'visited': False,
                             'stone here':True, 'rock here': True,
                             'thrown': False,
                             'intro': all_strings.racetrack_intro,
                             'extra': all_strings.racetrack_extra_start,
                             'bearings': all_strings.racetrack_bearings_start},
                     "alone":
-                            {'solved': False,
+                            {'solved': False, 'visited': False,
                             'stone here': True, 'final_response': False,
                             'good_text_up': False, 'sad_text_up': False,
                             'projector_power': False, "projector_on": False,
@@ -123,7 +125,7 @@ class SavedGame(object):
                             'extra': all_strings.alone_extra_start,
                             'bearings': all_strings.alone_bearings_start},
                     "world":
-                            {'solved': False,
+                            {'solved': False, 'visited': False,
                             'stone here': True, 'talked': False,
                             'intro': all_strings.world_intro_start,
                             'extra': all_strings.world_extra_start,
@@ -136,7 +138,7 @@ class FakeGame(object):
     failed_puzzles = 1
     starting = "right"
     room_by_room = {"start":
-                            {'start': False, 'pen': False, 'visited': True,
+                            {'pen': False, 'visited': True,
                             'intro': all_strings.starting_room_intro,
                             'extra': all_strings.starting_room_extra1,
                             'bearings': all_strings.starting_room_bearings1},
