@@ -1085,6 +1085,13 @@ connected to yourself. Looking at the stone, you see the word 'PEACE' written
 on it."""
     sleep(5)
 
+def stone_of_practice_pickup():
+    print"""
+You pick up the stone. You feel more sure of yourself. There is much that you
+do not know, but there is much that can be seen, experienced and learned. On the
+stone you see the word 'PRACTICE'."""
+    sleep(5)
+
 def stone_of_respect_pickup():
     print"""
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
@@ -1237,3 +1244,167 @@ def the_door_touch_door():
     sleep(2)
 
 touch_stone = "\nHard.\n"
+
+world_bearings_start = """
+To the north is the strangely incongruous passage that leads back to the office
+from which you came.
+
+What do you do?\n"""
+
+def world_chill_final():
+    print "\nYou feel you could do more good if you did not."
+    sleep(2)
+
+def world_chill_start():
+    print """
+It is pretty comfortable."""
+    sleep(3)
+    print "\nYou wonder what else you can see if you go walk around a bit."
+    sleep(2)
+    print "\nYou get up."
+    sleep(2)
+
+def world_enjoy_final():
+    print "\nThe world is rich."
+    sleep(2)
+
+def world_enjoy_start():
+    print """
+Simply breathtaking..."""
+    sleep(6)
+    print "\nYou wonder if some of the computers in the office have cable internet."
+    sleep(2)
+    print "\nYou're not really paying much attention any more."
+    sleep(2)
+
+world_extra_lose = """
+Where the elephant was there is now nothing. To your left is a sizable rock.
+There is an amazing view to enjoy and many mountains to look at. It is very hot."""
+
+world_extra_start = """
+There is an elephant sitting cross-legged in front of you. To your left is a
+sizable rock. There is an amazing view to enjoy and many mountains to look at.
+It is very hot."""
+
+world_extra_win = """
+In front of you is a stone lying on the ground. Perhaps the stone is worth
+picking up. To your left is a sizable rock. There is an amazing view to enjoy
+and many mountains to look at. It is very hot."""
+
+def world_fan_final():
+    print "\nAs hot as it is, you know that you will survive."
+    sleep(3)
+
+def world_fan_start():
+    print """
+The effect is not worth the effort"""
+    sleep(2)
+
+world_failed = """
+You blink and the elephant is gone. There is no trace of it."""
+
+def world_gaze_final():
+    print "\nYou see the mountains."
+    sleep(2)
+
+def world_gaze_start():
+    print """
+You feel tiny."""
+    sleep(3)
+    print "\nYou wonder how easy it would be to climb up one of those mountaints."
+    sleep(2)
+    print "\nYou'll do it someday."
+    sleep(2)
+
+world_intro_final = """
+Incredible. This passage somehow led to the top of a mountain. The view in
+better than any you have ever experienced. You feel miniscule. The mountains
+speak of something out of The Cossacks by Tolstoy. The palette has oranges, deep
+greens, light blues and everything in between mixed in."""
+
+world_intro_start = """
+Incredible. This passage somehow led to the top of a mountain. The view is
+better than any you have ever experienced. You feel miniscule. The mountains
+speak of something out of The Cossacks by Tolstoy. The palette has oranges, deep
+greens, light blues and everything in between mixed in. Perhaps more striking
+is the tiny (relatively speaking) elephant sitting cross-legged in loose
+clothing. The elephant is facing you, but its eyes do not open as you enter."""
+
+def world_meditate_final():
+    print "\nThere is much to do."
+    sleep(2)
+
+def world_meditate_start():
+    print """
+You sit on the ground and cross your legs."""
+    sleep(4.5)
+    print "\nYour right leg starts to cramp up."
+    sleep(3)
+    print "\nYou get up."
+    sleep(2)
+
+world_overheating1 = "\nYou feel sweat building up on your brow."
+
+world_overheating2 = "\nYou're starting to sweat through your clothing"
+
+world_overheating3 = "\nYou starting to feel like you're swimming in your clothes."
+
+world_overheating4 = "\nThe heat is becoming oppressive."
+
+world_overheating5 = "\nYou feel close to passing out."
+
+world_overheating6 = "\nYou feel nauseous."
+
+def world_riddle():
+    print "\n'Hello,' you say."
+    sleep(3)
+    print "\nThe elephant opens its eyes."
+    sleep(2)
+    print """
+'I am heavy but not backwards,' it intones."""
+    sleep(3)
+    print """
+'What am I?'"""
+    sleep(2)
+    print "\nYou feel compelled to answer."
+    sleep(1.5)
+
+def world_rock_final():
+    print "\nIt feels as it should."
+    sleep(2)
+
+def world_rock_start():
+    print "\nJust another rock."
+    sleep(2)
+
+def world_rock_buddy_final():
+    print "\nWords would do no good."
+    sleep(3)
+
+def world_rock_buddy_start():
+    print """
+'How are you doing, rock?' you say."""
+    sleep(3)
+    print "\nOk..."
+    sleep(1.5)
+
+def world_sit_final():
+    print "\nNot right now."
+    sleep(2)
+
+def world_sit_start():
+    print """
+The ground is very hot from the sun."""
+    sleep(3)
+    print "\nThis sucks."
+    sleep(2)
+    print "\nYou get up."
+    sleep(2)
+
+world_solved = """
+You blink and the elephant is gone. It seems like there is hardly a trace of it.
+There is some small object where it elephant appeared to be."""
+
+def world_touch():
+    print "\nSeems like a bad idea."
+    sleep(2)
