@@ -55,7 +55,7 @@ class SavedGame(object):
     items = []
     failed_puzzles = 0
     starting = "start"
-    room_by_room = {"starting":
+    rooms = {       "start":
                             {'start': False, 'pen': True,
                             'intro': all_strings.starting_room_intro,
                             'extra': all_strings.starting_room_extra1,
@@ -137,7 +137,7 @@ class FakeGame(object):
     items = ['dirty bag', 'ballpoint pen']
     failed_puzzles = 1
     starting = "right"
-    room_by_room = {"start":
+    rooms = {"start":
                             {'pen': False, 'visited': True,
                             'intro': all_strings.starting_room_intro,
                             'extra': all_strings.starting_room_extra1,
@@ -149,13 +149,13 @@ class FakeGame(object):
                             'bearings': all_strings.middle_room_bearings},
                     "door":
                             {'visited': True,
-                            'door_open': False, 'attempted_door': False,
-                            'touched_indentations': False, 'bag here': False,
+                            'door_open': True, 'attempted_door': False,
+                            'touched_indentations': False, 'bag_here': False,
                             'intro': all_strings.the_door_intro,
                             'extra': all_strings.the_door_extra1,
                             'bearings': all_strings.the_door_bearings1,
                             'Stone of Peace': False, 'Stone of Silence': False,
-                            'Stone of Respect': False,
+                            'Stone of Respect': True,
                             'Stone of Practice': False,
                             'Stone of Friendship': False,
                             'Stone of Compassion': False},

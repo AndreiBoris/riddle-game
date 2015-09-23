@@ -153,6 +153,7 @@ class Room(object):
 class StartingRoom(Room):
 
     start_of_game = True
+    pen = True
     good_moves = ['go north', 'walk north', 'take pen', 'touch pen',
                     'take mattress', 'touch mattress', 'lie down', 'sleep',
                     'take junk', 'touch junk']
@@ -164,6 +165,12 @@ class StartingRoom(Room):
     bearings = all_strings.starting_room_bearings1
 
     def enter(self):
+        try:
+            if not self.pen:
+                for option in ["take pen", "touch pen"]:
+                    self.good_moves.remove(option)
+        except ValueError:
+            pass
         if self.start_of_game == True:
             print self.wake_up
             self.start_of_game = False
@@ -201,7 +208,7 @@ class StartingRoom(Room):
 
         if action == "take pen":
             all_strings.starting_room_take_pen()
-            self.good_moves.remove("take pen")
+            self.pen = False
             inv.items.append("ballpoint pen")
             self.extra = all_strings.starting_room_extra2
             return self.enter()
@@ -256,6 +263,7 @@ class TheDoor(Room):
     door_open = False
     attempted_door = False
     touched_indentations = False
+    bag_here = True
     good_moves = ['touch door', 'place stones', 'back away', 'go back',
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations',
@@ -318,11 +326,15 @@ best.""" % stone
             return 'middle'
 
         if action == 'take bag':
-            all_strings.the_door_take_bag()
-            inv.add_to_top('dirty bag')
-            self.bag = False
-            self.extra = all_strings.the_door_extra2
-            return self.enter()
+            if self.bag_here:
+                all_strings.the_door_take_bag()
+                inv.add_to_top('dirty bag')
+                self.bag = False
+                self.extra = all_strings.the_door_extra2
+                return self.enter()
+            else:
+                print all_strings.the_door_bag
+                return self.enter()
 
         if action == 'open door':
             if self.door_open:
@@ -1221,10 +1233,17 @@ class Loader(object):
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
         for room in self.rooms.keys():
-            self.rooms[room].visited = self.info.room_by_room[room]['visited']
-            self.rooms[room].intro = self.info.room_by_room[room]['intro']
-            self.rooms[room].extra = self.info.room_by_room[room]['extra']
-            self.rooms[room].bearings = self.info.room_by_room[room]['bearings']
+            self.rooms[room].visited = self.info.rooms[room]['visited']
+            self.rooms[room].intro = self.info.rooms[room]['intro']
+            self.rooms[room].extra = self.info.rooms[room]['extra']
+            self.rooms[room].bearings = self.info.rooms[room]['bearings']
+        start_room.pen = self.info.rooms['start']['pen']
+        door_room.door_open = self.info.rooms['door']['door_open']
+        door_room.attempted_door = self.info.rooms['door']['attempted_door']
+        door_room.touched_indentations = self.info.rooms['door']['touched_indentations']
+        door_room.bag_here = self.info.rooms['door']['bag_here']
+        for stone in door_room.stones.keys():
+            door_room.stones[stone] = self.info.rooms['door'][stone]
         return self.info.starting
 
 if __name__ == "__main__":

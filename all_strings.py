@@ -1180,6 +1180,8 @@ the_door_already_open = """
 Good thing the door is already open. You felt certain that another struggle with
 an opponent this powerful would have resulted in grievious injury."""
 
+the_door_bag = "\nYou're carrying it."
+
 def the_door_experienced():
     print """
 Using your past failure to open the door to your advantage, you waste no time
