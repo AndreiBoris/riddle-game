@@ -1,6 +1,5 @@
 from sys import exit
-#from time import sleep
-from fakesleep import sleep
+from time import sleep
 from random import randint
 
 line_break = "--------------------------------"
@@ -24,8 +23,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = ['Stone of Peace', 'Stone of Silence',
-            'Stone of Respect', 'Stone of Practice',]
+    items = []
     failed_puzzles = 0
 
     def show(self):
@@ -1946,11 +1944,7 @@ inv = Inventory()
 game = Engine(the_map)
 game.play('start')
 
-# TODO: Make sure the inventory is clear for the start of the game.
-# TODO: Add the right side puzzle rooms
-# TODO: Add the end room
 # TODO: Get rid of string literals
-# TODO: Make sure "real" sleep is turned on
 # TODO: Define certains actions like wait, sit
 # TODO: Add sense of ease when you get the Silence stone, making you not want
 # to flip comptuters over.
