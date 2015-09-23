@@ -62,50 +62,32 @@ class Room(object):
     solved = False
     stone_here = False
     visited = False
-    vague_moves = ['walk', 'go', 'take']
     bad_moves = []
     good_moves = []
     extra = ""
-    helper ="""
-Here are some actions that you might be able to take:
-
-- walk (somewhere)
-- inventory (or inv)
-- look around (or look)
-- intro
-- touch (something)
-- take (something)
-- place (something)
-- throw (something)
-
-Perhaps looking around can help you find some other possible actions to take?
-"""
-    bearings = """
-There appears to be no way to get your bearings in this generic room.
-
-What do you do?
-"""
+    helper = all_strings.helper
+    bearings = all_strings.room_bearings
 
     def action(self):
         # basic action options for any room
         action = raw_input("> ").lower()
         while action not in self.good_moves:
             if action == 'touch stone' and 'take stone' in self.good_moves:
-                print "\nHard.\n"
+                print all_strings.touch_stone
             elif action in self.bad_moves:
-                print "\nYou can't go there from here.\n"
+                print all_strings.bad_moves
             elif action == "take":
-                print "\nTake! Take! Take! Do you even know what you want?\n"
+                print all_strings.action_take
             elif action == "talk":
                 print "\n%s\n" % choice(all_strings.talking)
             elif action == "go":
-                print "\nWhere to go?\n"
+                print all_strings.action_go
             elif action == "walk":
-                print "\nYou pace around the room and end up where you started.\n"
+                print all_strings.action_walk
             elif action == "touch":
-                print "\nFeel.\n"
+                print all_strings.action_touch
             elif action == "sleep":
-                print "\nYou don't feel tired enough.\n"
+                print all_strings.action_sleep
             elif action == 'help':
                 print all_strings.line_break
                 print "\n" * 6
@@ -124,15 +106,15 @@ What do you do?
                 print all_strings.line_break
                 print "\n" * 4
                 inv.show()
-                print "\nWhat do you do? \n"
+                print all_strings.action_prompt
             elif action == "sit" or action == "sit down":
-                print "\nYou'd rather stand.\n"
+                print all_strings.action_sit
             elif action == "stand":
-                print "\nBeen there, done that.\n"
+                print all_strings.action_stand
             elif action == "wait":
-                print "\nWhy wait?\n"
+                print all_strings.action_wait
             elif action == "lie down":
-                print "\nHere? I think not!\n"
+                print all_strings.action_lie
             else:
                 print "\nI'm sorry, but you can't %r.\n" % action
             action = raw_input("> ").lower()
@@ -164,25 +146,10 @@ class StartingRoom(Room):
                     'take junk', 'touch junk']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
-    wake_up = """You wake up.
-
-Your mind is foggy but slowly you get your bearings.
-
-You are in a blue-tinted room surrounded by what seems to be drywall. You are
-lying on a mattress sprawled in the middle of the room. You're dressed normally.
-Nothing seems to have gone wrong but you don't have a clear idea of where you
-are or why."""
-    extra = """
-This looks like the sloppy apartment of a bachelor. How lovely.
-
-There appears to be a pen on the floor near to the mattress."""
-    intro = """
-This is the room you woke up in. Apart from the spartan set up and the random
-mattress placement, it's not so bad."""
-    bearings = """
-There is some junk lying around. There is a hallway to the north.
-
-What do you do?\n"""
+    wake_up = all_strings.starting_room_wake_up
+    extra = all_strings.starting_room_extra1
+    intro = all_strings.starting_room_intro
+    bearings = all_strings.starting_room_bearings1
 
     def enter(self):
         if self.start_of_game == True:
@@ -197,57 +164,34 @@ What do you do?\n"""
             return "middle"
 
         if action == "lie down" or action == "sleep":
-            print """
-You're not sure what made you pass out in this room in the first place, but once
-was probably enough."""
-            sleep(3)
+            all_strings.starting_room_lie()
             return self.enter()
 
         if action == "touch pen":
-            print """
-Your clumsy fingers cause the pen to slide away from you."""
-            sleep(2)
-            print "\nUgh."
-            sleep(2)
+            all_strings.starting_room_touch_pen()
             return self.enter()
 
         if action == "touch mattress":
-            print """
-Springs. Notably mediocre."""
-            sleep(3)
+            all_strings.starting_room_touch_mattress()
             return self.enter()
 
         if action == "take mattress":
-            print """
-As you get ready to pick the whole thing up, you're struck that maybe the
-mattress is perfectly fine being just where it is."""
-            sleep(3)
+            all_strings.starting_room_take_mattress()
             return self.enter()
 
         if action == "take junk":
-            print """
-Probably best to not hoard a bunch of junk. Maybe there is something useful
-around here?"""
-            sleep(3)
+            all_strings.starting_room_take_junk()
             return self.enter()
 
         if action == "touch junk":
-            print """
-There is so much junk to choose from, you don't know where to begin. You do
-nothing."""
-            sleep(3)
+            all_strings.starting_room_touch_junk()
             return self.enter()
 
         if action == "take pen":
-            print """
-You pick up the pen. It is a blue ballpoint. Can never have enough pens."""
+            all_strings.starting_room_take_pen()
             self.good_moves.remove("take pen")
             inv.items.append("ballpoint pen")
-            sleep(2)
-            self.extra = """
-This looks like the sloppy apartment of a bachelor. How lovely.
-
-The rest of the junk on the floor is junk."""
+            self.extra = all_strings.starting_room_extra2
             return self.enter()
 
 class MiddleRoom(Room):
