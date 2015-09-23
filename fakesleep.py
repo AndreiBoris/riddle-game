@@ -1,2 +1,0 @@
-def sleep(time):
-    pass
