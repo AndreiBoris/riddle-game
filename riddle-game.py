@@ -120,8 +120,8 @@ class Room(object):
             else:
                 print "\nI'm sorry, but you can't %r.\n" % action
             action = raw_input("> ").lower()
-        print "\nYou attempt to %s." % action
-        sleep(1)
+        print "\nYou attempt to %s.\n" % action
+        sleep(0.75)
         return action
 
     def stone_available(self):
@@ -614,23 +614,9 @@ class Butcher(Room):
                     'take cuts', 'touch cuts', 'talk to the man']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
-    intro = """
-A fairly standard-looking butcher shop. There is metal counter over a glass
-display where certain cuts of meat are shown. A smooth, trim man with glasses
-stands behind the counter. He is manually sharpening a knife with a stone. The
-knife is not, in fact, a butcher's cleaver. Somehow this fact doesn't give you
-any deep sense of comfort. Behind the man you see a skinned pig hanging from a
-hook. How quaint."""
-    extra = """
-The pig swings invitingly in the back room. There are some cuts of meat lying
-about. The butcher glances at you periodically as he is sharpening the knife.
-Perhaps you could talk to him?"""
-    bearings = """
-The man doesn't appear to be terribly busy and there are no other patrons. To
-the south is the dark tunnel, which in some ways is more welcoming than this
-cold butcher shop.
-
-What do you do?\n"""
+    intro = all_strings.butcher_intro
+    extra = all_strings.butcher_extra_start
+    bearings = all_strings.butcher_bearings_start
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -639,65 +625,37 @@ What do you do?\n"""
             return "left"
 
         if action == "touch pig":
-            print """
-Yes, the pig really does look like it would enjoy the smooth touch of a caring
-human. Unfortunately, it's behind the counter and you don't feel the man
-sharpening the knife would appreciate you going back there."""
-            sleep(4)
+            all_strings.butcher_touch_pig()
             return self.enter()
 
         if (action == "touch cut" or action == "touch meat" or
             action == "touch cuts"):
-            print "\nSquishy."
-            sleep(3)
-            print """
-The butcher doesn't seem to like you touching the meat. Probably best to not do
-that anymore."""
+            all_strings.butcher_touch_meat()
             self.good_moves.remove("touch cut")
             self.good_moves.remove("touch cuts")
             self.good_moves.remove("touch meat")
             return self.enter()
 
         if action == "take pig":
-            print """
-The urge is to take this pig and rescue it from this cold, cold place."""
-            sleep(3)
-            print """
-But after a few seconds of reflection the notion seems a bit silly. You wouldn't
-even be able to carry the thing without chopping it up first, and that just
-seems counter-intuitive to your whole plan."""
-            sleep(4)
-            print "\nYou give it up."
+            all_strings.butcher_take_pig()
             self.good_moves.remove("take pig")
-            sleep(2)
             return self.enter()
 
         if (action == "take meat" or action == "take cut" or
             action == "take cuts"):
-            print """
-The butcher sees you reaching for one of the cuts of meat. He clears his throat
-to catch you attention and then shakes his head prohibitively.
-
-Maybe it's best to listen to the man with the knives. You leave the cuts alone."""
+            all_strings.butcher_take_meat()
             self.good_moves.remove("take cut")
             self.good_moves.remove("take meat")
             self.good_moves.remove("take cuts")
-            sleep(4.5)
             return self.enter()
 
         if (action == "talk" or action == "talk to man" or
             action == "talk to butcher" or action == "talk to him" or
             action == "talk to the man"):
-            print """
-You look at the man and indicate that you would like his attention. He puts his
-knife down firmly, perhaps a tad too firmly, and he walks to the end of his side
-of the counter and gives you a fake smile."""
-            sleep(3)
-            print "\nAfter a few awkward moments, he speaks in a gentle voice:"
-            sleep(2)
-            print """
-'What loses its head in the morning and gets it back at night?'"""
-            sleep(3)
+            for option in ["talk", "talk to him", "talk to butcher",
+                            "talk to man", "talk to the man"]:
+                self.good_moves.remove(option)
+            all_strings.butcher_riddle()
             solution = ""
             while self.guesses_left > 0 and not self.solved:
                 if self.guesses_left == 5:
@@ -713,46 +671,18 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 if solution == "pillow" or solution == "a pillow":
                     self.solved = True
                 if self.guesses_left == 1:
-                    print """
-The man laughs a kind-sounding laugh,
-
-'Maybe you 'ought to have a rest,' he says."""
-            self.bearings = """
-The man regards you as an entity of no greater interest than any of the
-displayed pieces of meat below the counter. To the south is the dark tunnel,
-maybe it's best to head back and get away from this vaguely uncomfortable place.
-
-What do you do?\n"""
+                    all_strings.butcher_hint()
+            sleep(2)
+            self.bearings = all_strings.butcher_bearings_after
             if self.solved:
-                self.extra = """
-After watching you look around nervously, the butcher catches your attention and
-indicates a tray at the end of the counter. The tray is labeled 'gratis'. There
-are some lumpy looking cuts in there, but also what appears to be a stone. Maybe
-the stone could be worth taking?"""
+                self.extra = all_strings.butcher_extra_win
                 self.stone_available()
-                print """
-The man gives a cool laugh. Maybe he likes you after all! He looks across the
-room to the end of the counter and then back at you, giving a nod.
-
-Suddenly he seems to lose most of his interest in you and goes back to
-sharpening the knife."""
+                print all_strings.butcher_solved
             else:
-                self.extra = """
-The man has gone back to sharpening his knife. He doesn't seem to really be
-all that interested in you. Maybe its best to just get out of here and be by
-yourself in the dark tunnel. Alone. Like always."""
-                print """
-The man gives a cool laugh. Maybe he likes you after all! He gives you a nod.
-
-Suddenly he seems to lose most of his interest in you and goes back to
-sharpening the knife."""
+                self.extra = all_strings.butcher_extra_lose
+                print all_strings.butcher_failed
                 inv.failed_puzzles += 1
                 inv.end_if_failed()
-            self.good_moves.remove("talk")
-            self.good_moves.remove("talk to him")
-            self.good_moves.remove("talk to butcher")
-            self.good_moves.remove("talk to man")
-            self.good_moves.remove("talk to the man")
             sleep(4.5)
             return self.enter()
 
@@ -766,21 +696,11 @@ sharpening the knife."""
                 self.stone_here = False
                 inv.items.append("Stone of Peace")
                 self.good_moves.remove("take stone")
-                print"""
-You pick up the stone. The man doesn't seem to notice at all. Somehow that's
-okay. You wonder why he seemed to exact such an influence on you. You feel more
-connected to yourself. Looking at the stone, you see the word 'PEACE' written
-on it."""
-                sleep(5)
+                all_strings.stone_of_peace_pickup()
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
-                self.extra = """
-The man continues to sharpen the knife. He is part of the room. You feel whole."""
-                self.bearings = """
-There doesn't appear to be much of particular interest around here. To the south
-is the dim tunnel. Go or stay, you feel quite comfortable.
-
-What do you do?\n"""
+                self.extra = all_strings.butcher_extra_final
+                self.bearings = all_strings.butcher_bearings_final
                 return self.enter()
 
 class Racetrack(Room):
