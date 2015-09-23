@@ -1,6 +1,6 @@
 from sys import exit
-from time import sleep
-#from fakesleep import sleep
+#from time import sleep
+from fakesleep import sleep
 from random import randint
 
 line_break = "--------------------------------"
@@ -358,7 +358,8 @@ stones! You had hoped that this would be enough?"""
                     sleep(4)
                     action = "sink into deeper despair"
                     door_count = 0
-                    while action != "pull door" and door_count < 6:
+                    while (action != "pull door" and action != "pull"
+                            and door_count < 6):
                         door_count += 1
                         print "I guess you might as well %s." % action
                         action = raw_input("\nBut would you also like to try to do something else? > ")
@@ -965,7 +966,7 @@ class Racetrack(Room):
     good_moves = ['go west', 'walk west', 'talk', 'take rock', 'talk to robot',
                     'talk to human', 'talk to the robot', 'talk to the person',
                     'talk to the human', 'talk to human', 'talk to person',
-                    'touch rock']
+                    'touch rock', 'take small rock']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk south', 'go east',
                 'go south']
     intro = """
@@ -1005,10 +1006,11 @@ confirm without a doubt that it is a rock."""
             sleep(2)
             return self.enter()
 
-        if action == "take rock":
+        if action == "take rock" or action == "take small rock":
             print """
 You pick up the rock. Hefty."""
             self.good_moves.remove("take rock")
+            self.good_moves.remove("take small rock")
             inv.add('rock')
             self.good_moves.remove("touch rock")
             self.good_moves.append("throw rock")
@@ -1151,8 +1153,8 @@ What do you do?\n"""
 You see now that the hugbot had just been looking for the person who was most in
 need of a hug. Apparentely it calculated that this person was you.
 
-It seems that the robot had dropped some kind of stone. Maybe you should take
-it?"""
+It seems that the robot had dropped some kind of stone. The idea is kind of
+gross but the stone looks clean and harmless. Maybe you should take it?"""
                 self.stone_available()
                 print """
 The hugbot backs away suddenly.
@@ -1591,7 +1593,7 @@ You feel it would probably be best to leave. There might be others, elsewhere,
 who could use your help."""
                 self.bearings = """
 To the south is the office. You wonder how many others are logged in, accessible
-and in need of help you could provide being there and listening.
+and in need of help you could provide by being there and listening.
 
 What do you do?\n"""
                 return self.enter()
