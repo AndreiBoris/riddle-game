@@ -8,10 +8,9 @@ import main
 
 class Engine(object):
 
-    def __init__(self, a_map, the_menu, new_game, loader):
+    def __init__(self, a_map, the_menu, loader):
         self.map = a_map
         self.menu = the_menu
-        self.game = new_game
         self.loader = loader
 
     def play(self):
@@ -1196,20 +1195,21 @@ class Map(object):
 
 class Loader(object):
 
-    def __init__(self, save):
+    def __init__(self, save, inventory):
         self.info = save
+        self.inv = inventory
 
     def load_it(self):
+        self.inv.items = self.info.items
         return self.info.starting
 
 if __name__ == "__main__":
     the_map = Map()
     the_menu = main.Menu()
-    new_game = main.SavedGame()
     load_game = main.FakeGame()
-    loader = Loader(load_game)
     inv = Inventory()
-    game = Engine(the_map, the_menu, new_game, loader)
+    loader = Loader(load_game, inv)
+    game = Engine(the_map, the_menu, loader)
     game.play()
 
 # TODO: Get rid of string literals
