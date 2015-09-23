@@ -4,6 +4,7 @@ from random import randint
 from random import choice
 import all_strings
 
+
 class Engine(object):
 
     def __init__(self, a_map):
@@ -54,6 +55,7 @@ class Inventory(object):
             print all_strings.lose_game
             sleep(1.5)
             exit(1)
+
 
 class Room(object):
 
@@ -138,6 +140,7 @@ class Room(object):
             print "\nWhat do you do?\n"
         self.current_room = True
 
+
 class StartingRoom(Room):
 
     start_of_game = True
@@ -194,6 +197,7 @@ class StartingRoom(Room):
             self.extra = all_strings.starting_room_extra2
             return self.enter()
 
+
 class MiddleRoom(Room):
 
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
@@ -236,6 +240,7 @@ class MiddleRoom(Room):
         if action == "take rubber":
             all_strings.middle_room_take_rubber()
             return self.enter()
+
 
 class TheDoor(Room):
 
@@ -352,6 +357,7 @@ You take The %s and place it the indentation where it fits best.""" % stone
                 count += 1
         return count
 
+
 class Left(Room):
 
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
@@ -386,7 +392,6 @@ class Left(Room):
             return self.enter()
 
 
-
 class Right(Room):
 
     racetrack_open = True
@@ -394,23 +399,9 @@ class Right(Room):
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'touch computer', 'touch computers']
     bad_moves = []
-    intro = """
-Wow. A totally intact office. There are even a bunch of computers, some of
-which are just idling. As you walk by desktops and laptops you feel a growing
-lack of fulfillment. The desire to throw the computers across the room and dance
-in the wreakage grows stronger and stronger. But no. You mustn't. You love
-technology. You need it. You feel certain of this. You begin to let go.
-Surrender. Everything will be okay."""
-    extra = """
-There are a bunch of computers that you wouldn't mind touching. The sounds of
-computer fans are oddly calming. """
-    bearings = """
-To the north appears to be another bachelor's apartment. You wonder what the
-rent is around this place. To the east seems to be the entryway to a racetrack.
-The south is an opening leading to the top of a mountain. Whoa. To the west is
-that large sack of moist newspapers that might be called a great hall.
-
-What do you do?\n"""
+    intro = all_strings.right_intro
+    extra = all_strings.right_extra
+    bearings = all_strings.right_bearings
     def enter(self):
         self.correct_intro()
         action = self.action()
@@ -422,10 +413,7 @@ What do you do?\n"""
             return "racetrack"
         if (action == "go east" or action == "walk east" and
             not Right.racetrack_open):
-            print """
-You start walking toward the racetrack when you realize what awaits you there
-after that episode with the rock and the human ... Perhaps it is best to just
-stay right where you are."""
+            all_strings.right_racetrack_closed()
             return self.enter()
         if action == "go west" or action == "walk west":
             self.current_room = False
@@ -434,20 +422,9 @@ stay right where you are."""
             self.current_room = False
             return "alone"
         if action == "touch computer" or action == "touch computers":
-            print """
-You walk up to one of the computers with the intention to check your e-mail or
-watch some YouTube videos or something."""
-            sleep(4)
-            print """
-It seems like the computer is sleeping, so you give the mouse a shake."""
-            sleep(3)
-            print "\nIt works!"
-            sleep(3)
-            print "\nHmmm, it seems like all the networks works are passworded."
-            sleep(4)
-            print "\nAfter trying a few easy ones, you decide it is hopeless."
-            sleep(4)
+            all_strings.right_touch_computer()
             return self.enter()
+
 
 class Battlefield(Room):
 

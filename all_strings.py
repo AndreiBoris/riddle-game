@@ -115,6 +115,48 @@ def middle_room_touch_rubber():
     print "\nUh... no."
     sleep(1.5)
 
+right_bearings = """
+To the north appears to be another bachelor's apartment. You wonder what the
+rent is around this place. To the east seems to be the entryway to a racetrack.
+The south is an opening leading to the top of a mountain. Whoa. To the west is
+that large sack of moist newspapers that might be called a great hall.
+
+What do you do?\n"""
+
+right_extra = """
+There are a bunch of computers that you wouldn't mind touching. The sounds of
+computer fans are oddly calming. """
+
+right_intro = """
+Wow. A totally intact office. There are even a bunch of computers, some of
+which are just idling. As you walk by desktops and laptops you feel a growing
+lack of fulfillment. The desire to throw the computers across the room and dance
+in the wreakage grows stronger and stronger. But no. You mustn't. You love
+technology. You need it. You feel certain of this. You begin to let go.
+Surrender. Everything will be okay."""
+
+def right_racetrack_closed():
+    print """
+You start walking toward the racetrack when you realize what awaits you there
+after that episode with the rock and the human ... Perhaps it is best to just
+stay right where you are."""
+    sleep(3)
+
+def right_touch_computer():
+    print """
+You walk up to one of the computers with the intention to check your e-mail or
+watch some YouTube videos or something."""
+    sleep(4)
+    print """
+It seems like the computer is sleeping, so you give the mouse a shake."""
+    sleep(3)
+    print "\nIt works!"
+    sleep(3)
+    print "\nHmmm, it seems like all the networks works are passworded."
+    sleep(4)
+    print "\nAfter trying a few easy ones, you decide it is hopeless."
+    sleep(4)
+
 room_bearings = """
 There appears to be no way to get your bearings in this generic room.
 
