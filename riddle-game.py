@@ -1,8 +1,15 @@
 from sys import exit
 from time import sleep
 from random import randint
+from random import choice
 
 line_break = "--------------------------------"
+talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
+            "'Can I stop talking now?'",
+            "'Am I supposed to say anything in particular?'", "'La la la.'",
+            "'The power of human expression is being tapped right now.'",
+            "'I don't have a whole lot more that I can say.'", "'Yup.'",
+            "'Good. Good.'", "'Lovely weather...'"]
 
 class Engine(object):
 
@@ -63,9 +70,6 @@ class Room(object):
     solved = False
     stone_here = False
     visited = False
-    valid = ['help', 'walk', 'walk north', 'walk south', 'walk east', 'walk west',
-            'go', 'go north', 'go south', 'go east', 'go west', 'inventory',
-            'inv', 'intro', 'look around', 'look', 'take']
     vague_moves = ['walk', 'go', 'take']
     bad_moves = []
     good_moves = []
@@ -81,6 +85,8 @@ Here are some actions that you might be able to take:
 - take (something)
 - place (something)
 - throw (something)
+
+Perhaps looking around can help you find some other possible actions to take?
 """
     bearings = """
 There appears to be no way to get your bearings in this generic room.
@@ -90,36 +96,54 @@ What do you do?
 
     def action(self):
         # basic action options for any room
-        action = None
+        action = raw_input("> ").lower()
         while action not in self.good_moves:
-            action = raw_input("> ").lower()
             if action == 'touch stone' and 'take stone' in self.good_moves:
                 print "\nHard.\n"
-            elif action not in self.valid and action not in self.good_moves:
-                print "\nI'm sorry, but you can't %r.\n" % action
-            if action in self.bad_moves:
+            elif action in self.bad_moves:
                 print "\nYou can't go there from here.\n"
-            if action in self.vague_moves:
-                print "\nCommunication is important. Please be more specific!\n"
-            if action == 'help':
+            elif action == "take":
+                print "\nTake! Take! Take! Do you even know what you want?\n"
+            elif action == "talk":
+                print "\n%s\n" % choice(talking)
+            elif action == "go":
+                print "\nWhere to go?\n"
+            elif action == "walk":
+                print "\nYou pace around the room and end up where you started.\n"
+            elif action == "touch":
+                print "\nFeel.\n"
+            elif action == "sleep":
+                print "\nYou don't feel tired enough.\n"
+            elif action == 'help':
                 print line_break
                 print "\n" * 6
                 print self.helper
-            if action == 'look around' or action == 'look':
+            elif action == 'look around' or action == 'look':
                 print line_break
                 print "\n" * 8
                 print self.extra
                 print self.bearings
-            if action == "intro":
+            elif action == "intro":
                 print line_break
                 print "\n" * 6
                 print self.intro
                 print self.bearings
-            if action == "inventory" or action == "inv":
+            elif action == "inventory" or action == "inv":
                 print line_break
                 print "\n" * 4
                 inv.show()
                 print "\nWhat do you do? \n"
+            elif action == "sit" or action == "sit down":
+                print "\nYou'd rather stand.\n"
+            elif action == "stand":
+                print "\nBeen there, done that.\n"
+            elif action == "wait":
+                print "\nWhy wait?\n"
+            elif action == "lie down":
+                print "\nHere? I think not!\n"
+            else:
+                print "\nI'm sorry, but you can't %r.\n" % action
+            action = raw_input("> ").lower()
         print "\nYou attempt to %s." % action
         sleep(1)
         return action
@@ -143,7 +167,9 @@ What do you do?
 class StartingRoom(Room):
 
     start_of_game = True
-    good_moves = ['go north', 'walk north', 'take pen']
+    good_moves = ['go north', 'walk north', 'take pen', 'touch pen',
+                    'take mattress', 'touch mattress', 'lie down', 'sleep',
+                    'take junk', 'touch junk']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
     wake_up = """You wake up.
@@ -173,9 +199,53 @@ What do you do?\n"""
             self.visited = True
         self.correct_intro()
         action = self.action()
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "middle"
+
+        if action == "lie down" or action == "sleep":
+            print """
+You're not sure what made you pass out in this room in the first place, but once
+was probably enough."""
+            sleep(3)
+            return self.enter()
+
+        if action == "touch pen":
+            print """
+Your clumsy fingers cause the pen to slide away from you."""
+            sleep(2)
+            print "\nUgh."
+            sleep(2)
+            return self.enter()
+
+        if action == "touch mattress":
+            print """
+Springs. Notably mediocre."""
+            sleep(3)
+            return self.enter()
+
+        if action == "take mattress":
+            print """
+As you get ready to pick the whole thing up, you're struck that maybe the
+mattress is perfectly fine being just where it is."""
+            sleep(3)
+            return self.enter()
+
+        if action == "take junk":
+            print """
+Probably best to not hoard a bunch of junk. Maybe there is something useful
+around here?"""
+            sleep(3)
+            return self.enter()
+
+        if action == "touch junk":
+            print """
+There is so much junk to choose from, you don't know where to begin. You do
+nothing."""
+            sleep(3)
+            return self.enter()
+
         if action == "take pen":
             print """
 You pick up the pen. It is a blue ballpoint. Can never have enough pens."""
@@ -192,7 +262,9 @@ class MiddleRoom(Room):
 
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
-                    'walk north']
+                    'walk north', 'touch newspapers', 'touch newspaper',
+                    'take newspaper', 'take newspapers', 'touch rubber',
+                    'take rubber']
     bad_moves = []
     intro = """
 This room is huge - remarkably so. It makes one wonder what kind of building was
@@ -223,6 +295,30 @@ What do you do?\n"""
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "door"
+
+        if action == "touch newspapers" or action == "touch newspaper":
+            print "\nSoggy.\n"
+            sleep(1.5)
+            return self.enter()
+
+        if action == "take newspapers" or action == "take newspaper":
+            print """
+As you pick up a newspaper up, it falls apart in your hand in a sloppy mess."""
+            sleep(2.5)
+            print """
+It hits the ground with a wet sound."""
+            sleep(1.5)
+            return self.enter()
+
+        if action == "touch rubber":
+            print "\nUh, no."
+            sleep(1.5)
+            return self.enter()
+
+        if action == "take rubber":
+            print "\nSomehow you don't think it will come in handy."
+            sleep(1.5)
+            return self.enter()
 
 class TheDoor(Room):
 
