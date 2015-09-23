@@ -8,14 +8,24 @@ import main
 
 class Engine(object):
 
-    def __init__(self, a_map):
+    def __init__(self, a_map, the_menu, new_game, fake_game):
         self.map = a_map
+        self.menu = the_menu
+        self.game = new_game
+        self.load = fake_game
 
-    def play(self, start_room):
+    def play(self):
         # this will run for the duration of the game, using self.map to
         # navigate between the rooms
 
-        next_room = self.map.play(start_room)
+
+        first_option = self.menu.run(1)
+        if first_option == "new":
+            first_room = "start"
+        elif first_option == "load":
+            first_room = self.load.starting
+
+        next_room = self.map.play(first_room)
 
         while next_room != 'end':
             next_room = self.map.play(next_room)
@@ -1186,11 +1196,12 @@ class Map(object):
 
 if __name__ == "__main__":
     the_map = Map()
-    menu = main.Menu()
+    the_menu = main.Menu()
+    new_game = main.SavedGame()
+    load_game = main.FakeGame()
     inv = Inventory()
-    game = Engine(the_map)
-    menu.run(1)
-    #game.play('start')
+    game = Engine(the_map, the_menu, new_game, load_game)
+    game.play()
 
 # TODO: Get rid of string literals
 # TODO: Refactor the stone pick ups to take the message upon pick up and the
