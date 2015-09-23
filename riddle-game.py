@@ -59,6 +59,7 @@ You receive no answer. You have no answer. There is nothing."""
 
 class Room(object):
 
+    current_room = False
     guesses_left = 5
     solved = False
     stone_here = False
@@ -130,6 +131,16 @@ What do you do?
         else:
             pass
 
+    def correct_intro(self):
+        if self.visited == False:
+            print self.intro
+        self.visited = True
+        if not self.current_room:
+            print self.bearings
+        elif self.current_room:
+            print "\nWhat do you do?\n"
+        self.current_room = True
+
 class StartingRoom(Room):
 
     start_of_game = True
@@ -160,9 +171,11 @@ What do you do?\n"""
         if self.start_of_game == True:
             print self.wake_up
             self.start_of_game = False
-        print self.bearings
+            self.visited = True
+        self.correct_intro()
         action = self.action()
         if action == "go north" or action == "walk north":
+            self.current_room = False
             return "middle"
         if action == "take pen":
             print """
@@ -197,18 +210,19 @@ south is a short hallway leading to a small apartment room.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go south" or action == "walk south":
+            self.current_room = False
             return "start"
         if action == "go east" or action == "walk east":
+            self.current_room = False
             return "right"
         if action == "go west" or action == "walk west":
+            self.current_room = False
             return "left"
         if action == "go north" or action == "walk north":
+            self.current_room = False
             return "door"
 
 class TheDoor(Room):
@@ -242,10 +256,7 @@ big, dripping room.
 What do you do?\n"""
 
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
 
         if action == 'touch door':
@@ -296,6 +307,7 @@ there is nothing at all. It is empty. How silly of you."""
 
         if (action == 'go south' or action == 'go back' or
             action == 'back away' or action == 'walk south'):
+            self.current_room = False
             return 'middle'
 
         if action == 'take bag':
@@ -381,6 +393,7 @@ pull on the door!"""
 
         if action == 'go north' or action == 'walk north':
             if self.door_open:
+                self.current_room = False
                 return 'end'
             else:
                 print "\n'Believe,' you whisper to yourself and march toward the door."
@@ -424,18 +437,19 @@ the dumpy, drippy room.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go south" or action == "walk south":
+            self.current_room = False
             return "battlefield"
         if action == "go east" or action == "walk east":
+            self.current_room = False
             return "middle"
         if action == "go west" or action == "walk west":
+            self.current_room = False
             return "dining room"
         if action == "go north" or action == "walk north":
+            self.current_room = False
             return "butcher"
 
 class Right(Room):
@@ -463,14 +477,13 @@ that large sack of moist newspapers that might be called a great hall.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go south" or action == "walk south":
+            self.current_room = False
             return "world"
         if (action == "go east" or action == "walk east") and Right.racetrack_open:
+            self.current_room = False
             return "racetrack"
         if (action == "go east" or action == "walk east" and
             not Right.racetrack_open):
@@ -480,8 +493,10 @@ after that episode with the rock and the human ... Perhaps it is best to just
 stay right where you are."""
             return self.enter()
         if action == "go west" or action == "walk west":
+            self.current_room = False
             return "middle"
         if action == "go north" or action == "walk north":
+            self.current_room = False
             return "alone"
         if action == "touch computer" or action == "touch computers":
             print """
@@ -525,12 +540,10 @@ closer. To the north is the dark tunnel.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go north" or action == "walk north":
+            self.current_room = False
             return "left"
 
         if (action == "talk" or action == "talk to soldier" or
@@ -648,12 +661,10 @@ where your frog buddy is probably still croaking along.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go east" or action == "walk east":
+            self.current_room = False
             return "left"
 
         if action == "read note":
@@ -790,12 +801,10 @@ cold butcher shop.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go south" or action == "walk south":
+            self.current_room = False
             return "left"
 
         if action == "touch pig":
@@ -978,12 +987,10 @@ life's problems there!
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
         action = self.action()
         if action == "go west" or action == "walk west":
+            self.current_room = False
             return "right"
 
         if action == "touch rock":
@@ -1244,10 +1251,7 @@ once did.
 
 What do you do?\n"""
     def enter(self):
-        if self.visited == False:
-            print self.intro
-        self.visited = True
-        print self.bearings
+        self.correct_intro()
 
         if (self.projector_on and self.projector_open and self.not_chatted):
             print """
@@ -1353,6 +1357,7 @@ i don't really want to talk to anyone"""
         action = self.action()
 
         if action == "go south" or action == "walk south":
+            self.current_room = False
             return "right"
 
         if (action == "talk" or action == "talk to lady" or
@@ -1629,10 +1634,5 @@ game.play('start')
 # TODO: Define certains actions like wait
 # TODO: Add sense of ease when you get the Silence stone, making you not want
 # to flip comptuters over.
-# TODO: Some way to lock the racetrack after killing the human there
-# TODO: Get rid of automatic bearings messages, they are annoying. This can be
-# done by making a room hold a value when it is the room that was last visited
-# and to only display the bearing message when the room has had the value
-# transferred over to it (so it won't play in all of the recursive calls)
-# make sure you add as "What do you do?" prompt that plays when the bearings
-# doesnts
+# TODO: Refactor the stone pick ups to take the message upon pick up and the
+# particular stone picked up to maybe avoid the large amounts of duplicate code
