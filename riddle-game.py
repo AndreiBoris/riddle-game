@@ -292,7 +292,8 @@ class TheDoor(Room):
                 if stone in inv.items:
                     inv.remove(stone)
                     print """
-You take The %s and place it the indentation where it fits best.""" % stone
+You take The %s and place it the indentation where it fits
+best.""" % stone
                     self.stones[stone] = True
                     placed = True
                     sleep(2.2)
@@ -329,9 +330,9 @@ You take The %s and place it the indentation where it fits best.""" % stone
                     action = "sink into deeper despair"
                     door_count = 0
                     while (action != "pull door" and action != "pull"
-                            and door_count < 6):
+                            and door_count < 4):
                         door_count += 1
-                        print "I guess you might as well %s." % action
+                        print "\nI guess you might as well %s." % action
                         action = raw_input("\nBut would you also like to try to do something else? > ")
                     all_strings.the_door_can_pull()
                     self.door_open = True
@@ -1005,7 +1006,7 @@ class World(Room):
                 'talk to it', 'sit', 'sit cross-legged', 'sit on rock',
                 'touch elephant', 'touch rock', 'talk to rock',
                 'enjoy the view', 'look at mountains', 'fan yourself',
-                'enjoy the amazing view']
+                'enjoy the amazing view', 'enjoy view', 'look at view']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     intro = all_strings.world_intro_start
@@ -1042,7 +1043,8 @@ class World(Room):
                 all_strings.world_chill_final()
                 return self.enter()
 
-        if action == "enjoy the view" or action == "enjoy the amazing view":
+        if (action == "enjoy the view" or action == "enjoy the amazing view" or
+            action == "enjoy view" or action == "look at view"):
             if self.stone_here:
                 all_strings.world_enjoy_start()
                 return self.enter()
@@ -1149,53 +1151,15 @@ class World(Room):
 class End(Room):
 
     stories = {
-    'Stone of Peace': """
-May it help you find ease in the difficult life we all share. The odds are in
-many ways stacked against us, but if we tread carefully and keep our well-being
-as the ultimate goal, we can dance through. Knowing the way that leads to our
-well-being takes more than common wisdom. May you have the humility and modesty
-to not answer when you should ask.""",
-    'Stone of Silence': """
-One can hope it helps you it times when things seem chaotic and oppressive. When
-things become dull or routine. When everthing loses its lustre. Silence might
-remind you that nothing is required for perfection. This is easy to say but
-seldom is it realized. May we all make the effort.""",
-    'Stone of Respect': """
-Let it remind you that each of us is here in the same way. Others have had a
-different life. A different experience. But right now, in any given interaction
-each is trying their best. To assume that less effort is given is to not give
-the respect that is perhaps deserved. To ask for more is to ask a stone to sing.
-We each of us are on different roads. May we not blame the traveller who
-followed the false marker but rather show this traveller the marker we know is
-best.""",
-    'Stone of Practice': """
-Perhaps you have already travelled far down the path you have chosen. Perhaps
-you have only ever just begun. Let your strenght and perseverance lead you
-further than you had dreamt. No one can walk on all the paths, but by knowing
-one well, we can help others who would travel them. By knowing many we can act
-as true sign posts who can help others choose. May you keep travelling for the
-world needs many to walk and share their wisdom.""",
-    'Stone of Friendship': """
-Know that to travel alone is the greatest way to make that trite mistake of
-over-commitment to a single invenstment. Share your joys to magnify them. Share
-your sorrows to trivialize them. Laugh with close companions and let their joys
-be your own. The wealth of such a life cannot be matched.""",
-    'Stone of Compassion': """
-Know that each of us carries sorrow and pain, from the richest to the poorest
-soul. What one lacks another has in abundance, and no one has it all. Instead
-of judging those that have what you have not because they have not what you
-have, be a teacher and be a student. Show them the way. Not once, not one
-hundred times, but as many times until their way becomes the Way. Not every soul
-is a willing student. But neither is every willing student a soliciting soul.
-May you find the judgement you need to help those you can, and leave those that
-you cannot in peace."""}
+    'Stone of Peace': all_strings.stone_of_peace_message,
+    'Stone of Silence': all_strings.stone_of_silence_message,
+    'Stone of Respect': all_strings.stone_of_respect_message,
+    'Stone of Practice': all_strings.stone_of_practice_message,
+    'Stone of Friendship': all_strings.stone_of_friendship_message,
+    'Stone of Compassion': all_strings.stone_of_compassion_message}
 
     def enter(self):
-        print """
-You are standing in a tiny cell."""
-        sleep(4)
-        print """
-The magnificent door behind you closes shut."""
+        all_strings.end_start()
         for stone in TheDoor.stones.keys():
             if TheDoor.stones[stone]:
                 raw_input("Go on? > ")
@@ -1203,12 +1167,7 @@ The magnificent door behind you closes shut."""
                 print self.stories[stone]
                 print "\n" * 2
         raw_input("Ready to finish? > ")
-        print """
-Thank you for taking the time. It is appreciated.
-
-If you noticed something that seemed like a bug or just have any comments,
-or suggestions for improvements, please reach me at Andrei.Borissenko@gmail.com
-I would love to hear from you."""
+        print all_strings.end_message
         exit(1)
 
 
