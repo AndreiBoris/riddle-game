@@ -605,7 +605,7 @@ carry them in, that would probably make things easier too."""
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here == False
+                self.stone_here = False
                 inv.items.append("Stone of Respect")
                 self.good_moves.remove("take stone")
                 print"""
@@ -739,7 +739,7 @@ carry them in, that would probably make things easier too."""
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here == False
+                self.stone_here = False
                 inv.items.append("Stone of Silence")
                 self.good_moves.remove("take stone")
                 print"""
@@ -927,7 +927,7 @@ carry them in, that would probably make things easier too."""
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here == False
+                self.stone_here = False
                 inv.items.append("Stone of Peace")
                 self.good_moves.remove("take stone")
                 print"""
@@ -1184,7 +1184,7 @@ carry them in, that would probably make things easier too."""
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here == False
+                self.stone_here = False
                 inv.items.append("Stone of Friendship")
                 self.good_moves.remove("take stone")
                 print"""
@@ -1209,25 +1209,31 @@ What do you do?\n"""
 
 class Alone(Room):
 
+    final_response = False
+    good_text_up = False
+    sad_text_up = False
     projector_power = False
     projector_on = False
     projector_open = False
     stone_here = True
+    not_chatted = True
     good_moves = ['go south', 'walk south', 'talk', 'talk to lady',
                     'talk to her', 'talk to woman', 'talk to projector',
                     'talk to girl', 'plug in projector', 'turn on projector',
                     'open lid', 'open projector lid', 'look at projector',
                     'turn off projector', 'look at the projector', 'close lid',
-                    'close projector lid']
+                    'close projector lid', 'turn on the projector',
+                    'turn off the projector', 'plug in the projector',
+                    'unplug the projector', 'talk to the projector',
+                    'unplug projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
     intro = """
 The place is horribly unkempt. It smells of sweat, tears, and stale urine. A
 young woman is sitting behind a table with a laptop open in front of her. She is
 facing away from you. You can tell that she notices that you entered, but she
-doesn't move very much. A small, modern projector to your right, pointing across
-the room to the wall on your left.
-"""
+doesn't move very much. A small, modern projector is to your right. It is
+pointing across the room to the wall on your left."""
     extra = """
 The young lady is in evident distress but is bearing it very quietly. Maybe it's
 also worth taking a look at the projector. Not that it has anything to do with
@@ -1243,8 +1249,106 @@ What do you do?\n"""
         self.visited = True
         print self.bearings
 
-        if self.projector_on and self.projector_open and self.stone_here:
-            pass
+        if (self.projector_on and self.projector_open and self.not_chatted):
+            print """
+An image displays on the projector screen on the left side of the room.
+Something is loading."""
+            sleep(6)
+            self.loading(4)
+            print """
+An empty text document appears on the screen. Then you hear the soft sounds of
+typing on the young lady's keyboard."""
+            sleep(6)
+            self.loading(2)
+            print "\nhi"
+            self.loading(1)
+            print "\nnot sure why your here"
+            self.loading(3)
+            print "\nwhat do you want"
+            sleep(1.5)
+            print "\n" *5
+            print """
+Before you have a chance to respond she goes on."""
+            sleep(1.5)
+            self.loading(3)
+            print "k my friend is having some kind of breakdown"
+            self.loading(3)
+            print "mby you can help"
+            self.loading(5)
+            print "he says he feels like that which has a tongue but cannot taste"
+            self.loading(1)
+            print "has a soul but cannot feel"
+            self.loading(2)
+            print "what is he talking about??"
+            while self.guesses_left > 0 and not self.solved:
+                self.loading(self.guesses_left)
+                self.guesses_left -= 1
+                solution = raw_input("\n?? > ").lower()
+                if solution == "shoe" or solution == "a shoe":
+                    self.solved = True
+                if self.guesses_left == 1:
+                    self.loading(2)
+                    print "lol i don't think any of those are it.."
+                    self.loading(3)
+                    print "he says he feels worn out"
+                    self.loading(2)
+                    print "and that hes tired of trampling on others"
+                    self.loading(1)
+            if self.solved:
+                self.good_text_up = True
+                self.extra = """
+.
+
+.
+
+.
+
+.
+thanks for your help
+
+.
+there's a stone under the projector
+
+.
+
+.
+i think someone like you could do some good with it"""
+                self.stone_available()
+                self.loading(5)
+                print "yeah"
+                self.loading(1)
+                print "he said yeah"
+                self.loading(2)
+                print "thank you"
+                self.loading(3)
+                print "check under the projector, theres something you should take"
+            else:
+                self.sad_text_up = True
+                self.extra = """
+.
+
+.
+
+.
+
+.
+
+.
+turn off the projector and stuff please
+
+.
+
+.
+i don't really want to talk to anyone"""
+                self.loading(1)
+                print "hmmm i don't think thats right"
+                self.loading(2)
+                print "don't worry about it"
+                inv.failed_puzzles += 1
+                inv.end_if_failed()
+            sleep(3)
+            self.not_chatted = False
+            return self.enter()
 
         action = self.action()
 
@@ -1261,9 +1365,10 @@ What do you do?\n"""
             sleep(2)
             print """
 You take the cue. You'd probably have better luck talking to the projector."""
+            sleep(3)
             return self.enter()
 
-        if action == "talk to projector":
+        if action == "talk to projector" or action == "talk to the projector":
             print """
 You see that the projector might be in emotional stress."""
             sleep(3)
@@ -1284,9 +1389,11 @@ Right, I don't think I did. Why don't you take your patronizing tone out of
 here, bud."""
             return self.enter()
 
-        if action == "plug in projector":
-            self.good_moves.remove("plug in projector")
-            self.good_moves.append("unplug projector")
+        if action == "plug in projector" or action == "plug in the projector":
+            if self.projector_power:
+                print """
+You had never unplugged the projector. Is that what you want to do?"""
+                return self.enter()
             self.projector_power = True
             print """
 You walk over to the projector plug, pick it up, and plug it into the wall
@@ -1294,29 +1401,81 @@ socket over on the wall to your right."""
             sleep(3)
             print """
 The projector probably has some power now."""
+            sleep(2.5)
             return self.enter()
 
-        if action == "unplug projector":
-            self.good_moves.append("plug in projector")
-            self.good_moves.remove("unplug projector")
+        if action == "unplug projector" or action == "unplug the projector":
+            if not self.projector_power:
+                print """
+You had never plugged in the projector. You can't double unplug it, that would
+be madness."""
+                sleep(2)
+                return self.enter()
             self.projector_power = False
             self.projector_on = False
             print """
 You guess that it's best to unplug the projector so that it doesn't suck any
 ghost power. Saving electricty is important, it means less combustible fuel
 needs to be burned to produce it... somewhere."""
+            sleep(5)
+            if self.stone_here:
+                self.extra = """
+The young lady is in evident distress but is bearing it very quietly. Maybe it's
+also worth taking a look at the projector. Not that it has anything to do with
+the lady or her distress. """
             return self.enter()
 
-        if action == "turn on projector":
+        if action == "turn on projector" or action == "turn on the projector":
             if self.projector_on:
                 print """
 Good news! The projector was already on. Saves you the energy from having to
 reach over and press the power button. Congratulations!"""
+                sleep(3)
                 return self.enter()
             if self.projector_power:
                 print """
 The projector fan whirs into life and some blinkies come on. All systems are go."""
+                sleep(3)
                 self.projector_on = True
+                if self.final_response:
+                    self.extra = """
+You feel it would probably be best to leave. There might be others, elsewhere,
+who could use your help."""
+                elif self.good_text_up:
+                    self.extra = """
+.
+
+.
+
+.
+
+.
+thanks for your help
+
+.
+there's a stone under the projector
+
+.
+
+.
+i think someone like you could do some good with it"""
+                elif self.sad_text_up:
+                    self.extra = """
+.
+
+.
+
+.
+
+.
+
+.
+turn off the projector and stuff please
+
+.
+
+.
+i don't really want to talk to anyone"""
                 return self.enter()
             elif not self.projector_power:
                 print """
@@ -1324,14 +1483,28 @@ It doesn't seem like the projector has any power. Is it plugged in?"""
                 sleep(2)
                 return self.enter()
 
-        if action == "turn off projector":
+        if action == "turn off projector" or action == "turn off the projector":
+            if not self.projector_on:
+                print """
+You reach to turn the projector off."""
+                sleep(2)
+                print """
+The projector was already off. You self-reflect on whether or not you might just
+be a hater."""
+                sleep(2)
+                print "Nah."
+                sleep(2)
+                return self.enter()
             self.projector_on = False
             print """
 If you're not going to use the projector, why waste electricity? Best to power
 it off. You do just that and the world feels slightly greener already."""
             sleep(5)
-            self.good_moves.append("turn on projector")
-            self.good_moves.remove("turn off projector")
+            if self.stone_here:
+                self.extra = """
+The young lady is in evident distress but is bearing it very quietly. Maybe it's
+also worth taking a look at the projector. Not that it has anything to do with
+the lady or her distress. """
             return self.enter()
 
         if action == "look at projector" or action == "look at the projector":
@@ -1367,6 +1540,7 @@ necessary to open the lens lid when it is already open. You may rest."""
             print """
 You go to front of the projector and pop open the cap. You set it down nicely
 next to the projector."""
+            sleep(3.5)
             return self.enter()
 
         if action == "close lid" or action == "close projector lid":
@@ -1382,105 +1556,6 @@ secure it on top of the projection lens."""
             return self.enter()
 
 
-
-
-        if (action == "throw rock at robot" or
-            action == "throw rock at the robot"):
-            inv.remove('rock')
-            self.good_moves.remove("throw rock")
-            self.good_moves.remove("throw rock at person")
-            self.good_moves.remove("throw rock at human")
-            self.good_moves.remove("throw rock at the human")
-            self.good_moves.remove("throw rock at the person")
-            self.good_moves.remove("throw rock at the robot")
-            self.good_moves.remove("throw rock at robot")
-            print """
-You hurl the rock at the robot. If you had a killer arm you might have actually
-gotten it somewhat close to the robot, which is a fair bit further away than you
-had judged."""
-            sleep(4)
-            print """
-Luckily (?) the robot seems to have noticed you regardless. It turns around and
-whips over to you."""
-            sleep(2)
-            print """
-The robot approaches very quickly and gets menacingly close to you. The exhaust
-that oddly appears have been designed to point forward makes it feel like the
-Cheshire face sending hot air straight to your face."""
-            sleep(4)
-            print """
-'You look lonesome,' the robot drones. 'Care for a hug?'"""
-            sleep(3)
-            print """
-Before you can respond the robot hugs you. The embrace is tight but not painful.
-It's robot arms are made of some kind of impossibly comfortable material.
-Something cracks inside and you feel yourself on the verge of tears, but you
-restrain yourself. 'This is just a robot!' you think to yourself."""
-            sleep(7)
-            print """
-'Remember you can always say the safeword if you feel you cannot accept the love
-that you deserve,' the robot says."""
-            sleep(5)
-            print """
-'Safeword?' you hear yourself ask."""
-            sleep(3)
-            print """
-'Yes, friend,' the robot says.
-
-'I have a few points, but we're not competing, and I'll help you win when you
-are eating. What I am, the safeword be.'"""
-            robot_clock = randint(1446, 1899)
-            while self.guesses_left > 0 and not self.solved:
-                print """
-'It's okay my friend, you are loved,' the hugbot says. You see the number %d
-quickly counting down on the display that's (gently) pressing into your face.
-""" % (self.guesses_left * robot_clock)
-                self.guesses_left -= 1
-                solution = raw_input("\nWhat is the safeword? > ").lower()
-                if solution == "fork" or solution == "a fork":
-                    self.solved = True
-                if self.guesses_left == 1:
-                    print """
-'If I am a spoon in hugging you, the safeword be a different hue,' the hugbot
-says."""
-            self.bearings = """
-The robot has gone off to survey the other people. You are out of rocks. To the
-west is the office, it seems a lot less crazy than this place.
-
-What do you do?\n"""
-            if self.solved:
-                self.extra = """
-You see now that the hugbot had just been seeing who was most in need of a hug.
-
-It seems that the robot had dropped some kind of stone. Maybe you should take
-it?"""
-                self.stone_available()
-                print """
-The hugbot backs away suddenly.
-
-'If you feel you don't need my acceptance I can only hope it is because you have
-dear friends of your own,' it says."""
-                sleep(5)
-                print """
-'I will leave this here, if you choose to pick it up, may it be a reminder for
-you of what is essential for happiness.'
-
-You hear something drop on the other side of the robot. The robot then drives
-away, presumably to give some robot loving to these other humans."""
-            else:
-                self.extra = """
-There doesn't appear to be anything else that's interesting around here.
-Everyone is just sad and mopey."""
-                print """
-Well, that was a long hug. You're not quite sure why that was necessary. The
-robot backs away slightly and its Cheshire cat face 'smiles.'
-
-'Bye-bye for now, sweet friend, others do have need of me.'"""
-                inv.failed_puzzles += 1
-                inv.end_if_failed()
-            sleep(4.5)
-            return self.enter()
-
         if action == "take stone":
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
@@ -1492,28 +1567,34 @@ carry them in, that would probably make things easier too."""
                 return self.enter()
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here == False
-                inv.items.append("Stone of Friendship")
+                self.stone_here = False
+                inv.items.append("Stone of Compassion")
                 self.good_moves.remove("take stone")
                 print"""
-You pick up the stone. It is warm to the touch. Probably had that hugbot's
-exhaust blowing on it too. Somehow this stone reminds you of some of the
-happiest times you've had with some close friends, along ago. Looking at the
-stone, you see the word 'FRIENDSHIP' written on it."""
+You pick up the stone. It is a bit dusty. But once your brush it off gently you
+notice that the stone is as brilliant as any you have ever looked on. Looking at
+the stone, you see the word 'COMPASSION' written on it."""
                 sleep(5)
                 if TheDoor.touched_indentations:
                     print """
 This stone seems like it might fit into one of those indentations you felt
 earlier at that beautiful door."""
                     sleep(3)
+                self.final_response = True
                 self.extra = """
-You feel loved."""
+You feel it would probably be best to leave. There might be others, elsewhere,
+who could use your help."""
                 self.bearings = """
-These people are in good hands, you feel. Good, comfortable robot hands. To the
-west is that lonesome office, but that's okay, it is only one room.
+To the south is the office. You wonder how many others are logged in, accessible
+and in need of help you could provide being there and listening.
 
 What do you do?\n"""
                 return self.enter()
+
+    def loading(self, count):
+        for i in xrange(count):
+            sleep(1)
+            print "\n."
 
 class World(Room):
     pass
@@ -1553,3 +1634,5 @@ game.play('start')
 # done by making a room hold a value when it is the room that was last visited
 # and to only display the bearing message when the room has had the value
 # transferred over to it (so it won't play in all of the recursive calls)
+# make sure you add as "What do you do?" prompt that plays when the bearings
+# doesnts
