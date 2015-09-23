@@ -1221,10 +1221,10 @@ class Loader(object):
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
         for room in self.rooms.keys():
-            #each = self.rooms[room]
-            #print each.intro
-            target = self.rooms[room]
-            target.intro = self.info.room_by_room[room]['intro']
+            self.rooms[room].visited = self.info.room_by_room[room]['visited']
+            self.rooms[room].intro = self.info.room_by_room[room]['intro']
+            self.rooms[room].extra = self.info.room_by_room[room]['extra']
+            self.rooms[room].bearings = self.info.room_by_room[room]['bearings']
         return self.info.starting
 
 if __name__ == "__main__":
