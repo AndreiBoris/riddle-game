@@ -528,7 +528,9 @@ best.""" % stone
                     all_strings.the_door_cant_push()
                     action = all_strings.the_door_action
                     door_count = 0
-                    while (action != "pull door" and action != "pull"
+                    while (action != 'pull door' and action != 'pull' and
+                            action != 'pull the door' and
+                            action != 'pull on door' and
                             and door_count < 4):
                         door_count += 1
                         print "\nI guess you might as well %s." % action
