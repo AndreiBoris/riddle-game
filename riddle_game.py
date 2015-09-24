@@ -222,7 +222,7 @@ class StartingRoom(Room):
         if not self.pen and 'take pen' in self.good_moves:
             for option in ["take pen", "touch pen"]:
                 self.good_moves.remove(option)
-    
+
         if self.start_of_game == True:
             print self.wake_up
             self.start_of_game = False
@@ -281,15 +281,19 @@ class MiddleRoom(Room):
     def enter(self):
         self.correct_intro()
         action = self.action()
+
         if action == "go south" or action == "walk south":
             self.current_room = False
             return "start"
+
         if action == "go east" or action == "walk east":
             self.current_room = False
             return "right"
+
         if action == "go west" or action == "walk west":
             self.current_room = False
             return "left"
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "door"
@@ -461,15 +465,19 @@ class Left(Room):
     def enter(self):
         self.correct_intro()
         action = self.action()
+
         if action == "go south" or action == "walk south":
             self.current_room = False
             return "battlefield"
+
         if action == "go east" or action == "walk east":
             self.current_room = False
             return "middle"
+
         if action == "go west" or action == "walk west":
             self.current_room = False
             return "dining room"
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "butcher"
@@ -498,19 +506,24 @@ class Right(Room):
     def enter(self):
         self.correct_intro()
         action = self.action()
+
         if action == "go south" or action == "walk south":
             self.current_room = False
             return "world"
+
         if (action == "go east" or action == "walk east") and self.racetrack_open:
             self.current_room = False
             return "racetrack"
+
         if (action == "go east" or action == "walk east" and
             not self.racetrack_open):
             all_strings.right_racetrack_closed()
             return self.enter()
+
         if action == "go west" or action == "walk west":
             self.current_room = False
             return "middle"
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "alone"
@@ -533,16 +546,20 @@ class Battlefield(Room):
     bearings = all_strings.battlefield_bearings1
     def enter(self):
         self.stone_available()
+
         if self.attempted and 'talk' in self.good_moves:
             for option in ['talk', 'talk to soldier', 'talk to her']:
                 self.good_moves.remove(option)
+
         if (self.solved and self.stone_here and
         'take stone' not in self.good_moves):
                 self.good_moves.append('take stone')
+
         if not self.stone_here and 'take stone' in self.good_moves:
             self.good_moves.remove('take stone')
         self.correct_intro()
         action = self.action()
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "left"
@@ -565,15 +582,20 @@ class Battlefield(Room):
 The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
                 solution = raw_input("\nHow do you answer? > ").lower()
+
                 if solution == "onion" or solution == "an onion":
                     self.solved = True
+
                 if self.guesses_left == 1:
                     all_strings.battlefield_hint()
+
             self.bearings = all_strings.battlefield_bearings2
+
             if self.solved:
                 self.extra = all_strings.battlefield_extra_win
                 sleep(1.5)
                 print all_strings.battlefield_solved
+
             else:
                 self.extra = all_strings.battlefield_extra_fail
                 print all_strings.battlefield_failed
@@ -581,6 +603,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 inv.end_if_failed()
             self.intro = all_strings.battlefield_intro_final
             sleep(4.5)
+
             return self.enter()
 
         if action == "take stone":
@@ -616,10 +639,12 @@ class DiningRoom(Room):
     bearings = all_strings.dining_room_bearings_start
     def enter(self):
         self.stone_available()
+
         if self.attempted and "read note" in self.good_moves:
             self.good_moves.remove("read note")
         self.correct_intro()
         action = self.action()
+
         if action == "go east" or action == "walk east":
             self.current_room = False
             return "left"
@@ -664,9 +689,11 @@ class DiningRoom(Room):
 
         if action == "read note":
             all_strings.dining_room_riddle()
+
             if "ballpoint pen" not in inv.items:
                 all_strings.dining_room_no_pen()
                 return self.enter()
+
             elif "ballpoint pen" in inv.items:
                 self.attempted = True
                 all_strings.dining_room_yes_pen()
@@ -681,9 +708,11 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                     if self.guesses_left == 1:
                         all_strings.dining_room_hint()
             self.bearings = all_strings.dining_room_bearings_after
+
             if self.solved:
                 self.extra = all_strings.dining_room_extra_win
                 all_strings.dining_room_quiet()
+
             else:
                 self.extra = all_strings.dining_room_extra_fail
                 print all_strings.dining_room_failed
@@ -691,6 +720,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                 inv.end_if_failed()
             all_strings.dining_room_leave_pen()
             inv.remove("ballpoint pen")
+
             return self.enter()
 
         if action == "take stone":
@@ -725,6 +755,7 @@ class Butcher(Room):
     extra = all_strings.butcher_extra_start
     bearings = all_strings.butcher_bearings_start
     def enter(self):
+
         if self.attempted and 'talk' in self.good_moves:
             for option in ['talk', 'talk to butcher', 'talk to man',
              'talk to him']:
@@ -732,6 +763,7 @@ class Butcher(Room):
         self.stone_available()
         self.correct_intro()
         action = self.action()
+
         if action == "go south" or action == "walk south":
             self.current_room = False
             return "left"
@@ -768,31 +800,38 @@ class Butcher(Room):
             all_strings.butcher_riddle()
             solution = ""
             while self.guesses_left > 0 and not self.solved:
+
                 if self.guesses_left == 5:
                     print """
 The man uses a small knife to carve a line into the wall behind him. There is
 %d line in the wall. His lips seem to curl involuntarily.""" % (6 - self.guesses_left)
+
                 else:
                     print """
 The man uses a small knife to carve a line into the wall behind him. There are
 %d lines in the wall. His lips seem to curl involuntarily.""" % (6 - self.guesses_left)
                 self.guesses_left -= 1
                 solution = raw_input("\nHow do you answer? > ").lower()
+
                 if solution == "pillow" or solution == "a pillow":
                     self.solved = True
+
                 if self.guesses_left == 1:
                     all_strings.butcher_hint()
             sleep(2)
             self.bearings = all_strings.butcher_bearings_after
+
             if self.solved:
                 self.extra = all_strings.butcher_extra_win
                 print all_strings.butcher_solved
+
             else:
                 self.extra = all_strings.butcher_extra_lose
                 print all_strings.butcher_failed
                 inv.failed_puzzles += 1
                 inv.end_if_failed()
             sleep(4.5)
+
             return self.enter()
 
         if action == "take stone":
@@ -806,10 +845,12 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 inv.items.append("Stone of Peace")
                 self.good_moves.remove("take stone")
                 all_strings.stone_of_peace_pickup()
+
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
                 self.extra = all_strings.butcher_extra_final
                 self.bearings = all_strings.butcher_bearings_final
+
                 return self.enter()
 
 
@@ -832,15 +873,19 @@ class Racetrack(Room):
     extra = all_strings.racetrack_extra_start
     bearings = all_strings.racetrack_bearings_start
     def enter(self):
+
         if not self.rock_on_floor and not self.attempted:
             for option in self.throw_options:
                 self.good_moves.append(option)
+
         if self.attempted and 'throw rock' in self.good_moves:
             for option in self.throw_options:
                 self.good_moves.remove(option)
+
         self.stone_available()
         self.correct_intro()
         action = self.action()
+
         if action == "go west" or action == "walk west":
             self.current_room = False
             return "right"
@@ -858,12 +903,14 @@ class Racetrack(Room):
             return self.enter()
 
         if action == "take rock" or action == "take small rock":
+
             if self.rock_on_floor:
                 self.rock_on_floor = False
                 all_strings.racetrack_take_rock()
                 inv.add('rock')
                 self.extra = all_strings.racetrack_extra_no_rock
                 return self.enter()
+
             else:
                 all_strings.racetrack_take_rock_gone()
                 return self.enter()
@@ -885,11 +932,13 @@ class Racetrack(Room):
             for option in ['talk to robot', 'talk to the robot']:
                 self.good_moves.remove(option)
             all_strings.racetrack_talk_to_robot()
+
             return self.enter()
 
         if (action == "talk to human" or action == "talk to the human" or
             action == "talk to person" or action == "talk to the person"):
             all_strings.racetrack_talk_to_human()
+
             return self.enter()
 
         if (action == "throw rock at robot" or
@@ -906,20 +955,26 @@ class Racetrack(Room):
 quickly counting down on the display that's (gently) pressing into your face.
 """ % (((self.guesses_left + 1) * robot_clock) + randint(1, 100))
                 solution = raw_input("What is the safeword? > ").lower()
+
                 if solution == "fork" or solution == "a fork":
                     self.solved = True
+
                 if self.guesses_left == 1:
                     all_strings.racetrack_hint()
+
             self.bearings = all_strings.racetrack_bearings_after
+
             if self.solved:
                 self.extra = all_strings.racetrack_extra_win
                 all_strings.racetrack_solved()
+
             else:
                 self.extra = all_strings.racetrack_extra_lose
                 print all_strings.racetrack_failed
                 inv.failed_puzzles += 1
                 inv.end_if_failed()
             sleep(4.5)
+
             return self.enter()
 
         if action == "take stone":
@@ -933,10 +988,13 @@ quickly counting down on the display that's (gently) pressing into your face.
                 inv.items.append("Stone of Friendship")
                 self.good_moves.remove("take stone")
                 all_strings.stone_of_friendship_pickup()
+
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
+
                 self.extra = all_strings.racetrack_extra_final
                 self.bearings = all_strings.racetrack_bearings_final
+
                 return self.enter()
 
 
@@ -981,14 +1039,18 @@ class Alone(Room):
                 self.loading(self.guesses_left)
                 self.guesses_left -= 1
                 solution = raw_input("\n?? > ").lower()
+
                 if solution == "shoe" or solution == "a shoe":
                     self.solved = True
+
                 if self.guesses_left == 1:
                     all_strings.alone_hint()
+
             if self.solved:
                 self.good_text_up = True
                 self.extra = all_strings.alone_extra_win
                 all_strings.alone_solved()
+
             else:
                 self.sad_text_up = True
                 self.extra = all_strings.alone_extra_lose
@@ -997,6 +1059,7 @@ class Alone(Room):
                 inv.end_if_failed()
             sleep(3)
             self.not_chatted = False
+
             return self.enter()
 
         action = self.action()
@@ -1019,6 +1082,7 @@ class Alone(Room):
             return self.enter()
 
         if action == "plug in projector" or action == "plug in the projector":
+
             if self.projector_power:
                 all_strings.alone_projector_powered()
                 return self.enter()
@@ -1027,79 +1091,104 @@ class Alone(Room):
             return self.enter()
 
         if action == "unplug projector" or action == "unplug the projector":
+
             if not self.projector_power:
                 all_strings.alone_projector_unpowered()
                 return self.enter()
             self.projector_power = False
             self.projector_on = False
             all_strings.alone_projector_power_off()
+
             if self.stone_here:
                 self.extra = all_strings.alone_extra_proj_off
+
             return self.enter()
 
         if action == "turn on projector" or action == "turn on the projector":
+
             if self.projector_on:
                 all_strings.alone_projector_running()
                 return self.enter()
+
             if self.projector_power:
                 all_strings.alone_projector_turn_on()
                 self.projector_on = True
+
                 if self.final_response:
                     self.extra = all_strings.alone_extra_final
+
                 elif self.good_text_up:
                     self.extra = all_strings.alone_extra_win
+
                 elif self.sad_text_up:
                     self.extra = all_strings.alone_extra_lose
+
                 return self.enter()
+
             elif not self.projector_power:
                 all_strings.alone_projector_no_power()
                 return self.enter()
 
         if action == "turn off projector" or action == "turn off the projector":
+
             if not self.projector_on:
                 all_strings.alone_projector_was_off()
                 return self.enter()
+
             self.projector_on = False
             all_strings.alone_projector_turn_off()
+
             if self.stone_here:
                 self.extra = all_strings.alone_extra_proj_off
+
             return self.enter()
 
         if action == "look at projector" or action == "look at the projector":
             all_strings.alone_proj_look_basic()
+
             if not self.projector_open:
                 all_strings.alone_proj_look_lid()
+
             if not self.projector_on:
                 all_strings.alone_proj_look_on()
+
             if not self.projector_power:
                 all_strings.alone_proj_look_power()
+
             return self.enter()
 
         if action == "open lid" or action == "open projector lid":
+
             if self.projector_open:
                 all_strings.alone_projector_no_lid()
                 return self.enter()
+
             self.projector_open = True
             all_strings.alone_projector_open()
             return self.enter()
 
         if action == "close lid" or action == "close projector lid":
+
             if not self.projector_open:
                 all_strings.alone_projector_lid()
                 return self.enter()
+
             self.projector_open = False
             all_strings.alone_projector_close()
             return self.enter()
 
         if (action == "look under projector" or
         action == "look under the projector"):
+
             if not self.solved:
                 all_strings.alone_look_under_start()
                 return self.enter()
+
             elif self.stone_here and self.solved:
                 self.looked = True
                 all_strings.alone_look_under_solved()
                 return self.enter()
+
             else:
                 all_strings.alone_look_under_final()
                 return self.enter()
@@ -1115,8 +1204,10 @@ class Alone(Room):
                 inv.items.append("Stone of Compassion")
                 self.good_moves.remove("take stone")
                 all_strings.stone_of_compassion_pickup()
+
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
+
                 self.final_response = True
                 self.extra = all_strings.alone_extra_final
                 self.bearings = all_strings.alone_bearings_final
@@ -1151,71 +1242,88 @@ class World(Room):
         self.stone_available()
         self.correct_intro()
         action = self.action()
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "right"
 
         if action == "sit":
+
             if self.stone_here:
                 all_strings.world_sit_start()
                 return self.enter()
+
             else:
                 all_strings.world_sit_final()
                 return self.enter()
 
         if action == "sit cross-legged":
+
             if self.stone_here:
                 all_strings.world_meditate_start()
                 return self.enter()
+
             else:
                 all_strings.world_meditate_final()
                 return self.enter()
 
         if action == "sit on rock":
+
             if self.stone_here:
                 all_strings.world_chill_start()
                 return self.enter()
+
             else:
                 all_strings.world_chill_final()
                 return self.enter()
 
         if (action == "enjoy the view" or action == "enjoy the amazing view" or
             action == "enjoy view" or action == "look at view"):
+
             if self.stone_here:
                 all_strings.world_enjoy_start()
                 return self.enter()
+
             else:
                 all_strings.world_enjoy_final()
                 return self.enter()
 
         if action == "look at mountains":
+
             if self.stone_here:
                 all_strings.world_gaze_start()
                 return self.enter()
+
             else:
                 all_strings.world_gaze_final()
                 return self.enter()
 
         if action == "touch rock":
+
             if self.stone_here:
                 all_strings.world_rock_start()
                 return self.enter()
+
             else:
                 all_strings.world_rock_final()
                 return self.enter()
 
         if action == "talk to rock":
+
             if self.stone_here:
                 all_strings.world_rock_buddy_start()
                 return self.enter()
+
             else:
                 all_strings.world_rock_buddy_final()
                 return self.enter()
 
         if action == "fan yourself":
+
             if self.stone_here:
                 all_strings.world_fan_start()
                 return self.enter()
+
             else:
                 all_strings.world_fan_final()
                 return self.enter()
@@ -1234,17 +1342,21 @@ class World(Room):
                 self.guesses_left -= 1
                 sleep(1)
                 solution = raw_input("\nYou speak > ").lower()
+
                 if solution == "ton":
                     self.solved = True
+
             if self.solved:
                 self.extra = all_strings.world_extra_win
                 sleep(1)
                 print all_strings.world_solved
+
             else:
                 self.extra = all_strings.world_extra_lose
                 print all_strings.world_failed
                 inv.failed_puzzles += 1
                 inv.end_if_failed()
+
             sleep(2.5)
             self.intro = all_strings.world_intro_final
             return self.enter()
@@ -1260,8 +1372,10 @@ class World(Room):
                 inv.items.append("Stone of Practice")
                 self.good_moves.remove("take stone")
                 all_strings.stone_of_practice_pickup()
+
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
+
                 return self.enter()
 
     def overheating(self, count):
@@ -1277,8 +1391,6 @@ class World(Room):
             print all_strings.world_overheating5
         if count == 0:
             print all_strings.world_overheating6
-        else:
-            pass
 
 
 class End(Room):
@@ -1295,11 +1407,13 @@ class End(Room):
     def enter(self):
         all_strings.end_start()
         for stone in TheDoor.stones.keys():
+
             if TheDoor.stones[stone]:
                 raw_input("Go on? > ")
                 print "\nYou found the %s." % stone
                 print self.stories[stone]
                 print "\n" * 2
+
         raw_input("Ready to finish? > ")
         print all_strings.end_message
         exit(1)
@@ -1362,6 +1476,7 @@ class Saver(object):
         save_file.items = self.inv.items
         save_file.starting = self.current
         save_file.failed_puzzles = self.inv.failed_puzzles
+
         for room, key in [(self.start, 'start'), (self.middle, 'middle'),
                     (self.door, 'door'),
                     (self.left, 'left'), (self.right, 'right'),
@@ -1372,19 +1487,23 @@ class Saver(object):
             save_file.rooms[key]['bearings'] = room.bearings
             save_file.rooms[key]['extra'] = room.extra
             save_file.rooms[key]['visited'] = room.visited
+
         for room, key in [(self.battle, 'battlefield'), (self.dining, 'dining room'),
                     (self.butcher, 'butcher'), (self.alone, 'alone'),
                     (self.race, 'racetrack'), (self.world, 'world')]:
             save_file.rooms[key]['solved'] = room.solved
             save_file.rooms[key]['attempted'] = room.attempted
             save_file.rooms[key]['stone_here'] = room.stone_here
+
         save_file.rooms['start']['pen'] = self.start.pen
         save_file.rooms['door']['door_open'] = self.door.door_open
         save_file.rooms['door']['attempted_door'] = self.door.attempted_door
         save_file.rooms['door']['touched_indentations'] = self.door.touched_indentations
         save_file.rooms['door']['bag_here'] = self.door.bag_here
+
         for stone in self.door.stones.keys():
             save_file.rooms['door'][stone] = self.door.stones[stone]
+
         save_file.rooms['right']['racetrack_open'] = self.right.racetrack_open
         save_file.rooms['alone']['final_response'] = self.alone.final_response
         save_file.rooms['alone']['good_text_up'] = self.alone.good_text_up
@@ -1393,6 +1512,7 @@ class Saver(object):
         save_file.rooms['alone']['projector_on'] = self.alone.projector_on
         save_file.rooms['alone']['projector_open'] = self.alone.projector_open
         save_file.rooms['alone']['looked'] = self.alone.looked
+
         return save_file
 
 
@@ -1414,22 +1534,27 @@ class Loader(object):
     def load_it(self):
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
+
         for room in self.rooms.keys():
             self.rooms[room].visited = self.info.rooms[room]['visited']
             self.rooms[room].intro = self.info.rooms[room]['intro']
             self.rooms[room].extra = self.info.rooms[room]['extra']
             self.rooms[room].bearings = self.info.rooms[room]['bearings']
+
         for room in self.puzzle_rooms:
             self.rooms[room].solved = self.info.rooms[room]['solved']
             self.rooms[room].attempted = self.info.rooms[room]['attempted']
             self.rooms[room].stone_here = self.info.rooms[room]['stone_here']
+
         start_room.pen = self.info.rooms['start']['pen']
         door_room.door_open = self.info.rooms['door']['door_open']
         door_room.attempted_door = self.info.rooms['door']['attempted_door']
         door_room.touched_indentations = self.info.rooms['door']['touched_indentations']
         door_room.bag_here = self.info.rooms['door']['bag_here']
+
         for stone in door_room.stones.keys():
             door_room.stones[stone] = self.info.rooms['door'][stone]
+            
         right_room.racetrack_open = self.info.rooms['right']['racetrack_open']
         alone_room.final_response = self.info.rooms['alone']['final_response']
         alone_room.good_text_up = self.info.rooms['alone']['good_text_up']
