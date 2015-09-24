@@ -116,7 +116,7 @@ def alone_look_under_solved():
     print """
 You crouch down beside the projector and take a look beneath it. There is a
 a stone lying there, collecting dust. Perhaps it'd be a good idea to take it?"""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 def alone_look_under_start():
     print """
@@ -127,17 +127,17 @@ def alone_proj_look_basic():
     print """
 There seems to be a wire connecting the projector to the laptop in front of the
 lady at the desk."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_proj_look_lid():
     print """
 It seems like the projector lid isn't open."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_proj_look_on():
     print """
 Upon closer inspection you realize that the projector isn't on."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_proj_look_power():
     print """
@@ -163,7 +163,7 @@ You reach for the lid only to realize that its not there! Where is it?!"""
     print """
 Right. It's next to the projector where you left it. It probably won't be
 necessary to open the lens lid when it is already open. You may rest."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_no_power():
     print """
@@ -174,7 +174,7 @@ def alone_projector_open():
     print """
 You go to front of the projector and pop open the cap. You set it down nicely
 next to the projector."""
-    sleep(3.5)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_powered():
     print """
@@ -186,39 +186,39 @@ def alone_projector_power_off():
 You guess that it's best to unplug the projector so that it doesn't suck any
 ghost power. Saving electricty is important, it means less combustible fuel
 needs to be burned to produce it... somewhere."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_power_on():
     print """
 You walk over to the projector plug, pick it up, and plug it into the wall
 socket over on the wall to your right."""
-    sleep(3)
+    sleep(2)
     print """
 The projector probably has some power now."""
-    sleep(2.5)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_running():
     print """
 Good news! The projector was already on. Saves you the energy from having to
 reach over and press the power button. Congratulations!"""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_turn_off():
     print """
 If you're not going to use the projector, why waste electricity? Best to power
 it off. You do just that and the world feels slightly greener already."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_turn_on():
     print """
 The projector fan whirs into life and some blinkies come on. All systems are go."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_unpowered():
     print """
 You had never plugged in the projector. You can't double unplug it, that would
 be madness."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def alone_projector_was_off():
     print """
@@ -227,31 +227,30 @@ You reach to turn the projector off."""
     print """
 The projector was already off. You self-reflect on whether or not you might just
 be a hater."""
-    sleep(2)
+    sleep(1)
     print "\nNah."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def alone_riddle():
     print """
 An image displays on the projector screen on the left side of the room.
 Something is loading."""
-    sleep(6)
+    raw_input("\nHit ENTER to continue")
     loading(4)
     print """
 An empty text document appears on the screen. Then you hear the soft sounds of
 typing on the young lady's keyboard."""
-    sleep(6)
+    raw_input("\nHit ENTER to continue")
     loading(2)
     print "\nhi"
     loading(1)
     print "\nnot sure why your here"
     loading(3)
     print "\nwhat do you want"
-    sleep(1.5)
-    print "\n" *5
+    print "\n" *2
     print """
 Before you have a chance to respond she goes on."""
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
     loading(3)
     print "k my friend is having some kind of breakdown"
     loading(3)
@@ -276,11 +275,11 @@ def alone_solved():
 def alone_talk_to_girl():
     print """
 Oh, I'm sorry. Did I mention that there was a girl here?"""
-    sleep(3)
+    sleep(2)
     print """
 Right, I don't think I did. Why don't you take your patronizing tone out of
 here, bud."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_talk_to_lady():
     print """
@@ -291,7 +290,7 @@ def alone_talk_to_lady():
     sleep(2)
     print """
 You take the cue. You'd probably have better luck talking to the projector."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def alone_talk_to_projector():
     print """
@@ -302,7 +301,7 @@ You see that the projector might be in emotional stress."""
     sleep(3)
     print """
 Deep down, you feel the projector heard you. It will be okay."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 bad_moves = "\nYou can't go there from here.\n"
 
@@ -366,35 +365,40 @@ this ruin. The soldier is clearly in excrutiating pain and is doing what she can
 to stay conscious for as long as possible. It doesn't seem like that will be for
 much longer. You might say she's on her last legs. But that would seem a bit
 disrespectful as it seems that bomb had dismembered her of exactly those legs
-that the phrase seems to be referring to."""
+that said phrase refers to."""
+
+battlefield_intro_final = """
+After walking south from the dark tunnel you come across a pretty grim scene.
+It looks like a soldier had been hit by the bomb or whatever it was that created
+this ruin. Horrible stuff."""
 
 def battlefield_riddle():
     print """
 You approach the soldier and she looks you right in the eyes. As you approach
 you notice that her eyelids have been torn off in the twisted explosion. She
 doesn't appear to ever blink and you feel very uneasy."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print "\nThe soldier appears to be disoriented. She speaks:"
     sleep(2)
     print """
 'You use a knife to slice my head, and weep beside me when I am dead.'"""
     sleep(3)
     print "\n'What am I?'"
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
 
 battlefield_solved = """
-The soldier appears relieved. Her left hand drops. You can see she the ghost is
+The soldier appears relieved. Her left hand drops. You can see that the ghost is
 passing. You notice that her right hand also relaxes revealing something inside."""
 
 def battlefield_take_soldier():
     print """
 You aren't whisking anybody away today, buster."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def battlefield_touch_soldier():
     print """
 You decide not to do it at the last moment."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 butcher_bearings_after = """
 The man regards you as an entity of no greater interest than any of the
@@ -430,7 +434,7 @@ about. The butcher glances at you periodically as he is sharpening the knife.
 Perhaps you could talk to him?"""
 
 butcher_extra_win = """
-After watching you look around nervously, the butcher catches your attention and
+The butcher sees you nervously looking around and he catches your attention and
 indicates a tray at the end of the counter. The tray is labeled 'gratis'. There
 are some lumpy looking cuts in there, but also what appears to be a stone. Maybe
 the stone could be worth taking?"""
@@ -461,12 +465,12 @@ def butcher_riddle():
 You look at the man and indicate that you would like his attention. He puts his
 knife down firmly, perhaps a tad too firmly, and he walks to the end of his side
 of the counter and gives you a fake smile."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print "\nAfter a few awkward moments, he speaks in a gentle voice:"
     sleep(2)
     print """
 'What loses its head in the morning and gets it back at night?'"""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 butcher_solved = """
 The man gives a cool laugh. Maybe he likes you after all! He looks across the
@@ -481,34 +485,34 @@ The butcher sees you reaching for one of the cuts of meat. He clears his throat
 to catch you attention and then shakes his head prohibitively.
 
 Maybe it's best to listen to the man with the knives. You leave the cuts alone."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 def butcher_take_pig():
     print """
 The urge is to take this pig and rescue it from this cold, cold place."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print """
 But after a few seconds of reflection the notion seems a bit silly. You wouldn't
 even be able to carry the thing without chopping it up first, and that just
 seems counter-intuitive to your whole plan."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
     print "\nYou give it up."
-    sleep(2)
+    sleep(1)
 
 def butcher_touch_meat():
     print "\nSquishy."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
     print """
 The butcher doesn't seem to like you touching the meat. Probably best to not do
 that anymore."""
-    sleep(3)
+    sleep(2)
 
 def butcher_touch_pig():
     print """
-Yes, the pig really does look like it would enjoy the smooth touch of a caring
-human. Unfortunately, it's behind the counter and you don't feel the man
-sharpening the knife would appreciate you going back there."""
-    sleep(4)
+Yes, the pig really does look like it needs the smooth touch of a caring human.
+Unfortunately, it's behind the counter and you don't feel the man sharpening the
+knife would appreciate you going back there."""
+    raw_input("\nHit ENTER to continue")
 
 dining_room_bearings_after = """
 The dining table stands as eerily as ever. To the east is that tunnel, the one
@@ -562,7 +566,7 @@ There is only one line left,
 
 You start to feel a bit nervous and can hear your heart beating in your chest.
 It's really damn quiet in this weird place."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 dining_room_intro = """
 This room is extremely gaudy. They've got little fountains with little rocks and
@@ -575,25 +579,25 @@ curtains are floating lyrically along. You half-expect a wild butler to appear."
 def dining_room_leave_pen():
     print """
 You decide to leave the pen here, it seems somehow appropriate."""
-    sleep(4.5)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_look_outside():
     print """
 You see nothing but brightness. Your corneas protests."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_no_pen():
     print """
 What an interesting question. Well, without a nice pen to respond to the
 inquiry it is probably best to just back away. Heck, even a ballpoint pen would
 have done the job."""
-    sleep(4.5)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_quiet():
     print """
 You suddenly realize just how quiet this place is. Apart from the noises made by
 your body, there does seem to be one other sound in the room."""
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_riddle():
     print """
@@ -602,61 +606,61 @@ in is exquisite. It reminds you of what you imagined Lev Nikolayevich Myshkin's
 calligraphy would look like. But then you realize that you had never read The
 Idiot, and just heard that one pretentious gentlemen mention it once. You
 applaud your selective memory."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print "\nThe note has only a short phrase written on it:"
     sleep(2)
     print """
 'What is so delicate that even mentioning it breaks it?'"""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_sit():
     print """
 On second thought, your clothes are probably too dirty. Wouldn't want to get
 anyone mad for dirtying their million dollar sofa. You decide to keep standing."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_take_big():
     print """
-It is bigger than you are."""
-    sleep(2)
+It is significantly bigger than you are."""
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_take_curtain():
     print """
-You don't feel like being a common criminal."""
+You don't feel like being a common criminal..."""
     sleep(2)
     print """
-Right now."""
-    sleep(2)
+...right now."""
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_take_water():
     print """
 ... And how would you like to do that, exactly?"""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_touch_clock():
     print """
 It's made of some pretty nice wood."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_touch_curtain():
     print """
 Silk feels nice."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_touch_sofa():
     print """
 Soft, smooth, and snobby."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_touch_water():
     print """
 Water feels nice."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def dining_room_yes_pen():
     print """
 Hmmm. Good thing you had the foresight to pick up this trusty ballpoint pen."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def end_start():
     print """
@@ -664,9 +668,9 @@ You are standing in a tiny room."""
     sleep(4)
     print """
 The magnificent door behind you closes shut."""
-    sleep(4)
+    sleep(2)
 
-end_message = """
+end_message = """\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 Thank you for taking the time. It is appreciated.
 
 If you noticed something that seemed like a bug or just have any comments,
@@ -674,6 +678,8 @@ or suggestions for improvements, please reach me at Andrei.Borissenko@gmail.com
 I would love to hear from you."""
 
 empty_inv = "Just the clothes on your back."
+
+goodbye = "\nGoodbye!"
 
 helper = """
 Here are some actions that you might be able to take:
@@ -686,6 +692,8 @@ Here are some actions that you might be able to take:
 - take (something)
 - place (something)
 - throw (something)
+- save
+- quit
 
 Perhaps looking around can help you find some other possible actions to take?
 """
@@ -694,7 +702,7 @@ def indentation_hint():
     print """
 This stone seems like it might fit into one of those indentations you felt
 earlier at that beautiful door."""
-    sleep(2.5)
+    raw_input("\nHit ENTER to continue")
 
 left_bearing = """
 To the north appears to be a butcher shop. To the west you see the glimmer of a
@@ -710,7 +718,7 @@ You wander in the darkness trying to echo-locate the frog."""
     sleep(3)
     print """
 The frog has fallen annoying silent."""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 left_extra = """
 The sounds made by a croaking frog are somehow comforting. Why it is here, you
@@ -735,8 +743,17 @@ lose_game = """
 None of these rooms seem to make any sense. 'Why am I here?!' you call out.
 You receive no answer. You have no answer. There is nothing."""
 
+lost_1 = """
+You feel a bit shaken. That wasn't supposed to happen. You feel like you lost
+an opportunity forever."""
+
+lost_2 = """
+This is the second time that something has gone quite strangely. You feel
+discouraged but you also know that you can do better. Pay more attention. Win.
+Otherwise..."""
+
 middle_room_bearings ="""
-To the north there is a door that is in incongruously good condition. To the
+To the north there is a door that is in impeccably good condition. To the
 east is some sort of office wing. To the west there is a dark tunnel. To the
 south is a short hallway leading to a small apartment room.
 
@@ -752,32 +769,43 @@ leaves much to be desired. It dripping with old newspapers that have been left
 lying around and in various makeshift beddings. Dripping because the ceiling is
 soaked - evidently the roof doesn't do such a great job keeping the rain out."""
 
+def middle_room_take_hair():
+    print """
+You have enough."""
+    raw_input("\nHit ENTER to continue")
+
 def middle_room_take_newspaper():
     print """
-As you pick up a newspaper up, it falls apart in your hand in a sloppy mess."""
-    sleep(2.5)
+As you pick up a newspaper up, it falls apart in your hand."""
+    sleep(2)
     print """
-It hits the ground with a wet sound."""
-    sleep(1.5)
+The newspaper hits the ground with a wet sound."""
+    raw_input("\nHit ENTER to continue")
 
 def middle_room_take_rubber():
     print "\nSomehow you don't think it will come in handy."
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
+
+def middle_room_touch_hair():
+    print """
+You touch your own. The stuff spread over this place is unlikely to feel as
+silky smooth."""
+    raw_input("\nHit ENTER to continue")
 
 def middle_room_touch_newspaper():
     print "\nSoggy.\n"
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
 
 def middle_room_touch_rubber():
     print "\nUh... no."
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
 
 def no_bag():
     print """
 You don't think you can carry any more of these stones at once. Maybe it makes
 sense to drop them off somewhere. Or maybe if you had some kind of container to
 carry them in, that would probably make things easier too."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 racetrack_bearings_after = """
 The robot has gone off to survey the other people. You are out of rocks. To the
@@ -831,7 +859,7 @@ def racetrack_hint():
     print """
 'If I am a spoon in hugging you, the safeword be a different hue,' the hugbot
 says."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 racetrack_intro = """
 This is no ordinary racetrack. You spot some kind of machine - a hugbot on
@@ -845,40 +873,40 @@ appears to be deciding who to go after next."""
 def racetrack_riddle():
     print """
 You hurl the rock at the robot. If you had a killer arm you might have actually
-gotten it somewhat close to the robot, which is a fair bit further away than you
-had judged."""
-    sleep(4)
+gotten the rock somewhat close to the robot, which is a fair bit further away
+than you had judged."""
+    raw_input("\nHit ENTER to continue")
     print """
 Luckily (?) the robot seems to have noticed you regardless. It turns around and
 whips over to you."""
-    sleep(2)
+    sleep(3)
     print """
 The robot approaches very quickly and gets menacingly close to you. The exhaust
 that oddly appears have been designed to point forward makes it feel like the
 Cheshire face sending hot air straight to your face."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
     print """
 'You look lonesome,' the robot drones. 'Care for a hug?'"""
-    sleep(3)
+    sleep(2)
     print """
 Before you can respond the robot hugs you. The embrace is tight but not painful.
-It's robot arms are made of some kind of impossibly comfortable material.
-Something cracks inside and you feel yourself on the verge of tears, but you
-restrain yourself. 'This is just a robot!' you think to yourself."""
-    sleep(7)
+Its robot arms are made of some kind of impossibly comfortable material.
+Some emotional nut cracks inside and you feel yourself on the verge of tears,
+but you restrain yourself. 'This is just a robot!' you think to yourself."""
+    raw_input("\nHit ENTER to continue")
     print """
 'Remember you can always say the safeword if you feel you cannot accept the love
 that you deserve,' the robot says."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print """
 'Safeword?' you hear yourself ask."""
-    sleep(3)
+    sleep(2)
     print """
 'Yes, friend,' the robot says.
 
 'I have a few points, but we're not competing, and I'll help you win when you
 are eating. What I am, the safeword be.'"""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 def racetrack_solved():
     print """
@@ -886,10 +914,10 @@ The hugbot backs away suddenly.
 
 'If you feel you don't need my acceptance I can only hope it is because you have
 dear friends of your own,' it says."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print """
-'I will leave this here, if you choose to pick it up, may be a reminder for you
-of what is essential for happiness.'
+'I will leave this here, if you choose to pick it up, may it be a reminder for
+you of what is essential for your well-being.'
 
 You hear something drop on the other side of the robot. The robot then drives
 away, presumably to give some robot loving to these other humans."""
@@ -901,64 +929,73 @@ def racetrack_talk():
 def racetrack_take_rock():
     print """
 You pick up the rock. Hefty."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
+
+def racetrack_take_rock_gone():
+    print """
+You remember there once was a rock. But no longer. Times ain't what they used to
+be."""
+    raw_input("\nHit ENTER to continue")
 
 def racetrack_talk_to_robot():
     print """
 Talk to the robot? What is your problem? That is a machine bent on killing
 people foolish enough to try reasoning with it! No way! Why don't you go try
 talking to a wall or something."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 def racetrack_talk_to_human():
     print """
 You approach the person with the intention to speak with him."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print """
 'Hello,' you say."""
-    sleep(4)
+    sleep(2)
     print """
 A fit of loud sobbing comes over the person. Maybe its best just to leave him
 alone."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 def racetrack_throw_rock():
     print """
 Uh. This is kind of the only rock you see around. So maybe you should think
 about where the best place to throw it might be."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def racetrack_throw_rock_at_human():
     print """
 In a fit of wickedness you throw a rock at the cowering human. You feel
 deviously sinister as you let go of the rock."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
     print """
 BAM! It's like you've been throwing stones at defenceless cowering humans all
 your life."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print """
 The person seems to be legitimately knocked out and potentially bleeding. Wow."""
-    sleep(5)
+    sleep(3)
     print """
 Suddently the hugbot spins around and seems to notice you. The other cowering
 humans are also taking note of you, the rock slinging bad-ass."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print """
 Oh god! Everyone starts running at full speed to get you. The hugbot's 'You'll
 get yours' sign is particularly sinister as it approaches at such a high speed."""
-    sleep(6)
+    raw_input("\nHit ENTER to continue")
     print """
 You quickly back up out of the racetrack and lock the door behind you. That was
 pretty convenient. Probably best if you don't try going back in there anymore.\n"""
-    sleep(3)
-    raw_input("Press ENTER to escape. > ")
+    raw_input("\nHit ENTER to continue")
 
 def racetrack_touch_rock():
     print """
 Good thing that you tried to touch that rock before taking it. Now you can
 confirm without a doubt that it is a rock."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
+
+def racetrack_touch_rock_gone():
+    print '\nThe rock is gone. They all leave, don\'t they?'
+    raw_input("\nHit ENTER to continue")
 
 right_bearings = """
 To the north appears to be another bachelor's apartment. You wonder what the
@@ -985,28 +1022,34 @@ def right_racetrack_closed():
 You start walking toward the racetrack when you realize what awaits you there
 after that episode with the rock and the human ... Perhaps it is best to just
 stay right where you are."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def right_touch_computer():
     print """
 You walk up to one of the computers with the intention to check your e-mail or
 watch some YouTube videos or something."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
     print """
-It seems like the computer is sleeping, so you give the mouse a shake."""
-    sleep(3)
+It seems like the computer is sleeping, maybe you should give the mouse a shake?"""
+    raw_input("\nHit ENTER to continue")
     print "\nIt works!"
-    sleep(3)
+    sleep(2)
     print "\nHmmm, it seems like all the networks are passworded."
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
     print "\nAfter failing with some predictable guesses, you decide it is hopeless."
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 room_bearings = """
 There appears to be no way to get your bearings in this generic room.
 
 What do you do?
 """
+
+start_game = """
+Welcome to the game!
+
+New
+Load"""
 
 starting_room_bearings1 = """
 There is some junk lying around. There is a hallway to the north.
@@ -1029,44 +1072,45 @@ mattress placement, it's not so bad."""
 
 def starting_room_lie():
     print """
-You're not sure what made you pass out in this room in the first place, but once
-was probably enough."""
-    sleep(3)
+You're not sure what made you pass out in this room in the first place, but one
+episode of unconsciousness in this room feels like it was plenty."""
+    raw_input("\nHit ENTER to continue")
 
 def starting_room_take_junk():
     print """
 Probably best to not hoard a bunch of junk. Maybe there is something useful
 around here?"""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def starting_room_take_mattress():
     print """
 As you get ready to pick the whole thing up, you're struck that maybe the
 mattress is perfectly fine being just where it is."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def starting_room_take_pen():
     print """
-You pick up the pen. It is a blue ballpoint. Can never have enough pens."""
-    sleep(2)
+You pick up the pen. It is a blue ballpoint. You are certain that one can never
+have enough pens."""
+    raw_input("\nHit ENTER to continue")
 
 def starting_room_touch_junk():
     print """
 There is so much junk to choose from, you don't know where to begin. You do
 nothing."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def starting_room_touch_mattress():
     print """
 Springs. Notably mediocre."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def starting_room_touch_pen():
     print """
 Your clumsy fingers cause the pen to slide away from you."""
-    sleep(2)
+    sleep(1)
     print "\nUgh."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 starting_room_wake_up = """You wake up.
 
@@ -1082,7 +1126,7 @@ def stone_of_compassion_pickup():
 You pick up the stone. It is a bit dusty. But once your brush it off gently you
 notice that the stone is as brilliant as any you have ever looked on. Looking at
 the stone, you see the word 'COMPASSION' written on it."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 stone_of_compassion_message = """
 Know that each of us carries sorrow and pain, from the richest to the poorest
@@ -1100,7 +1144,7 @@ You pick up the stone. It is warm to the touch. It probably had that hugbot's
 exhaust blowing on it too. Somehow this stone reminds you of some of the
 happiest times you've had with some close friends, along ago. Looking at the
 stone, you see the word 'FRIENDSHIP' written on it."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 stone_of_friendship_message = """
 Know that to travel alone is the greatest way to make that trite mistake of
@@ -1114,7 +1158,7 @@ You pick up the stone. The man doesn't seem to notice at all. Somehow that's
 okay. You wonder why he seemed to exact such an influence on you. You feel more
 connected to yourself. Looking at the stone, you see the word 'PEACE' written
 on it."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 stone_of_peace_message = """
 May it help you find ease in the difficult life we all share. The odds are in
@@ -1130,7 +1174,7 @@ def stone_of_practice_pickup():
 You pick up the stone. You feel more sure of yourself. There is much that you
 do not know, but there is much that can be seen, experienced and learned. On the
 stone you see the word 'PRACTICE'."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 stone_of_practice_message = """
 Perhaps you have already travelled far down the path you have chosen. Perhaps
@@ -1145,7 +1189,7 @@ def stone_of_respect_pickup():
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
 would want you to take this and do with it what she did not get the change to.
 On the stone you see the word 'RESPECT'."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 stone_of_respect_message = """
 Let it remind you that each of us is here in the same way. Others have had a
@@ -1161,7 +1205,7 @@ def stone_of_silence_pickup():
 You pick up the stone. The room is now entirely quiet. Somehow, even your own
 body has seeemed to slow down and ease into the silence of this room. You feel
 well. On the stone you see the word 'SILENCE'."""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
 
 stone_of_silence_message = """
 One can hope it helps you it times when things seem chaotic and oppressive. When
@@ -1174,23 +1218,27 @@ talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
             "'Am I supposed to say anything in particular?'", "'La la la.'",
             "'The power of human expression is being tapped into right now.'",
             "'I don't have a whole lot more that I can say.'", "'Yup.'",
-            "'Good. Good.'", "'Lovely weather...'"]
+            "'Good. Good.'", "'Lovely weather...'", "'What can I say...'",
+            "'Amazing, aren't I?'",
+            "'If a genius speaks and no one is there to hear it...'"]
 
 the_door_already_open = """
 Good thing the door is already open. You felt certain that another struggle with
 an opponent this powerful would have resulted in grievious injury."""
 
+the_door_bag = "\nYou're carrying it."
+
 def the_door_experienced():
     print """
 Using your past failure to open the door to your advantage, you waste no time
 and pull on the door after turning the handle."""
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
     print "\nSuccess!"
-    sleep(1.5)
+    sleep(0.5)
 
 the_door_bearings1 = """
-An immaculate door is just to the north of you. Behind you, to the south, is the
-big, dripping room.
+The immaculate door is just to the north of you. Behind you, to the south, is
+the big, dripping room.
 
 What do you do?\n"""
 
@@ -1203,38 +1251,38 @@ What do you do?\n"""
 
 def the_door_believe():
     print "\n'Believe,' you whisper to yourself and march toward the door."
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print "\n'Ouch!'"
-    sleep(2.5)
+    sleep(1.5)
     print """
 Yes, this door really is there. Maybe it's worth trying to open it before
 attempting to channel Houdini some more."""
-    sleep(3.5)
+    raw_input("\nHit ENTER to continue")
 
 def the_door_can_pull():
-    print "In a desperate effort, you pull on the door handle."
-    sleep(2)
+    print "In a desperate effort, you decide to pull on the door handle."
+    raw_input("\nHit ENTER to continue")
     print "\nNice."
     sleep(2)
     print "\nThe door is now open."
-    sleep(1.5)
+    raw_input("\nHit ENTER to continue")
 
 def the_door_cant_push():
     print """
 You turn the handle and give the door a good push. Nothing. What? But the
 stones! You had hoped that this would be enough?"""
-    sleep(4)
+    sleep(2)
     print "\nWhat is missing? What needs be done?"
-    sleep(3)
+    sleep(2)
     print "\nYour mind spins around in despair..."
-    sleep(4)
+    raw_input("\nHit ENTER to continue")
 
 the_door_extra1 = """
 There is a bag made out of fabric on the floor next to the door. It is seriously
 messing up how cool this door looks.
 
 The door looks so beautiful that you would love to touch it, not that you'd
-expect to learn anything. There are also some slightly more useful looking
+expect to learn anything. There are also six slightly more useful looking
 indentations that are within reach."""
 
 the_door_extra2 = """
@@ -1258,54 +1306,62 @@ defeated."""
     print """
 'Of course! This door is a pull!' you say. You turn the handle and triumphantly
 pull on the door!"""
-    sleep(5)
+    raw_input("\nHit ENTER to continue")
     print "\nNope. Definitely not opening. At least you gave it your all!"
     sleep(2.5)
     print "\n(It wasn't enough.)"
-    sleep (1.5)
+    raw_input("\nHit ENTER to continue")
 
 def the_door_take_indentations():
-    print "\nIt would be very impressive if you could actually do that."
-    sleep(3)
+    print "\nIt'd be interesting to hear exactly how you intended to do that."
+    raw_input("\nHit ENTER to continue")
 
 def the_door_touch_indentations1():
     print "\nThese indentations are cold."
     sleep(2)
 
+def the_door_had_stone():
+    print """
+These indentations are no longer all empty. Perhaps it is worth trying to open
+the door now?"""
+    raw_input("\nHit ENTER to continue")
+
 def the_door_have_stone():
     print """
 It seems like a stone that you have might fit into one of these indentations.
 Maybe you could try placing the stone?"""
-    sleep(3.5)
+    raw_input("\nHit ENTER to continue")
 
 def the_door_no_stone():
     print """
 You wonder what these indentations might be for. Perhaps they are meant to hold
 something? But what? You'll have to look around."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def the_door_not_placed():
     print """
-You pull out a stone and get ready to place it on the wall. Except in your hand
-there is nothing at all. It is empty. How silly of you."""
-    sleep(4)
+You pull out a stone and get ready to place it on the wall."""
+    raw_input("\nHit ENTER to continue")
+    print"""
+But, in your handthere there is nothing at all. It is empty. How silly of you."""
+    sleep(2)
 
 def the_door_take_bag():
     print """
 There is something sticky under the bag so you have to really give it a tug
 before you can lift it up."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print """
 Upon closer inspection, it doesn't look half bad! Rough, rugged, tough, serious.
 The bag reminds you enough of your childhood that you think it's best if you
 hold onto it. Might come in handy."""
-    sleep(6)
+    raw_input("\nHit ENTER to continue")
 
 def the_door_touch_door():
     print "\nNo door has the right to feel this good."
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print "\nReluctantly, you back away."
-    sleep(2)
+    sleep(1.5)
 
 touch_stone = "\nHard.\n"
 
@@ -1317,29 +1373,29 @@ What do you do?\n"""
 
 def world_chill_final():
     print "\nYou feel you could do more good if you did not."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_chill_start():
     print """
 It is pretty comfortable."""
     sleep(3)
     print "\nYou wonder what else you can see if you go walk around a bit."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
     print "\nYou get up."
-    sleep(2)
+    sleep(1)
 
 def world_enjoy_final():
     print "\nThe world is rich."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_enjoy_start():
     print """
 Simply breathtaking..."""
-    sleep(6)
+    raw_input("\nHit ENTER to continue")
     print "\nYou wonder if some of the computers in the office have cable internet."
     sleep(2)
     print "\nYou're not really paying much attention any more."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 world_extra_lose = """
 Where the elephant was there is now nothing. To your left is a sizable rock.
@@ -1357,28 +1413,28 @@ and many mountains to look at. It is very hot."""
 
 def world_fan_final():
     print "\nAs hot as it is, you know that you will survive."
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def world_fan_start():
     print """
 The effect is not worth the effort"""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 world_failed = """
 You blink and the elephant is gone. There is no trace of it."""
 
 def world_gaze_final():
     print "\nYou see the mountains."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_gaze_start():
     print """
 You feel tiny."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print "\nYou wonder how easy it would be to climb up one of those mountaints."
     sleep(2)
     print "\nYou'll do it someday."
-    sleep(2)
+    sleep(1.5)
 
 world_intro_final = """
 Incredible. This passage somehow led to the top of a mountain. The view in
@@ -1396,16 +1452,16 @@ clothing. The elephant is facing you, but its eyes do not open as you enter."""
 
 def world_meditate_final():
     print "\nThere is much to do."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_meditate_start():
     print """
 You sit on the ground and cross your legs."""
-    sleep(4.5)
+    raw_input("\nHit ENTER to continue")
     print "\nYour right leg starts to cramp up."
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print "\nYou get up."
-    sleep(2)
+    sleep(1)
 
 world_overheating1 = "\nYou feel sweat building up on your brow."
 
@@ -1429,39 +1485,39 @@ def world_riddle():
     sleep(3)
     print """
 'What am I?'"""
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
     print "\nYou feel compelled to answer."
-    sleep(1.5)
+    sleep(1)
 
 def world_rock_final():
     print "\nIt feels as it should."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_rock_start():
     print "\nJust another rock."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_rock_buddy_final():
     print "\nWords would do no good."
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
 
 def world_rock_buddy_start():
     print """
 'How are you doing, rock?' you say."""
-    sleep(3)
+    raw_input("\nHit ENTER to continue")
     print "\nOk..."
-    sleep(1.5)
+    sleep(1)
 
 def world_sit_final():
     print "\nNot right now."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
 
 def world_sit_start():
     print """
 The ground is very hot from the sun."""
-    sleep(3)
-    print "\nThis sucks."
     sleep(2)
+    print "\n...this sucks."
+    raw_input("\nHit ENTER to continue")
     print "\nYou get up."
     sleep(2)
 
@@ -1471,4 +1527,4 @@ There is some small object where it elephant appeared to be."""
 
 def world_touch():
     print "\nSeems like a bad idea."
-    sleep(2)
+    raw_input("\nHit ENTER to continue")
