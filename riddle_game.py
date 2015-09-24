@@ -32,6 +32,7 @@ class Engine(object):
         if next_room == 'end':
             self.map.play(next_room)
 
+
 class Inventory(object):
 
     items = []
@@ -71,7 +72,6 @@ class Inventory(object):
             print all_strings.lose_game
             sleep(1.5)
             exit(1)
-
 
 
 class Room(object):
@@ -710,6 +710,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                 self.bearings = all_strings.dining_room_bearings_final
                 return self.enter()
 
+
 class Butcher(Room):
 
     name = 'butcher'
@@ -810,6 +811,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 self.extra = all_strings.butcher_extra_final
                 self.bearings = all_strings.butcher_bearings_final
                 return self.enter()
+
 
 class Racetrack(Room):
 
@@ -936,6 +938,7 @@ quickly counting down on the display that's (gently) pressing into your face.
                 self.extra = all_strings.racetrack_extra_final
                 self.bearings = all_strings.racetrack_bearings_final
                 return self.enter()
+
 
 class Alone(Room):
 
@@ -1123,6 +1126,7 @@ class Alone(Room):
         for i in xrange(count):
             sleep(1)
             print "\n."
+
 
 class World(Room):
 
@@ -1534,5 +1538,3 @@ if __name__ == "__main__":
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
-
-# TODO: Add more user prompts to continue with text (less sleeps)

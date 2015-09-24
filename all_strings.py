@@ -1238,8 +1238,8 @@ and pull on the door after turning the handle."""
     sleep(0.5)
 
 the_door_bearings1 = """
-The immaculate door is just to the north of you. Behind you, to the south, is the
-big, dripping room.
+The immaculate door is just to the north of you. Behind you, to the south, is
+the big, dripping room.
 
 What do you do?\n"""
 
