@@ -23,6 +23,7 @@ class Engine(object):
         if first_option == "new":
             first_room = "start"
         elif first_option == "load":
+            self.loader.load_it()
             first_room = self.loader.load_it()
 
         next_room = self.map.play(first_room)
@@ -95,6 +96,7 @@ class Room(object):
                 saved_file = the_saver.save()
                 with open('saved.py', 'wb') as save_doc:
                     pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
+                print "we visited middle at save: ", saved_file.rooms['middle']['visited']
                 print '\nGame saved.\n'
             elif action in self.bad_moves:
                 print all_strings.bad_moves
@@ -1304,7 +1306,6 @@ class Saver(object):
         save_file.items = self.inv.items
         save_file.starting = self.current
         save_file.failed_puzzles = self.inv.failed_puzzles
-        save_file.failed_puzzles = self.current
         for room, key in [(self.start, 'start'), (self.middle, 'middle'),
                     (self.door, 'door'),
                     (self.left, 'left'), (self.right, 'right'),
@@ -1355,6 +1356,7 @@ class Loader(object):
         self.inv = inventory
 
     def load_it(self):
+        print "pen is here:", self.info.rooms['start']['pen']
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
         for room in self.rooms.keys():
@@ -1388,7 +1390,12 @@ class Loader(object):
 if __name__ == "__main__":
     the_map = Map()
     the_menu = main.Menu()
-    load_game = main.FakeGame()
+
+    with open('saved.py', 'rb') as loaded_doc:
+        load_game = pickle.load(loaded_doc)
+
+    #load_game = main.FakeGame()
+    print "pen is here, bottom of file: ", load_game.rooms['start']['pen']
     inv = Inventory()
     loader = Loader(load_game, inv)
     game = Engine(the_map, the_menu, loader)
