@@ -1249,6 +1249,154 @@ class Map(object):
         print "\n" * 35
         return self.rooms[next_room].enter()
 
+class SavedGame(object):
+
+    items = []
+    failed_puzzles = 0
+    starting = "start"
+    rooms = {"start":
+                            {'pen': True, 'visited': True,
+                            'intro': all_strings.starting_room_intro,
+                            'extra': all_strings.starting_room_extra1,
+                            'bearings': all_strings.starting_room_bearings1},
+                    "middle":
+                            {'visited': False,
+                            'intro': all_strings.middle_room_intro,
+                            'extra': all_strings.middle_room_extra,
+                            'bearings': all_strings.middle_room_bearings},
+                    "door":
+                            {'visited': False,
+                            'door_open': False, 'attempted_door': False,
+                            'touched_indentations': False, 'bag_here': True,
+                            'intro': all_strings.the_door_intro,
+                            'extra': all_strings.the_door_extra1,
+                            'bearings': all_strings.the_door_bearings1,
+                            'Stone of Peace': False, 'Stone of Silence': False,
+                            'Stone of Respect': False,
+                            'Stone of Practice': False,
+                            'Stone of Friendship': False,
+                            'Stone of Compassion': False},
+                    "left":
+                            {'visited': False,
+                            'intro': all_strings.left_intro,
+                            'extra': all_strings.left_extra,
+                            'bearings': all_strings.left_bearing},
+                    "right":
+                            {'visited': False,
+                            'racetrack_open': True,
+                            'intro': all_strings.right_intro,
+                            'extra': all_strings.right_extra,
+                            'bearings': all_strings.right_bearings},
+                    "battlefield":
+                            {'visited': False,
+                            'solved': False, 'stone_here': True,
+                            'attempted': False,
+                            'intro': all_strings.battlefield_intro,
+                            'extra': all_strings.battlefield_extra_start,
+                            'bearings': all_strings.battlefield_bearings1},
+                    "dining room":
+                            {'visited': False, 'solved': False,
+                            'stone_here': True, 'attempted': False,
+                            'intro': all_strings.dining_room_intro,
+                            'extra': all_strings.dining_room_extra_start,
+                            'bearings': all_strings.dining_room_bearings_start},
+                    "butcher":
+                            {'visited': False, 'attempted': False,
+                            'solved': False, 'stone_here': True,
+                            'intro': all_strings.butcher_intro,
+                            'extra': all_strings.butcher_extra_start,
+                            'bearings': all_strings.butcher_bearings_start},
+                    "racetrack":
+                            {'visited': False,
+                            'solved': False, 'stone_here': True,
+                            'rock_on_floor': True, 'attempted': False,
+                            'intro': all_strings.racetrack_intro,
+                            'extra': all_strings.racetrack_extra_start,
+                            'bearings': all_strings.racetrack_bearings_start},
+                    "alone":
+                            {'solved': False, 'visited': False,
+                            'stone_here': True, 'final_response': False,
+                            'good_text_up': False, 'sad_text_up': False,
+                            'projector_power': False, "projector_on": False,
+                            "projector_open": False, "attempted": False,
+                            "looked": False,
+                            'intro': all_strings.alone_intro,
+                            'extra': all_strings.alone_extra_start,
+                            'bearings': all_strings.alone_bearings_start},
+                    "world":
+                            {'solved': False, 'visited': False,
+                            'stone_here': True, 'attempted': False,
+                            'intro': all_strings.world_intro_start,
+                            'extra': all_strings.world_extra_start,
+                            'bearings': all_strings.world_bearings_start}
+                    }
+
+class Saver(object):
+
+    rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
+            'left': left_room, 'right': right_room, 'butcher': butcher_room,
+            'dining room': dining_room, 'battlefield': battlefield_room,
+            'racetrack': racetrack_room, 'alone': alone_room,
+            'world': world_room}
+
+    puzzle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
+                    'alone', 'world']
+
+    def __init__(self, start, middle, door, left, right, battle,
+                dining, butcher, alone, race, world, inv, current):
+        self.start = start
+        self.middle = middle
+        self.door = door
+        self.left = left
+        self.right = right
+        self.battle = battle
+        self.dining = dining
+        self.butcher = butcher
+        self.alone = alone
+        self.race = race
+        self.world = world
+        self.inv = inv
+        self.current = current
+
+    def save(self):
+        save_file = main.SavedGame()
+        save_file.items = self.inv.items
+        save_file.failed_puzzles = self.inv.failed_puzzles
+        save_file.failed_puzzles = self.current
+        for room, key in [(self.start, 'start'), (self.middle, 'middle'),
+                    (self.door, 'door'),
+                    (self.left, 'left'), (self.right, 'right'),
+                    (self.battle 'battlefield'), (self.dining, 'dining room'),
+                    (self.butcher, 'butcher'), (self.alone, 'alone'),
+                    (self.race, 'racetrack'), (self.world, 'world')]:
+            save_file.rooms[key]['intro'] = room.intro
+            save_file.rooms[key]['bearings'] = room.bearings
+            save_file.rooms[key]['extra'] = room.extra
+            save_file.rooms[key]['visited'] = room.visited
+        for room, key in [(self.battle 'battlefield'), (self.dining, 'dining room'),
+                    (self.butcher, 'butcher'), (self.alone, 'alone'),
+                    (self.race, 'racetrack'), (self.world, 'world')]:
+            save_file.rooms[key]['solved'] = room.solved
+            save_file.rooms[key]['attempted'] = room.attempted
+            save_file.rooms[key]['stone_here'] = room.stone_here
+        save_file.rooms['start']['pen'] = self.start.pen
+        save_file.rooms['door']['door_open'] = self.door.door_open
+        save_file.rooms['door']['attempted_door'] = self.door.attempted_door
+        (save_file.rooms['door']['touched_indentations'] =
+            self.door.touched_indentations)
+        save_file.rooms['door']['bag_here'] = self.door.bag_here
+        for stone in self.door.stones.keys():
+            save_file.rooms['door'][stone] = self.door.stones[stone]
+        save_file.rooms['right']['racetrack_open'] = self.right.racetrack_open
+        save_file.rooms['alone']['final_response'] = self.alone.final_response
+        save_file.rooms['alone']['good_text_up'] = self.alone.good_text_up
+        save_file.rooms['alone']['sad_text_up'] = self.alone.sad_text_up
+        save_file.rooms['alone']['projector_power'] = self.alone.projector_power
+        save_file.rooms['alone']['projector_on'] = self.alone.projector_on
+        save_file.rooms['alone']['projector_open'] = self.alone.projector_open
+        save_file.rooms['alone']['looked'] = self.alone.looked
+
+
 class Loader(object):
 
     rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
@@ -1293,6 +1441,7 @@ class Loader(object):
         alone_room.looked = self.info.rooms['alone']['looked']
 
         return self.info.starting
+
 
 if __name__ == "__main__":
     the_map = Map()
