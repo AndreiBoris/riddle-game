@@ -4,7 +4,6 @@ from random import choice
 from sys import exit
 import pickle
 import all_strings
-import main
 
 
 class Engine(object):
