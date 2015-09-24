@@ -741,6 +741,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
 
 class Racetrack(Room):
 
+    rock_on_floor = True
     throw_options = ["throw rock", "throw rock at person",
                     "throw rock at human", "throw rock at the person",
                     "throw rock at the robot", "throw rock at robot",
@@ -756,6 +757,9 @@ class Racetrack(Room):
     extra = all_strings.racetrack_extra_start
     bearings = all_strings.racetrack_bearings_start
     def enter(self):
+        if not self.rock_on_floor and not self.attempted:
+            for option in self.throw_options:
+                self.good_moves.append(option)
         if self.attempted and 'throw rock' in self.good_moves:
             for option in self.throw_options:
                 self.good_moves.remove(option)
@@ -767,22 +771,27 @@ class Racetrack(Room):
             return "right"
 
         if action == "touch rock":
-            all_strings.racetrack_touch_rock()
-            return self.enter()
+            if self.rock_on_floor:
+                all_strings.racetrack_touch_rock()
+                return self.enter()
+            else:
+                all.strings.racetrack_touch_rock_gone()
+                return self.enter()
 
         if action == "talk":
             all_strings.racetrack_talk()
             return self.enter()
 
         if action == "take rock" or action == "take small rock":
-            all_strings.racetrack_take_rock()
-            inv.add('rock')
-            for option in ["take rock", "take small rock", "touch rock"]:
-                self.good_moves.remove(option)
-            for option in self.throw_options:
-                self.good_moves.append(option)
-            self.extra = all_strings.racetrack_extra_no_rock
-            return self.enter()
+            if self.rock_on_floor:
+                self.rock_on_floor = False
+                all_strings.racetrack_take_rock()
+                inv.add('rock')
+                self.extra = all_strings.racetrack_extra_no_rock
+                return self.enter()
+            else:
+                all_strings.racetrack_take_rock_gone()
+                return self.enter()
 
         if action == "throw rock":
             all_strings.racetrack_throw_rock()
@@ -790,10 +799,11 @@ class Racetrack(Room):
 
         if action == "throw rock at human" or action == "throw rock at person":
             inv.remove('rock')
+            self.attempted = True
             all_strings.racetrack_throw_rock_at_human()
             inv.failed_puzzles += 1
             inv.end_if_failed()
-            Right.racetrack_open = False
+            right_room.racetrack_open = False
             return "right"
 
         if action == "talk to robot" or action == "talk to the robot":
@@ -1264,7 +1274,6 @@ class Loader(object):
             self.rooms[room].bearings = self.info.rooms[room]['bearings']
         for room in self.puzzle_rooms:
             self.rooms[room].solved = self.info.rooms[room]['solved']
-            # THIS attempted IS NOT DEFINED MUST GO AND DEFINE EACH PUZZLE ROOM
             self.rooms[room].attempted = self.info.rooms[room]['attempted']
             self.rooms[room].stone_here = self.info.rooms[room]['stone_here']
         start_room.pen = self.info.rooms['start']['pen']

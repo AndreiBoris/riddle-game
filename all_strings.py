@@ -868,8 +868,8 @@ Cheshire face sending hot air straight to your face."""
     print """
 Before you can respond the robot hugs you. The embrace is tight but not painful.
 Its robot arms are made of some kind of impossibly comfortable material.
-Something cracks inside and you feel yourself on the verge of tears, but you
-restrain yourself. 'This is just a robot!' you think to yourself."""
+Some emotional nut cracks inside and you feel yourself on the verge of tears,
+but you restrain yourself. 'This is just a robot!' you think to yourself."""
     sleep(7)
     print """
 'Remember you can always say the safeword if you feel you cannot accept the love
@@ -893,8 +893,8 @@ The hugbot backs away suddenly.
 dear friends of your own,' it says."""
     sleep(5)
     print """
-'I will leave this here, if you choose to pick it up, may be a reminder for you
-of what is essential for happiness.'
+'I will leave this here, if you choose to pick it up, may it be a reminder for
+you of what is essential for your well-being.'
 
 You hear something drop on the other side of the robot. The robot then drives
 away, presumably to give some robot loving to these other humans."""
@@ -906,6 +906,12 @@ def racetrack_talk():
 def racetrack_take_rock():
     print """
 You pick up the rock. Hefty."""
+    sleep(3)
+
+def racetrack_take_rock_gone():
+    print """
+You remember there once was a rock. But no longer. Times ain't what they used to
+be."""
     sleep(3)
 
 def racetrack_talk_to_robot():
@@ -964,6 +970,10 @@ def racetrack_touch_rock():
 Good thing that you tried to touch that rock before taking it. Now you can
 confirm without a doubt that it is a rock."""
     sleep(3)
+
+def racetrack_touch_rock_gone():
+    print '\nThe rock is gone. They all leave, don\'t they?'
+    sleep(2)
 
 right_bearings = """
 To the north appears to be another bachelor's apartment. You wonder what the

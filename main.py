@@ -101,7 +101,7 @@ class SavedGame(object):
                             'bearings': all_strings.dining_room_bearings_start},
                     "butcher":
                             {'solved': False, 'visited': False,
-                            'stone here': True, 'touched meat': False,
+                            'stone_here': True, 'touched meat': False,
                             'took pig': False, 'took meat': False,
                             'attempted': False,
                             'intro': all_strings.butcher_intro,
@@ -109,14 +109,14 @@ class SavedGame(object):
                             'bearings': all_strings.butcher_bearings_start},
                     "race":
                             {'solved': False, 'visited': False,
-                            'stone here':True, 'rock here': True,
+                            'stone_here':True, 'rock here': True,
                             'attempted': False,
                             'intro': all_strings.racetrack_intro,
                             'extra': all_strings.racetrack_extra_start,
                             'bearings': all_strings.racetrack_bearings_start},
                     "alone":
                             {'solved': False, 'visited': False,
-                            'stone here': True, 'final_response': False,
+                            'stone_here': True, 'final_response': False,
                             'good_text_up': False, 'sad_text_up': False,
                             'projector_power': False, "projector_on": False,
                             "projector_open": False, "attempted": False,
@@ -126,7 +126,7 @@ class SavedGame(object):
                             'bearings': all_strings.alone_bearings_start},
                     "world":
                             {'solved': False, 'visited': False,
-                            'stone here': True, 'attempted': False,
+                            'stone_here': True, 'attempted': False,
                             'intro': all_strings.world_intro_start,
                             'extra': all_strings.world_extra_start,
                             'bearings': all_strings.world_bearings_start}
@@ -186,7 +186,7 @@ class FakeGame(object):
                             'bearings': all_strings.dining_room_bearings_start},
                     "butcher":
                             {'visited': False,
-                            'solved': False, 'stone here': True,
+                            'solved': False, 'stone_here': True,
                             'touched meat': False, 'took pig': False,
                             'took meat': False, 'attempted': False,
                             'intro': all_strings.butcher_intro,
@@ -194,14 +194,14 @@ class FakeGame(object):
                             'bearings': all_strings.butcher_bearings_start},
                     "racetrack":
                             {'visited': True,
-                            'solved': False, 'stone here':True,
-                            'rock here': True, 'attempted': False,
+                            'solved': False, 'stone_here':True,
+                            'rock_on_floor': True, 'attempted': False,
                             'intro': all_strings.racetrack_intro,
                             'extra': all_strings.racetrack_extra_start,
                             'bearings': all_strings.racetrack_bearings_start},
                     "alone":
                             {'solved': False, 'visited': False,
-                            'stone here': True, 'final_response': False,
+                            'stone_here': True, 'final_response': False,
                             'good_text_up': False, 'sad_text_up': False,
                             'projector_power': False, "projector_on": False,
                             "projector_open": False, "attempted": False,
@@ -211,7 +211,7 @@ class FakeGame(object):
                             'bearings': all_strings.alone_bearings_start},
                     "world":
                             {'solved': False, 'visited': False,
-                            'stone here': True, 'attempted': False,
+                            'stone_here': True, 'attempted': False,
                             'intro': all_strings.world_intro_start,
                             'extra': all_strings.world_extra_start,
                             'bearings': all_strings.world_bearings_start}
