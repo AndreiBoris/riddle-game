@@ -1490,11 +1490,5 @@ if __name__ == "__main__":
     game = Engine(the_map, the_menu, loader)
     game.play()
 
-# TODO: Get rid of string literals
-# TODO: Refactor the stone pick ups to take the message upon pick up and the
-# particular stone picked up to maybe avoid the large amounts of duplicate code
 # TODO: Get the riddles failed counter to give some kind of message to indicate
 # that players should try to not fail puzzles
-# TODO: Add a way to save the game... its a bit long.
-# TODO: Make the talked (or attempted) thing that removes those options into
-# a procedure
