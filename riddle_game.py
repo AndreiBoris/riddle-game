@@ -1284,6 +1284,14 @@ class Loader(object):
         for stone in door_room.stones.keys():
             door_room.stones[stone] = self.info.rooms['door'][stone]
         right_room.racetrack_open = self.info.rooms['right']['racetrack_open']
+        alone_room.final_response = self.info.rooms['alone']['final_response']
+        alone_room.good_text_up = self.info.rooms['alone']['good_text_up']
+        alone_room.sad_text_up = self.info.rooms['alone']['sad_text_up']
+        alone_room.projector_power = self.info.rooms['alone']['projector_power']
+        alone_room.projector_on = self.info.rooms['alone']['projector_on']
+        alone_room.projector_open = self.info.rooms['alone']['projector_open']
+        alone_room.looked = self.info.rooms['alone']['looked']
+
         return self.info.starting
 
 if __name__ == "__main__":

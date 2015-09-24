@@ -185,10 +185,8 @@ class FakeGame(object):
                             'extra': all_strings.dining_room_extra_start,
                             'bearings': all_strings.dining_room_bearings_start},
                     "butcher":
-                            {'visited': False,
+                            {'visited': False, 'attempted': False,
                             'solved': False, 'stone_here': True,
-                            'touched meat': False, 'took pig': False,
-                            'took meat': False, 'attempted': False,
                             'intro': all_strings.butcher_intro,
                             'extra': all_strings.butcher_extra_start,
                             'bearings': all_strings.butcher_bearings_start},
