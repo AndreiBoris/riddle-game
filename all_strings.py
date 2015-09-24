@@ -680,6 +680,8 @@ I would love to hear from you."""
 
 empty_inv = "Just the clothes on your back."
 
+goodbye = "\nGoodbye!"
+
 helper = """
 Here are some actions that you might be able to take:
 
@@ -741,6 +743,15 @@ line_break = "--------------------------------"
 lose_game = """
 None of these rooms seem to make any sense. 'Why am I here?!' you call out.
 You receive no answer. You have no answer. There is nothing."""
+
+lost_1 = """
+You feel a bit shaken. That wasn't supposed to happen. You feel like you lost
+an opportunity forever."""
+
+lost_2 = """
+This is the second time that something has gone quite strangely. You feel
+discouraged but you also know that you can do better. Pay more attention. Win.
+Otherwise..."""
 
 middle_room_bearings ="""
 To the north there is a door that is in impeccably good condition. To the

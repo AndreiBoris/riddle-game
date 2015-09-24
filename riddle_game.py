@@ -61,10 +61,17 @@ class Inventory(object):
         return count
 
     def end_if_failed(self):
+        if self.failed_puzzles == 1:
+            print all_strings.lost_1
+            sleep(1.5)
+        if self.failed_puzzles == 2:
+            print all_strings.lost_2
+            sleep(1.5)
         if self.failed_puzzles >= 3:
             print all_strings.lose_game
             sleep(1.5)
             exit(1)
+
 
 
 class Room(object):
@@ -107,6 +114,7 @@ class Room(object):
             elif action == 'quit':
                 confirm = raw_input('\nAre you sure you want to quit? y/n > ').lower()
                 if confirm == 'y' or confirm == 'yes':
+                    print all_strings.goodbye
                     exit(1)
                 else:
                     print all_strings.action_prompt
