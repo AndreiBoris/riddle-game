@@ -400,7 +400,8 @@ class TheDoor(Room):
                     'walk south', 'go south', 'take bag', 'open door',
                     'go north', 'walk north', 'touch indentations',
                     'place stone', 'touch indentation', 'take indentations',
-                    'take indentation']
+                    'take indentation', 'look at indentations',
+                    'look at indentation']
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
@@ -423,13 +424,19 @@ class TheDoor(Room):
             all_strings.the_door_take_indentations()
             return self.enter()
 
-        if action == 'touch indentation' or action == 'touch indentations':
-            all_strings.the_door_touch_indentations1()
+        if (action == 'touch indentation' or action == 'touch indentations',
+            action == 'look at indentations' or
+            action == 'look at indentation'):
+            if action == 'touch indentation' or action == 'touch indentations':
+                all_strings.the_door_touch_indentations()
+            if action == 'look at indentation' or action == 'look at indentations':
+                all_strings.the_door_see_indentations()
             TheDoor.touched_indentations = True
             have_stone = False
             had_stone = False
 
             for stone in self.stones.keys():
+
                 if stone in inv.items:
                     have_stone = True
                 if self.stones[stone]:
@@ -440,6 +447,18 @@ class TheDoor(Room):
                 return self.enter()
 
             elif had_stone:
+                if self.stones['Stone of Peace']:
+                    all_strings.the_door_s_peace()
+                if self.stones['Stone of Silence']:
+                    all_strings.the_door_s_silence()
+                if self.stones['Stone of Compassion']:
+                    all_strings.the_door_s_compassion()
+                if self.stones['Stone of Friendship']:
+                    all_strings.the_door_s_friendship()
+                if self.stones['Stone of Respect']:
+                    all_strings.the_door_s_respect()
+                if self.stones['Stone of Practice']:
+                    all_strings.the_door_s_practice()
                 all_strings.the_door_had_stone()
                 return self.enter()
 

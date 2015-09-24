@@ -1314,18 +1314,9 @@ pull on the door!"""
     print "\n(It wasn't enough.)"
     raw_input("\nHit ENTER to continue")
 
-def the_door_take_indentations():
-    print "\nIt'd be interesting to hear exactly how you intended to do that."
-    raw_input("\nHit ENTER to continue")
-
-def the_door_touch_indentations1():
-    print "\nThese indentations are cold."
-    sleep(2)
-
 def the_door_had_stone():
     print """
-These indentations are no longer all empty. Perhaps it is worth trying to open
-the door now?"""
+Is that enough to unlock the door?"""
     raw_input("\nHit ENTER to continue")
 
 def the_door_have_stone():
@@ -1348,6 +1339,38 @@ You pull out a stone and get ready to place it on the wall."""
 But, in your handthere there is nothing at all. It is empty. How silly of you."""
     sleep(2)
 
+def the_door_s_peace():
+    print"""
+One of the indentations has The Stone of Peace resting in it."""
+    raw_input("\nHit ENTER to continue")
+
+def the_door_s_silence():
+    print"""
+The Stone of Silence is quietly lodged into an indentation."""
+    raw_input("\nHit ENTER to continue")
+
+def the_door_s_compassion():
+    print"""
+The indentation with The Stone of Compassion looks better than it did before."""
+    raw_input("\nHit ENTER to continue")
+
+def the_door_s_friendship():
+    print"""
+The Stone of Friendship has found a new home with one of these indentations."""
+    raw_input("\nHit ENTER to continue")
+
+def the_door_s_respect():
+    print"""
+There is something deeply proper about how The Stone of Respect sits in its
+indentation."""
+    raw_input("\nHit ENTER to continue")
+
+def the_door_s_practice():
+    print"""
+The perfection with which The Stone of Practice fits into its indentation is
+unmatched by anything you have seen."""
+    raw_input("\nHit ENTER to continue")
+
 def the_door_take_bag():
     print """
 There is something sticky under the bag so you have to really give it a tug
@@ -1359,11 +1382,24 @@ The bag reminds you enough of your childhood that you think it's best if you
 hold onto it. Might come in handy."""
     raw_input("\nHit ENTER to continue")
 
+def the_door_see_indentations():
+    print "\nThere are three on each side of the door."
+    sleep(2)
+
+def the_door_take_indentations():
+    print "\nIt'd be interesting to hear exactly how you intended to do that."
+    raw_input("\nHit ENTER to continue")
+
 def the_door_touch_door():
     print "\nNo door has the right to feel this good."
     raw_input("\nHit ENTER to continue")
     print "\nReluctantly, you back away."
     sleep(1.5)
+
+def the_door_touch_indentations():
+    print "\nThese indentations are cold."
+    sleep(2)
+
 
 touch_stone = "\nHard.\n"
 
