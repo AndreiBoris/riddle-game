@@ -10,6 +10,10 @@ class Engine(object):
 
     def __init__(self, a_map, loader):
         self.map = a_map
+
+# The loader carries a set of saved-game properties and can be called upon by
+# Engine to apply to properties to the current file.
+
         self.loader = loader
 
     def play(self):
@@ -20,10 +24,19 @@ class Engine(object):
         choice = ''
         while choice != 'new' and choice != 'load':
             choice = raw_input('\n> ').lower()
-        if choice == "new":
-            first_room = "start"
-        elif choice == "load":
+        if choice == 'new':
+            first_room = 'start'
+        elif choice == 'load':
+
+# If there is is no saved file, the loader has default properties loaded to it
+# and will act just like a running a new game. load_it() changes the state of
+# the room objects defined lower down in this file and returns only the starting
+# room (i.e. where the save was made.)
+
             first_room = self.loader.load_it()
+
+# the play() method in the Map() class runs the enter() method of the room
+# objects. The room objects return markers that can be put into this play().
 
         next_room = self.map.play(first_room)
 
@@ -36,10 +49,13 @@ class Engine(object):
 class Inventory(object):
 
     items = []
+
+# 3 failed puzzles mean the game cannot be completed, so at that point it fails.
+
     failed_puzzles = 0
 
     def show(self):
-        print "\nYour inventory:"
+        print '\nYour inventory:'
         for item in self.items:
             print item
         if not self.items:
@@ -48,33 +64,42 @@ class Inventory(object):
     def add(self, new_item):
         self.items.append(new_item)
 
+# This is for an aethetic reason - one item 'dirty bag' fits better at the top
+# of the inventory, so this method is called.
+
     def add_to_top(self, new_item):
         self.items.insert(0, new_item)
 
     def remove(self, old_item):
         self.items.remove(old_item)
 
+# The player cannot carry more than 1 stone without a bag.
+
     def stones_carried(self):
         count = 0
         for item in self.items:
-            if item.split()[0] == "Stone":
+            if item.split()[0] == 'Stone':
                 count += 1
         return count
+
+# Gives warning messages and finally a terminating one.
 
     def end_if_failed(self):
         if self.failed_puzzles == 1:
             print all_strings.lost_1
-            raw_input("\nHit ENTER to continue")
+            raw_input('\nHit ENTER to continue')
         if self.failed_puzzles == 2:
             print all_strings.lost_2
-            raw_input("\nHit ENTER to continue")
+            raw_input('\nHit ENTER to continue')
         if self.failed_puzzles >= 3:
             print all_strings.lose_game
-            raw_input("\nHit ENTER to continue")
+            raw_input('\nHit ENTER to continue')
             exit(1)
 
 
 class Room(object):
+
+# Some of these are not used for some of the rooms.
 
     current_room = False
     guesses_left = 5
@@ -83,18 +108,29 @@ class Room(object):
     visited = False
     bad_moves = []
     good_moves = []
-    extra = ""
+    extra = ''
     helper = all_strings.helper
-    bearings = all_strings.room_bearings
+    bearings = ''
     attempted = False
 
     def action(self):
         # basic action options for any room
         action = raw_input("> ").lower()
+
+# Each room has a specific mutable set of actions that are good_moves, if one
+# of those is picked, that action is returned and fed into the room's script,
+# otherwise this action handles it and reprompts the user.
+
         while action not in self.good_moves:
+
+# Having the 'touch stone' line here saves having to put it into each
+# individual room.
 
             if action == 'touch stone' and 'take stone' in self.good_moves:
                 print all_strings.touch_stone
+
+# Saver() relies on taking all the room objects that are initialized at the
+# bottom of this code.
 
             elif action == 'save':
                 confirm = raw_input('\nAre you sure you want to save? y/n > ').lower()
@@ -103,6 +139,10 @@ class Room(object):
                                         right_room, battlefield_room, dining_room,
                                         butcher_room, alone_room, racetrack_room,
                                         world_room, inv, self.name)
+
+# the save() method returns a SavedGame() object that has had the attributes
+# of the current room objects loaded into it.
+
                     saved_file = the_saver.save()
                     with open('saved.py', 'wb') as save_doc:
                         pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
@@ -180,14 +220,22 @@ class Room(object):
 
             action = raw_input("> ").lower()
 
+# This only plays when one of the good_moves is chosen.
+
         print "\nYou attempt to %s." % action
         sleep(0.75)
         return action
 
     def stone_available(self):
 
+# This runs at the beginning of each puzzle room (except for Alone(), see
+# specific comments for that one)
+
         if self.stone_here and self.solved and "take stone" not in self.good_moves:
             self.good_moves.append("take stone")
+
+# correct_intro() Decides which messages to play when enter() is run in any
+# room.
 
     def correct_intro(self):
         if self.visited == False:
@@ -219,6 +267,11 @@ class StartingRoom(Room):
     bearings = all_strings.starting_room_bearings1
 
     def enter(self):
+
+# Checks good_moves first to avoid errors when trying to remove the options,
+# if 'take pen' is there so is 'touch pen' since this is the only spot where
+# they get removed. This applied to all similar code at the top of other rooms
+
         if not self.pen and 'take pen' in self.good_moves:
             for option in ["take pen", "touch pen"]:
                 self.good_moves.remove(option)
@@ -1026,6 +1079,9 @@ class Alone(Room):
     bearings = all_strings.alone_bearings_start
     def enter(self):
 
+# This is in essence the same thing as the stone_available() method from Room()
+# but it also checks looked.
+
         if (self.solved and self.stone_here and
          "take stone" not in self.good_moves and self.looked):
             self.good_moves.append('take stone')
@@ -1417,6 +1473,9 @@ class End(Room):
         raw_input("Ready to finish? > ")
         print all_strings.end_message
         exit(1)
+
+# These Room objects are necessary as they allow the Saver to get the current
+# state of each of the rooms
 
 start_room = StartingRoom()
 middle_room = MiddleRoom()
