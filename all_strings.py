@@ -1025,6 +1025,14 @@ There appears to be no way to get your bearings in this generic room.
 What do you do?
 """
 
+start_game = """
+Welcome to the game!
+
+Options:
+
+New
+Load"""
+
 starting_room_bearings1 = """
 There is some junk lying around. There is a hallway to the north.
 

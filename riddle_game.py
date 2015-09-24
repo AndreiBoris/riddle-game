@@ -9,19 +9,21 @@ import main
 
 class Engine(object):
 
-    def __init__(self, a_map, the_menu, loader):
+    def __init__(self, a_map, loader):
         self.map = a_map
-        self.menu = the_menu
         self.loader = loader
 
     def play(self):
         # this will run for the duration of the game, using self.map to
         # navigate between the rooms
 
-        first_option = self.menu.run(1)
-        if first_option == "new":
+        print all_strings.start_game
+        choice = ''
+        while choice != 'new' and choice != 'load':
+            choice = raw_input('\n> ').lower()
+        if choice == "new":
             first_room = "start"
-        elif first_option == "load":
+        elif choice == "load":
             self.loader.load_it()
             first_room = self.loader.load_it()
 
@@ -1501,7 +1503,6 @@ class SavedGame(object):
 
 if __name__ == "__main__":
     the_map = Map()
-    the_menu = main.Menu()
 
     try:
         with open('saved.py', 'rb') as loaded_doc:
@@ -1511,7 +1512,7 @@ if __name__ == "__main__":
 
     inv = Inventory()
     loader = Loader(load_game, inv)
-    game = Engine(the_map, the_menu, loader)
+    game = Engine(the_map, loader)
     game.play()
 
 # TODO: Get the riddles failed counter to give some kind of message to indicate

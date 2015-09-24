@@ -1,6 +1,3 @@
-import all_strings
-import riddle_game
-
 class Menu(object):
 
     menu_options = ["1. New", "2. Load"]
