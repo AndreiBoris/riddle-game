@@ -1554,6 +1554,7 @@ class Saver(object):
             save_file.rooms[key]['attempted'] = room.attempted
             save_file.rooms[key]['stone_here'] = room.stone_here
 
+        save_file.rooms['start']['start_of_game'] = self.start.start_of_game
         save_file.rooms['start']['pen'] = self.start.pen
         save_file.rooms['door']['door_open'] = self.door.door_open
         save_file.rooms['door']['attempted_door'] = self.door.attempted_door
@@ -1605,6 +1606,7 @@ class Loader(object):
             self.rooms[room].attempted = self.info.rooms[room]['attempted']
             self.rooms[room].stone_here = self.info.rooms[room]['stone_here']
 
+        start_room.start_of_game = self.info.rooms['start']['start_of_game']
         start_room.pen = self.info.rooms['start']['pen']
         door_room.door_open = self.info.rooms['door']['door_open']
         door_room.attempted_door = self.info.rooms['door']['attempted_door']
@@ -1634,6 +1636,7 @@ class SavedGame(object):
         self.starting = "start"
         self.rooms = {"start":
                                 {'pen': True, 'visited': True,
+                                'start_of_game': True,
                                 'intro': all_strings.starting_room_intro,
                                 'extra': all_strings.starting_room_extra1,
                                 'bearings': all_strings.starting_room_bearings1},
