@@ -56,7 +56,7 @@ class SavedGame(object):
     failed_puzzles = 0
     starting = "start"
     rooms = {"start":
-                            {'pen': False, 'visited': True,
+                            {'pen': True, 'visited': True,
                             'intro': all_strings.starting_room_intro,
                             'extra': all_strings.starting_room_extra1,
                             'bearings': all_strings.starting_room_bearings1},
@@ -134,7 +134,7 @@ class SavedGame(object):
 
 class FakeGame(object):
 
-    items = ['dirty bag', 'ballpoint pen']
+    items = ['ballpoint pen']
     failed_puzzles = 1
     starting = "right"
     rooms = {"start":
@@ -166,7 +166,7 @@ class FakeGame(object):
                             'bearings': all_strings.left_bearing},
                     "right":
                             {'visited': True,
-                            'racetrack_open': False,
+                            'racetrack_open': True,
                             'intro': all_strings.right_intro,
                             'extra': all_strings.right_extra,
                             'bearings': all_strings.right_bearings},
@@ -180,12 +180,12 @@ class FakeGame(object):
                     "dining room":
                             {'visited': False,
                             'solved': False,
-                            'stone_here': True, 'attempted': False,
+                            'stone_here': True, 'attempted': True,
                             'intro': all_strings.dining_room_intro,
                             'extra': all_strings.dining_room_extra_start,
                             'bearings': all_strings.dining_room_bearings_start},
                     "butcher":
-                            {'visited': False, 'attempted': False,
+                            {'visited': False, 'attempted': True,
                             'solved': False, 'stone_here': True,
                             'intro': all_strings.butcher_intro,
                             'extra': all_strings.butcher_extra_start,
@@ -193,7 +193,7 @@ class FakeGame(object):
                     "racetrack":
                             {'visited': True,
                             'solved': False, 'stone_here':True,
-                            'rock_on_floor': True, 'attempted': False,
+                            'rock_on_floor': True, 'attempted': True,
                             'intro': all_strings.racetrack_intro,
                             'extra': all_strings.racetrack_extra_start,
                             'bearings': all_strings.racetrack_bearings_start},
@@ -202,14 +202,14 @@ class FakeGame(object):
                             'stone_here': True, 'final_response': False,
                             'good_text_up': False, 'sad_text_up': False,
                             'projector_power': False, "projector_on": False,
-                            "projector_open": False, "attempted": False,
+                            "projector_open": False, "attempted": True,
                             "looked": False,
                             'intro': all_strings.alone_intro,
                             'extra': all_strings.alone_extra_start,
                             'bearings': all_strings.alone_bearings_start},
                     "world":
                             {'solved': False, 'visited': False,
-                            'stone_here': True, 'attempted': False,
+                            'stone_here': True, 'attempted': True,
                             'intro': all_strings.world_intro_start,
                             'extra': all_strings.world_extra_start,
                             'bearings': all_strings.world_bearings_start}
