@@ -1633,6 +1633,7 @@ class Saver(object):
             save_file.rooms['door'][stone] = self.door.stones[stone]
 
         save_file.rooms['right']['racetrack_open'] = self.right.racetrack_open
+        save_file.rooms['racetrack']['rock_on_floor'] = self.race.rock_on_floor
         save_file.rooms['alone']['final_response'] = self.alone.final_response
         save_file.rooms['alone']['good_text_up'] = self.alone.good_text_up
         save_file.rooms['alone']['sad_text_up'] = self.alone.sad_text_up
@@ -1685,6 +1686,7 @@ class Loader(object):
             door_room.stones[stone] = self.info.rooms['door'][stone]
 
         right_room.racetrack_open = self.info.rooms['right']['racetrack_open']
+        racetrack_room.rock_on_floor = self.info.rooms['racetrack']['rock_on_floor']
         alone_room.final_response = self.info.rooms['alone']['final_response']
         alone_room.good_text_up = self.info.rooms['alone']['good_text_up']
         alone_room.sad_text_up = self.info.rooms['alone']['sad_text_up']
