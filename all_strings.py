@@ -671,7 +671,7 @@ You are standing in a tiny room."""
 The magnificent door behind you closes shut."""
     sleep(4)
 
-end_message = """
+end_message = """\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n
 Thank you for taking the time. It is appreciated.
 
 If you noticed something that seemed like a bug or just have any comments,
@@ -852,8 +852,8 @@ appears to be deciding who to go after next."""
 def racetrack_riddle():
     print """
 You hurl the rock at the robot. If you had a killer arm you might have actually
-gotten it somewhat close to the robot, which is a fair bit further away than you
-had judged."""
+gotten the rock somewhat close to the robot, which is a fair bit further away
+than you had judged."""
     sleep(5)
     print """
 Luckily (?) the robot seems to have noticed you regardless. It turns around and
@@ -1099,7 +1099,7 @@ def stone_of_compassion_pickup():
 You pick up the stone. It is a bit dusty. But once your brush it off gently you
 notice that the stone is as brilliant as any you have ever looked on. Looking at
 the stone, you see the word 'COMPASSION' written on it."""
-    sleep(5)
+    sleep(3.5)
 
 stone_of_compassion_message = """
 Know that each of us carries sorrow and pain, from the richest to the poorest
@@ -1117,7 +1117,7 @@ You pick up the stone. It is warm to the touch. It probably had that hugbot's
 exhaust blowing on it too. Somehow this stone reminds you of some of the
 happiest times you've had with some close friends, along ago. Looking at the
 stone, you see the word 'FRIENDSHIP' written on it."""
-    sleep(5)
+    sleep(3.5)
 
 stone_of_friendship_message = """
 Know that to travel alone is the greatest way to make that trite mistake of
@@ -1131,7 +1131,7 @@ You pick up the stone. The man doesn't seem to notice at all. Somehow that's
 okay. You wonder why he seemed to exact such an influence on you. You feel more
 connected to yourself. Looking at the stone, you see the word 'PEACE' written
 on it."""
-    sleep(5)
+    sleep(3.5)
 
 stone_of_peace_message = """
 May it help you find ease in the difficult life we all share. The odds are in
@@ -1147,7 +1147,7 @@ def stone_of_practice_pickup():
 You pick up the stone. You feel more sure of yourself. There is much that you
 do not know, but there is much that can be seen, experienced and learned. On the
 stone you see the word 'PRACTICE'."""
-    sleep(5)
+    sleep(3.5)
 
 stone_of_practice_message = """
 Perhaps you have already travelled far down the path you have chosen. Perhaps
@@ -1162,7 +1162,7 @@ def stone_of_respect_pickup():
 You pick up the stone. Perhaps you are imagining this, but you feel the soldier
 would want you to take this and do with it what she did not get the change to.
 On the stone you see the word 'RESPECT'."""
-    sleep(5)
+    sleep(3.5)
 
 stone_of_respect_message = """
 Let it remind you that each of us is here in the same way. Others have had a
@@ -1178,7 +1178,7 @@ def stone_of_silence_pickup():
 You pick up the stone. The room is now entirely quiet. Somehow, even your own
 body has seeemed to slow down and ease into the silence of this room. You feel
 well. On the stone you see the word 'SILENCE'."""
-    sleep(5)
+    sleep(3.5)
 
 stone_of_silence_message = """
 One can hope it helps you it times when things seem chaotic and oppressive. When

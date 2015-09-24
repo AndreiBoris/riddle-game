@@ -4,11 +4,7 @@ import riddle_game
 class Menu(object):
 
     menu_options = ["1. New", "2. Load"]
-    ingame_menu_options = ["1. New", "2. Save", "3. Load", "4. Continue"]
     menu = {1: ["Start a New Game", "new"], 2: ["Load Game", "load"]}
-    ingame_menu = {1: ["Start a New Game", "pam"], 2: ["Save Game", "bam"],
-                    3: ["Load Game", "uncle sam"],
-                    4: ["Continue Game", "roger roger"]}
 
     def run(self, version):
         if version == 1:

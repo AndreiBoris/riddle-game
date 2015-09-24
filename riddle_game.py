@@ -18,7 +18,6 @@ class Engine(object):
         # this will run for the duration of the game, using self.map to
         # navigate between the rooms
 
-
         first_option = self.menu.run(1)
         if first_option == "new":
             first_room = "start"
@@ -86,68 +85,93 @@ class Room(object):
         # basic action options for any room
         action = raw_input("> ").lower()
         while action not in self.good_moves:
+
             if action == 'touch stone' and 'take stone' in self.good_moves:
                 print all_strings.touch_stone
+
             elif action == 'save':
-                the_saver = Saver(start_room, middle_room, door_room, left_room,
-                                    right_room, battlefield_room, dining_room,
-                                    butcher_room, alone_room, racetrack_room,
-                                    world_room, inv, self.name)
-                saved_file = the_saver.save()
-                with open('saved.py', 'wb') as save_doc:
-                    pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
-                print '\nGame saved.'
-                print all_strings.action_prompt
+                confirm = raw_input('\nAre you sure you want to save? y/n > ').lower()
+                if confirm == 'y' or confirm == 'yes':
+                    the_saver = Saver(start_room, middle_room, door_room, left_room,
+                                        right_room, battlefield_room, dining_room,
+                                        butcher_room, alone_room, racetrack_room,
+                                        world_room, inv, self.name)
+                    saved_file = the_saver.save()
+                    with open('saved.py', 'wb') as save_doc:
+                        pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
+                    print '\nGame saved.'
+                    print all_strings.action_prompt
+                else:
+                    print all_strings.action_prompt
+
             elif action == 'quit':
-                confirm = raw_input('\nAre you sure you want to quit? y/n > ')
-                if confirm == 'y':
+                confirm = raw_input('\nAre you sure you want to quit? y/n > ').lower()
+                if confirm == 'y' or confirm == 'yes':
                     exit(1)
                 else:
                     print all_strings.action_prompt
+
             elif action in self.bad_moves:
                 print all_strings.bad_moves
+
             elif action == "take":
                 print all_strings.action_take
+
             elif action == "talk":
                 print "\n%s\n" % choice(all_strings.talking)
+
             elif action == "go":
                 print all_strings.action_go
+
             elif action == "walk":
                 print all_strings.action_walk
+
             elif action == "touch":
                 print all_strings.action_touch
+
             elif action == "sleep":
                 print all_strings.action_sleep
+
             elif action == 'help':
                 print all_strings.line_break
                 print "\n" * 6
                 print self.helper
+
             elif action == 'look around' or action == 'look':
                 print all_strings.line_break
                 print "\n" * 8
                 print self.extra
                 print self.bearings
+
             elif action == "intro":
                 print all_strings.line_break
                 print "\n" * 6
                 print self.intro
                 print self.bearings
+
             elif action == "inventory" or action == "inv":
                 print all_strings.line_break
                 print "\n" * 4
                 inv.show()
                 print all_strings.action_prompt
+
             elif action == "sit" or action == "sit down":
                 print all_strings.action_sit
+
             elif action == "stand":
                 print all_strings.action_stand
+
             elif action == "wait":
                 print all_strings.action_wait
+
             elif action == "lie down":
                 print all_strings.action_lie
+
             else:
                 print "\nI'm sorry, but you can't %r.\n" % action
+
             action = raw_input("> ").lower()
+
         print "\nYou attempt to %s." % action
         sleep(0.75)
         return action
@@ -569,6 +593,7 @@ class DiningRoom(Room):
     extra = all_strings.dining_room_extra_start
     bearings = all_strings.dining_room_bearings_start
     def enter(self):
+        self.stone_available()
         if self.attempted and "read note" in self.good_moves:
             self.good_moves.remove("read note")
         self.correct_intro()
@@ -636,7 +661,6 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
             self.bearings = all_strings.dining_room_bearings_after
             if self.solved:
                 self.extra = all_strings.dining_room_extra_win
-                self.stone_available()
                 all_strings.dining_room_quiet()
             else:
                 self.extra = all_strings.dining_room_extra_fail
@@ -1492,3 +1516,6 @@ if __name__ == "__main__":
 
 # TODO: Get the riddles failed counter to give some kind of message to indicate
 # that players should try to not fail puzzles
+# TODO: Add more user prompts to continue with text (less sleeps)
+# TODO: indentation message should give different information if user has had
+# stones before
