@@ -96,8 +96,7 @@ class Room(object):
                 saved_file = the_saver.save()
                 with open('saved.py', 'wb') as save_doc:
                     pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
-                print "we visited middle at save: ", saved_file.rooms['middle']['visited']
-                print '\nGame saved.\n'
+                print '\nGame saved.'
                 print all_strings.action_prompt
             elif action == 'quit':
                 confirm = raw_input('\nAre you sure you want to quit? y/n > ')
@@ -1309,7 +1308,7 @@ class Saver(object):
         self.current = current
 
     def save(self):
-        save_file = main.SavedGame()
+        save_file = SavedGame()
         save_file.items = self.inv.items
         save_file.starting = self.current
         save_file.failed_puzzles = self.inv.failed_puzzles
@@ -1363,7 +1362,6 @@ class Loader(object):
         self.inv = inventory
 
     def load_it(self):
-        print "pen is here:", self.info.rooms['start']['pen']
         self.inv.items = self.info.items
         self.inv.failed_puzzles = self.info.failed_puzzles
         for room in self.rooms.keys():
@@ -1394,14 +1392,99 @@ class Loader(object):
         return self.info.starting
 
 
+class SavedGame(object):
+
+    def __init__(self):
+        self.items = []
+        self.failed_puzzles = 0
+        self.starting = "start"
+        self.rooms = {"start":
+                                {'pen': True, 'visited': True,
+                                'intro': all_strings.starting_room_intro,
+                                'extra': all_strings.starting_room_extra1,
+                                'bearings': all_strings.starting_room_bearings1},
+                        "middle":
+                                {'visited': False,
+                                'intro': all_strings.middle_room_intro,
+                                'extra': all_strings.middle_room_extra,
+                                'bearings': all_strings.middle_room_bearings},
+                        "door":
+                                {'visited': False,
+                                'door_open': False, 'attempted_door': False,
+                                'touched_indentations': False, 'bag_here': True,
+                                'intro': all_strings.the_door_intro,
+                                'extra': all_strings.the_door_extra1,
+                                'bearings': all_strings.the_door_bearings1,
+                                'Stone of Peace': False, 'Stone of Silence': False,
+                                'Stone of Respect': False,
+                                'Stone of Practice': False,
+                                'Stone of Friendship': False,
+                                'Stone of Compassion': False},
+                        "left":
+                                {'visited': False,
+                                'intro': all_strings.left_intro,
+                                'extra': all_strings.left_extra,
+                                'bearings': all_strings.left_bearing},
+                        "right":
+                                {'visited': False,
+                                'racetrack_open': True,
+                                'intro': all_strings.right_intro,
+                                'extra': all_strings.right_extra,
+                                'bearings': all_strings.right_bearings},
+                        "battlefield":
+                                {'visited': False,
+                                'solved': False, 'stone_here': True,
+                                'attempted': False,
+                                'intro': all_strings.battlefield_intro,
+                                'extra': all_strings.battlefield_extra_start,
+                                'bearings': all_strings.battlefield_bearings1},
+                        "dining room":
+                                {'visited': False, 'solved': False,
+                                'stone_here': True, 'attempted': False,
+                                'intro': all_strings.dining_room_intro,
+                                'extra': all_strings.dining_room_extra_start,
+                                'bearings': all_strings.dining_room_bearings_start},
+                        "butcher":
+                                {'visited': False, 'attempted': False,
+                                'solved': False, 'stone_here': True,
+                                'intro': all_strings.butcher_intro,
+                                'extra': all_strings.butcher_extra_start,
+                                'bearings': all_strings.butcher_bearings_start},
+                        "racetrack":
+                                {'visited': False,
+                                'solved': False, 'stone_here': True,
+                                'rock_on_floor': True, 'attempted': False,
+                                'intro': all_strings.racetrack_intro,
+                                'extra': all_strings.racetrack_extra_start,
+                                'bearings': all_strings.racetrack_bearings_start},
+                        "alone":
+                                {'solved': False, 'visited': False,
+                                'stone_here': True, 'final_response': False,
+                                'good_text_up': False, 'sad_text_up': False,
+                                'projector_power': False, "projector_on": False,
+                                "projector_open": False, "attempted": False,
+                                "looked": False,
+                                'intro': all_strings.alone_intro,
+                                'extra': all_strings.alone_extra_start,
+                                'bearings': all_strings.alone_bearings_start},
+                        "world":
+                                {'solved': False, 'visited': False,
+                                'stone_here': True, 'attempted': False,
+                                'intro': all_strings.world_intro_start,
+                                'extra': all_strings.world_extra_start,
+                                'bearings': all_strings.world_bearings_start}}
+
+
 if __name__ == "__main__":
     the_map = Map()
     the_menu = main.Menu()
 
-    with open('saved.py', 'rb') as loaded_doc:
-        load_game = pickle.load(loaded_doc)
+    try:
+        with open('saved.py', 'rb') as loaded_doc:
+            load_game = pickle.load(loaded_doc)
+    except IOError:
+        load_game = SavedGame()
 
-    print "pen is here, bottom of file: ", load_game.rooms['start']['pen']
     inv = Inventory()
     loader = Loader(load_game, inv)
     game = Engine(the_map, the_menu, loader)
