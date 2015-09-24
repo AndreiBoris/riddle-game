@@ -151,7 +151,7 @@ class Room(object):
                 else:
                     print all_strings.action_prompt
 
-            elif action == 'quit':
+            elif action == 'quit' or action == 'exit':
                 confirm = raw_input('\nAre you sure you want to quit? y/n > ').lower()
                 if confirm == 'y' or confirm == 'yes':
                     print all_strings.goodbye
@@ -280,12 +280,23 @@ class StartingRoom(Room):
             print self.wake_up
             self.start_of_game = False
             self.visited = True
+
+# corrent_intro means that self.intro only runs automatically the first time a
+# room is entered and that self.bearings are only run when the user comes from a
+# different room and not when a recursive call is made.
+
         self.correct_intro()
+
         action = self.action()
+
+# Non-recursive returns feed back into the_map.play() where it finds the room
+# that is being pointed to and runs its enter() method
 
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "middle"
+
+# Recursive calls are just 'dead end' actions
 
         if action == "lie down" or action == "sleep":
             all_strings.starting_room_lie()
@@ -332,7 +343,9 @@ class MiddleRoom(Room):
     extra = all_strings.middle_room_extra
     bearings = all_strings.middle_room_bearings
     def enter(self):
+
         self.correct_intro()
+
         action = self.action()
 
         if action == "go south" or action == "walk south":
@@ -397,7 +410,9 @@ class TheDoor(Room):
     bearings = all_strings.the_door_bearings1
 
     def enter(self):
+
         self.correct_intro()
+
         action = self.action()
 
         if action == 'touch door':
@@ -412,17 +427,22 @@ class TheDoor(Room):
             all_strings.the_door_touch_indentations1()
             TheDoor.touched_indentations = True
             have_stone = False
+            had_stone = False
+
             for stone in self.stones.keys():
                 if stone in inv.items:
                     have_stone = True
                 if self.stones[stone]:
                     had_stone = True
+
             if have_stone:
                 all_strings.the_door_have_stone()
                 return self.enter()
+
             elif had_stone:
                 all_strings.the_door_had_stone()
                 return self.enter()
+
             else:
                 all_strings.the_door_no_stone()
                 return self.enter()

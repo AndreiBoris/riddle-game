@@ -693,7 +693,7 @@ Here are some actions that you might be able to take:
 - place (something)
 - throw (something)
 - save
-- quit
+- quit (or exit)
 
 Perhaps looking around can help you find some other possible actions to take?
 """
