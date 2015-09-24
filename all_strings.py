@@ -1048,7 +1048,6 @@ What do you do?
 start_game = """
 Welcome to the game!
 
-
 New
 Load"""
 
