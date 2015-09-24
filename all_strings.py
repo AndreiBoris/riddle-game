@@ -1224,6 +1224,8 @@ talking = ["'Yes, I am talking'", "'I know English.'", "'Words words words.'",
             "'Amazing, aren't I?'",
             "'If a genius speaks and no one is there to hear it...'"]
 
+the_door_action = "sink into deeper despair"
+
 the_door_already_open = """
 Good thing the door is already open. You felt certain that another struggle with
 an opponent this powerful would have resulted in grievious injury."""

@@ -476,9 +476,11 @@ You take The %s and place it the indentation where it fits
 best.""" % stone
                     self.stones[stone] = True
                     placed = True
-                    sleep(2.2)
+                    raw_input("\nHit ENTER to continue")
+
             if placed:
                 return self.enter()
+
             if not placed:
                 all_strings.the_door_not_placed()
                 return self.enter()
@@ -489,29 +491,37 @@ best.""" % stone
             return 'middle'
 
         if action == 'take bag':
+
             if self.bag_here:
                 all_strings.the_door_take_bag()
                 inv.add_to_top('dirty bag')
                 self.bag_here = False
                 self.extra = all_strings.the_door_extra2
                 return self.enter()
+
             else:
                 print all_strings.the_door_bag
                 return self.enter()
 
         if action == 'open door':
+
             if self.door_open:
                 print all_strings.the_door_already_open
                 return self.enter()
+
+# The door will open if there are 4 or more stones placed in the indentations.
+
             if self.stone_count() > 3:
+
                 if self.attempted_door:
                     all_strings.the_door_experienced()
                     self.door_open = True
                     self.bearings = all_strings.the_door_bearings2
                     return self.enter()
+
                 else:
                     all_strings.the_door_cant_push()
-                    action = "sink into deeper despair"
+                    action = all_strings.the_door_action
                     door_count = 0
                     while (action != "pull door" and action != "pull"
                             and door_count < 4):
@@ -522,6 +532,7 @@ best.""" % stone
                     self.door_open = True
                     self.bearings = all_strings.the_door_bearings2
                     return self.enter()
+
             else:
                 all_strings.the_door_struggles()
                 self.attempted_door = True
@@ -534,6 +545,8 @@ best.""" % stone
             else:
                 all_strings.the_door_believe()
                 return self.enter()
+
+# stone_count() is used to determine if the door can open.
 
     def stone_count(self):
         count = 0
@@ -637,15 +650,16 @@ class Battlefield(Room):
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
     def enter(self):
+
+# These self.stone_available() methods are called at the beginning of each
+# puzzle room (except for Alone) to check if 'take stone' should be added to
+# self.good_moves or not.
+
         self.stone_available()
 
         if self.attempted and 'talk' in self.good_moves:
             for option in ['talk', 'talk to soldier', 'talk to her']:
                 self.good_moves.remove(option)
-
-        if (self.solved and self.stone_here and
-        'take stone' not in self.good_moves):
-                self.good_moves.append('take stone')
 
         if not self.stone_here and 'take stone' in self.good_moves:
             self.good_moves.remove('take stone')
