@@ -50,9 +50,9 @@ class Inventory(object):
 
     items = []
 
-# 3 failed puzzles mean the game cannot be completed, so at that point it fails.
+# 3 failed riddles mean the game cannot be completed, so at that point it fails.
 
-    failed_puzzles = 0
+    failed_riddles = 0
 
     def show(self):
         print '\nYour inventory:'
@@ -85,13 +85,13 @@ class Inventory(object):
 # Gives warning messages and finally a terminating one.
 
     def end_if_failed(self):
-        if self.failed_puzzles == 1:
+        if self.failed_riddles == 1:
             print all_strings.lost_1
             raw_input('\nHit ENTER to continue')
-        if self.failed_puzzles == 2:
+        if self.failed_riddles == 2:
             print all_strings.lost_2
             raw_input('\nHit ENTER to continue')
-        if self.failed_puzzles >= 3:
+        if self.failed_riddles >= 3:
             print all_strings.lose_game
             raw_input('\nHit ENTER to continue')
             exit(1)
@@ -119,7 +119,7 @@ class Room(object):
 
 # Each room has a specific mutable set of actions that are good_moves, if one
 # of those is picked, that action is returned and fed into the room's script,
-# otherwise this action handles it and reprompts the user.
+# otherwise this action handles it and reprompts the player.
 
         while action not in self.good_moves:
 
@@ -228,7 +228,7 @@ class Room(object):
 
     def stone_available(self):
 
-# This runs at the beginning of each puzzle room (except for Alone(), see
+# This runs at the beginning of each riddle room (except for Alone(), see
 # specific comments for that one)
 
         if self.stone_here and self.solved and "take stone" not in self.good_moves:
@@ -282,7 +282,7 @@ class StartingRoom(Room):
             self.visited = True
 
 # corrent_intro means that self.intro only runs automatically the first time a
-# room is entered and that self.bearings are only run when the user comes from a
+# room is entered and that self.bearings are only run when the player comes from a
 # different room and not when a recursive call is made.
 
         self.correct_intro()
@@ -652,7 +652,7 @@ class Battlefield(Room):
     def enter(self):
 
 # These self.stone_available() methods are called at the beginning of each
-# puzzle room (except for Alone(Room)) to check if 'take stone' should be added
+# riddle room (except for Alone(Room)) to check if 'take stone' should be added
 # to self.good_moves or not.
 
         self.stone_available()
@@ -681,7 +681,7 @@ class Battlefield(Room):
             action == "talk to her"):
 
 # These self.attempted attributes in the riddle rooms determine if the actual
-# puzzle can be started. Once attempted, no riddle can be repeated, win or lose.
+# riddle can be started. Once attempted, no riddle can be repeated, win or lose.
 
             self.attempted = True
             all_strings.battlefield_riddle()
@@ -708,10 +708,15 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
             else:
                 self.extra = all_strings.battlefield_extra_fail
                 print all_strings.battlefield_failed
-                inv.failed_puzzles += 1
+                inv.failed_riddles += 1
+
+# inv.end_if_failed is run after each failed riddled to see if the game-ending
+# condition of 3 failures has been met and to give the player an update.
+
                 inv.end_if_failed()
+
             self.intro = all_strings.battlefield_intro_final
-            sleep(4.5)
+            raw_input("\nHit ENTER to continue")
 
             return self.enter()
 
@@ -828,7 +833,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
             else:
                 self.extra = all_strings.dining_room_extra_fail
                 print all_strings.dining_room_failed
-                inv.failed_puzzles += 1
+                inv.failed_riddles += 1
                 inv.end_if_failed()
             all_strings.dining_room_leave_pen()
             inv.remove("ballpoint pen")
@@ -941,7 +946,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
             else:
                 self.extra = all_strings.butcher_extra_lose
                 print all_strings.butcher_failed
-                inv.failed_puzzles += 1
+                inv.failed_riddles += 1
                 inv.end_if_failed()
             sleep(4.5)
 
@@ -1036,7 +1041,7 @@ class Racetrack(Room):
             inv.remove('rock')
             self.attempted = True
             all_strings.racetrack_throw_rock_at_human()
-            inv.failed_puzzles += 1
+            inv.failed_riddles += 1
             inv.end_if_failed()
             right_room.racetrack_open = False
             return "right"
@@ -1084,7 +1089,7 @@ quickly counting down on the display that's (gently) pressing into your face.
             else:
                 self.extra = all_strings.racetrack_extra_lose
                 print all_strings.racetrack_failed
-                inv.failed_puzzles += 1
+                inv.failed_riddles += 1
                 inv.end_if_failed()
             sleep(4.5)
 
@@ -1171,7 +1176,7 @@ class Alone(Room):
                 self.sad_text_up = True
                 self.extra = all_strings.alone_extra_lose
                 all_strings.alone_failed()
-                inv.failed_puzzles += 1
+                inv.failed_riddles += 1
                 inv.end_if_failed()
             sleep(3)
             self.not_chatted = False
@@ -1470,7 +1475,7 @@ class World(Room):
             else:
                 self.extra = all_strings.world_extra_lose
                 print all_strings.world_failed
-                inv.failed_puzzles += 1
+                inv.failed_riddles += 1
                 inv.end_if_failed()
 
             sleep(2.5)
@@ -1571,7 +1576,7 @@ class Saver(object):
             'racetrack': racetrack_room, 'alone': alone_room,
             'world': world_room}
 
-    puzzle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
+    riddle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
                     'alone', 'world']
 
     def __init__(self, start, middle, door, left, right, battle,
@@ -1594,7 +1599,7 @@ class Saver(object):
         save_file = SavedGame()
         save_file.items = self.inv.items
         save_file.starting = self.current
-        save_file.failed_puzzles = self.inv.failed_puzzles
+        save_file.failed_riddles = self.inv.failed_riddles
 
         for room, key in [(self.start, 'start'), (self.middle, 'middle'),
                     (self.door, 'door'),
@@ -1644,7 +1649,7 @@ class Loader(object):
             'racetrack': racetrack_room, 'alone': alone_room,
             'world': world_room}
 
-    puzzle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
+    riddle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
                     'alone', 'world']
 
     def __init__(self, save, inventory):
@@ -1653,7 +1658,7 @@ class Loader(object):
 
     def load_it(self):
         self.inv.items = self.info.items
-        self.inv.failed_puzzles = self.info.failed_puzzles
+        self.inv.failed_riddles = self.info.failed_riddles
 
         for room in self.rooms.keys():
             self.rooms[room].visited = self.info.rooms[room]['visited']
@@ -1661,7 +1666,7 @@ class Loader(object):
             self.rooms[room].extra = self.info.rooms[room]['extra']
             self.rooms[room].bearings = self.info.rooms[room]['bearings']
 
-        for room in self.puzzle_rooms:
+        for room in self.riddle_rooms:
             self.rooms[room].solved = self.info.rooms[room]['solved']
             self.rooms[room].attempted = self.info.rooms[room]['attempted']
             self.rooms[room].stone_here = self.info.rooms[room]['stone_here']
@@ -1692,7 +1697,7 @@ class SavedGame(object):
 
     def __init__(self):
         self.items = []
-        self.failed_puzzles = 0
+        self.failed_riddles = 0
         self.starting = "start"
         self.rooms = {"start":
                                 {'pen': True, 'visited': True,
