@@ -24,7 +24,6 @@ class Engine(object):
         if choice == "new":
             first_room = "start"
         elif choice == "load":
-            self.loader.load_it()
             first_room = self.loader.load_it()
 
         next_room = self.map.play(first_room)
