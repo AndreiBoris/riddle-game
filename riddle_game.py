@@ -350,8 +350,13 @@ class TheDoor(Room):
             for stone in self.stones.keys():
                 if stone in inv.items:
                     have_stone = True
+                if self.stones[stone]:
+                    had_stone = True
             if have_stone:
                 all_strings.the_door_have_stone()
+                return self.enter()
+            elif had_stone:
+                all_strings.the_door_had_stone()
                 return self.enter()
             else:
                 all_strings.the_door_no_stone()
@@ -559,6 +564,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
             self.bearings = all_strings.battlefield_bearings2
             if self.solved:
                 self.extra = all_strings.battlefield_extra_win
+                sleep(1.5)
                 print all_strings.battlefield_solved
             else:
                 self.extra = all_strings.battlefield_extra_fail
@@ -1521,8 +1527,4 @@ if __name__ == "__main__":
     game = Engine(the_map, loader)
     game.play()
 
-# TODO: Get the riddles failed counter to give some kind of message to indicate
-# that players should try to not fail puzzles
 # TODO: Add more user prompts to continue with text (less sleeps)
-# TODO: indentation message should give different information if user has had
-# stones before
