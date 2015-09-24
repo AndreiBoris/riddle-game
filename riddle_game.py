@@ -2,6 +2,7 @@ from time import sleep
 from random import randint
 from random import choice
 from sys import exit
+import pickle
 import all_strings
 import main
 
@@ -92,12 +93,9 @@ class Room(object):
                                     butcher_room, alone_room, racetrack_room,
                                     world_room, inv, self.name)
                 saved_file = the_saver.save()
-                print "attempted alone", saved_file.rooms['alone']['attempted']
-                print "attempted battle", saved_file.rooms['battlefield']['attempted']
-                print "attempted race", saved_file.rooms['racetrack']['attempted']
-                print "attempted butcher", saved_file.rooms['butcher']['attempted']
-                print "attempted dining", saved_file.rooms['dining room']['attempted']
-                print "attempted world", saved_file.rooms['world']['attempted']
+                with open('saved.py', 'wb') as save_doc:
+                    pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
+                print '\nGame saved.\n'
             elif action in self.bad_moves:
                 print all_strings.bad_moves
             elif action == "take":
