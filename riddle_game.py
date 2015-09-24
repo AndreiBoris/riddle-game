@@ -98,6 +98,13 @@ class Room(object):
                     pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
                 print "we visited middle at save: ", saved_file.rooms['middle']['visited']
                 print '\nGame saved.\n'
+                print all_strings.action_prompt
+            elif action == 'quit':
+                confirm = raw_input('\nAre you sure you want to quit? y/n > ')
+                if confirm == 'y':
+                    exit(1)
+                else:
+                    print all_strings.action_prompt
             elif action in self.bad_moves:
                 print all_strings.bad_moves
             elif action == "take":

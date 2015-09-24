@@ -691,6 +691,8 @@ Here are some actions that you might be able to take:
 - take (something)
 - place (something)
 - throw (something)
+- save
+- quit
 
 Perhaps looking around can help you find some other possible actions to take?
 """
