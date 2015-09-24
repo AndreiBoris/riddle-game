@@ -64,13 +64,13 @@ class Inventory(object):
     def end_if_failed(self):
         if self.failed_puzzles == 1:
             print all_strings.lost_1
-            sleep(1.5)
+            raw_input("\nHit ENTER to continue")
         if self.failed_puzzles == 2:
             print all_strings.lost_2
-            sleep(1.5)
+            raw_input("\nHit ENTER to continue")
         if self.failed_puzzles >= 3:
             print all_strings.lose_game
-            sleep(1.5)
+            raw_input("\nHit ENTER to continue")
             exit(1)
 
 
@@ -1554,7 +1554,7 @@ class Loader(object):
 
         for stone in door_room.stones.keys():
             door_room.stones[stone] = self.info.rooms['door'][stone]
-            
+
         right_room.racetrack_open = self.info.rooms['right']['racetrack_open']
         alone_room.final_response = self.info.rooms['alone']['final_response']
         alone_room.good_text_up = self.info.rooms['alone']['good_text_up']

@@ -355,8 +355,8 @@ def battlefield_hint():
     print """
 The soldier whispers,
 
-'Don't let all my layers whither and die.'"""
-    sleep(1)
+'Don't let all my layers wither and die.'"""
+    raw_input("\nHit ENTER to continue")
 
 battlefield_intro = """
 After walking south from the dark tunnel you come across a pretty grim scene.
@@ -596,7 +596,7 @@ have done the job."""
 def dining_room_quiet():
     print """
 You suddenly realize just how quiet this place is. Apart from the noises made by
-your body, there does seem to be one other sound in the room."""
+your body, there seems to be only one other sound in the room."""
     raw_input("\nHit ENTER to continue")
 
 def dining_room_riddle():
@@ -741,7 +741,9 @@ line_break = "--------------------------------"
 
 lose_game = """
 None of these rooms seem to make any sense. 'Why am I here?!' you call out.
-You receive no answer. You have no answer. There is nothing."""
+You receive no answer. You have no answer. There is nothing.
+
+You are lost."""
 
 lost_1 = """
 You feel a bit shaken. That wasn't supposed to happen. You feel like you lost
