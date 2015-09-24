@@ -233,6 +233,8 @@ class Room(object):
 
         if self.stone_here and self.solved and "take stone" not in self.good_moves:
             self.good_moves.append("take stone")
+        if not self.stone_here and "take stone" in self.good_moves:
+            self.good_moves.remove("take stone")
 
 # correct_intro() Decides which messages to play when enter() is run in any
 # room.
@@ -849,7 +851,6 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Silence")
-                self.good_moves.remove("take stone")
                 all_strings.stone_of_silence_pickup()
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
@@ -961,7 +962,6 @@ The man uses a small knife to carve a line into the wall behind him. There are
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Peace")
-                self.good_moves.remove("take stone")
                 all_strings.stone_of_peace_pickup()
 
                 if TheDoor.touched_indentations:
@@ -1104,7 +1104,6 @@ quickly counting down on the display that's (gently) pressing into your face.
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Friendship")
-                self.good_moves.remove("take stone")
                 all_strings.stone_of_friendship_pickup()
 
                 if TheDoor.touched_indentations:
@@ -1150,6 +1149,8 @@ class Alone(Room):
         if (self.solved and self.stone_here and
          "take stone" not in self.good_moves and self.looked):
             self.good_moves.append('take stone')
+        if not self.stone_here and 'take stone' in self.good_moves:
+            self.good_moves.remove("take stone")
 
         self.correct_intro()
 
@@ -1323,7 +1324,6 @@ class Alone(Room):
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Compassion")
-                self.good_moves.remove("take stone")
                 all_strings.stone_of_compassion_pickup()
 
                 if TheDoor.touched_indentations:
@@ -1491,7 +1491,6 @@ class World(Room):
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Practice")
-                self.good_moves.remove("take stone")
                 all_strings.stone_of_practice_pickup()
 
                 if TheDoor.touched_indentations:
