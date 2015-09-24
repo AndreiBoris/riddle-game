@@ -741,7 +741,7 @@ None of these rooms seem to make any sense. 'Why am I here?!' you call out.
 You receive no answer. You have no answer. There is nothing."""
 
 middle_room_bearings ="""
-To the north there is a door that is in incongruously good condition. To the
+To the north there is a door that is in impeccably good condition. To the
 east is some sort of office wing. To the west there is a dark tunnel. To the
 south is a short hallway leading to a small apartment room.
 

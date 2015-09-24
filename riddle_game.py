@@ -1394,7 +1394,6 @@ if __name__ == "__main__":
     with open('saved.py', 'rb') as loaded_doc:
         load_game = pickle.load(loaded_doc)
 
-    #load_game = main.FakeGame()
     print "pen is here, bottom of file: ", load_game.rooms['start']['pen']
     inv = Inventory()
     loader = Loader(load_game, inv)
