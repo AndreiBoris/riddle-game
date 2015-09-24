@@ -366,7 +366,12 @@ this ruin. The soldier is clearly in excrutiating pain and is doing what she can
 to stay conscious for as long as possible. It doesn't seem like that will be for
 much longer. You might say she's on her last legs. But that would seem a bit
 disrespectful as it seems that bomb had dismembered her of exactly those legs
-that the phrase seems to be referring to."""
+that said phrase refers to."""
+
+battlefield_intro_final = """
+After walking south from the dark tunnel you come across a pretty grim scene.
+It looks like a soldier had been hit by the bomb or whatever it was that created
+this ruin. Horrible stuff."""
 
 def battlefield_riddle():
     print """
@@ -383,7 +388,7 @@ doesn't appear to ever blink and you feel very uneasy."""
     sleep(1.5)
 
 battlefield_solved = """
-The soldier appears relieved. Her left hand drops. You can see she the ghost is
+The soldier appears relieved. Her left hand drops. You can see that the ghost is
 passing. You notice that her right hand also relaxes revealing something inside."""
 
 def battlefield_take_soldier():
@@ -430,7 +435,7 @@ about. The butcher glances at you periodically as he is sharpening the knife.
 Perhaps you could talk to him?"""
 
 butcher_extra_win = """
-After watching you look around nervously, the butcher catches your attention and
+The butcher sees you nervously looking around and he catches your attention and
 indicates a tray at the end of the counter. The tray is labeled 'gratis'. There
 are some lumpy looking cuts in there, but also what appears to be a stone. Maybe
 the stone could be worth taking?"""
@@ -847,22 +852,22 @@ def racetrack_riddle():
 You hurl the rock at the robot. If you had a killer arm you might have actually
 gotten it somewhat close to the robot, which is a fair bit further away than you
 had judged."""
-    sleep(4)
+    sleep(5)
     print """
 Luckily (?) the robot seems to have noticed you regardless. It turns around and
 whips over to you."""
-    sleep(2)
+    sleep(3)
     print """
 The robot approaches very quickly and gets menacingly close to you. The exhaust
 that oddly appears have been designed to point forward makes it feel like the
 Cheshire face sending hot air straight to your face."""
-    sleep(4)
+    sleep(5)
     print """
 'You look lonesome,' the robot drones. 'Care for a hug?'"""
-    sleep(3)
+    sleep(4)
     print """
 Before you can respond the robot hugs you. The embrace is tight but not painful.
-It's robot arms are made of some kind of impossibly comfortable material.
+Its robot arms are made of some kind of impossibly comfortable material.
 Something cracks inside and you feel yourself on the verge of tears, but you
 restrain yourself. 'This is just a robot!' you think to yourself."""
     sleep(7)
