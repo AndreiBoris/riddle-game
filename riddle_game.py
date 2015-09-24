@@ -661,8 +661,6 @@ class Battlefield(Room):
             for option in ['talk', 'talk to soldier', 'talk to her']:
                 self.good_moves.remove(option)
 
-        if not self.stone_here and 'take stone' in self.good_moves:
-            self.good_moves.remove('take stone')
         self.correct_intro()
         action = self.action()
 
@@ -721,6 +719,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Respect")
+                self.good_moves.remove('take stone')
                 all_strings.stone_of_respect_pickup()
                 if TheDoor.touched_indentations:
                     all_strings.indentation_hint()
@@ -744,10 +743,12 @@ class DiningRoom(Room):
     extra = all_strings.dining_room_extra_start
     bearings = all_strings.dining_room_bearings_start
     def enter(self):
+
         self.stone_available()
 
         if self.attempted and "read note" in self.good_moves:
             self.good_moves.remove("read note")
+
         self.correct_intro()
         action = self.action()
 
@@ -866,6 +867,7 @@ class Butcher(Room):
             for option in ['talk', 'talk to butcher', 'talk to man',
              'talk to him']:
                 self.good_moves.remove(option)
+
         self.stone_available()
         self.correct_intro()
         action = self.action()
