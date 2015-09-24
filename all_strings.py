@@ -382,7 +382,7 @@ doesn't appear to ever blink and you feel very uneasy."""
     sleep(2)
     print """
 'You use a knife to slice my head, and weep beside me when I am dead.'"""
-    sleep(3)
+    sleep(1.5)
     print "\n'What am I?'"
     raw_input("\nHit ENTER to continue")
 
@@ -1048,10 +1048,11 @@ What do you do?
 """
 
 start_game = """
-Welcome to the game!
+            Welcome to the game!
 
-New
-Load"""
+
+
+        New                     Load"""
 
 starting_room_bearings1 = """
 There is some junk lying around. There is a hallway to the north.

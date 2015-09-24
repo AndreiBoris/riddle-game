@@ -23,7 +23,7 @@ class Engine(object):
         print all_strings.start_game
         choice = ''
         while choice != 'new' and choice != 'load':
-            choice = raw_input('\n> ').lower()
+            choice = raw_input('\n\n\n> ').lower()
         if choice == 'new':
             first_room = 'start'
         elif choice == 'load':
@@ -403,7 +403,8 @@ class TheDoor(Room):
                     'go north', 'walk north', 'touch indentations',
                     'place stone', 'touch indentation', 'take indentations',
                     'take indentation', 'look at indentations',
-                    'look at indentation']
+                    'look at indentation', 'inspect indentations',
+                    'inspect indentation']
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
@@ -426,9 +427,11 @@ class TheDoor(Room):
             all_strings.the_door_take_indentations()
             return self.enter()
 
-        if (action == 'touch indentation' or action == 'touch indentations',
+        if (action == 'touch indentation' or action == 'touch indentations' or
             action == 'look at indentations' or
-            action == 'look at indentation'):
+            action == 'look at indentation' or
+            action == 'inspect indentations' or
+            action == 'inspect indentation'):
             if action == 'touch indentation' or action == 'touch indentations':
                 all_strings.the_door_touch_indentations()
             if action == 'look at indentation' or action == 'look at indentations':
@@ -1135,7 +1138,7 @@ class Alone(Room):
                     'turn off the projector', 'plug in the projector',
                     'unplug the projector', 'talk to the projector',
                     'unplug projector', 'look under projector',
-                    'look under the projector']
+                    'look under the projector', 'inspect projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
     intro = all_strings.alone_intro
@@ -1265,7 +1268,8 @@ class Alone(Room):
 
             return self.enter()
 
-        if action == "look at projector" or action == "look at the projector":
+        if (action == 'look at projector' or action == 'look at the projector' or
+            action == 'inspect projector'):
             all_strings.alone_proj_look_basic()
 
             if not self.projector_open:
