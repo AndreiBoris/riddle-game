@@ -652,8 +652,8 @@ class Battlefield(Room):
     def enter(self):
 
 # These self.stone_available() methods are called at the beginning of each
-# puzzle room (except for Alone) to check if 'take stone' should be added to
-# self.good_moves or not.
+# puzzle room (except for Alone(Room)) to check if 'take stone' should be added
+# to self.good_moves or not.
 
         self.stone_available()
 
@@ -662,6 +662,7 @@ class Battlefield(Room):
                 self.good_moves.remove(option)
 
         self.correct_intro()
+
         action = self.action()
 
         if action == "go north" or action == "walk north":
@@ -678,6 +679,10 @@ class Battlefield(Room):
 
         if (action == "talk" or action == "talk to soldier" or
             action == "talk to her"):
+
+# These self.attempted attributes in the riddle rooms determine if the actual
+# puzzle can be started. Once attempted, no riddle can be repeated, win or lose.
+
             self.attempted = True
             all_strings.battlefield_riddle()
             solution = ""
