@@ -185,19 +185,21 @@ class Room(object):
         return action
 
     def stone_available(self):
+
         if self.stone_here and self.solved and "take stone" not in self.good_moves:
             self.good_moves.append("take stone")
-        else:
-            pass
 
     def correct_intro(self):
         if self.visited == False:
             print self.intro
         self.visited = True
+
         if not self.current_room:
             print self.bearings
+
         elif self.current_room:
             print "\nWhat do you do?\n"
+
         self.current_room = True
 
 
@@ -217,12 +219,10 @@ class StartingRoom(Room):
     bearings = all_strings.starting_room_bearings1
 
     def enter(self):
-        try:
-            if not self.pen:
-                for option in ["take pen", "touch pen"]:
-                    self.good_moves.remove(option)
-        except ValueError:
-            pass
+        if not self.pen and 'take pen' in self.good_moves:
+            for option in ["take pen", "touch pen"]:
+                self.good_moves.remove(option)
+    
         if self.start_of_game == True:
             print self.wake_up
             self.start_of_game = False
