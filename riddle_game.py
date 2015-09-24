@@ -86,6 +86,18 @@ class Room(object):
         while action not in self.good_moves:
             if action == 'touch stone' and 'take stone' in self.good_moves:
                 print all_strings.touch_stone
+            elif action == 'save':
+                the_saver = Saver(start_room, middle_room, door_room, left_room,
+                                    right_room, battlefield_room, dining_room,
+                                    butcher_room, alone_room, racetrack_room,
+                                    world_room, inv, self.name)
+                saved_file = the_saver.save()
+                print "attempted alone", saved_file.rooms['alone']['attempted']
+                print "attempted battle", saved_file.rooms['battlefield']['attempted']
+                print "attempted race", saved_file.rooms['racetrack']['attempted']
+                print "attempted butcher", saved_file.rooms['butcher']['attempted']
+                print "attempted dining", saved_file.rooms['dining room']['attempted']
+                print "attempted world", saved_file.rooms['world']['attempted']
             elif action in self.bad_moves:
                 print all_strings.bad_moves
             elif action == "take":
@@ -153,6 +165,7 @@ class Room(object):
 
 class StartingRoom(Room):
 
+    name = 'start'
     start_of_game = True
     pen = True
     good_moves = ['go north', 'walk north', 'take pen', 'touch pen',
@@ -217,6 +230,7 @@ class StartingRoom(Room):
 
 class MiddleRoom(Room):
 
+    name = 'middle'
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'touch newspapers', 'touch newspaper',
@@ -261,6 +275,7 @@ class MiddleRoom(Room):
 
 class TheDoor(Room):
 
+    name = 'door'
     door_open = False
     attempted_door = False
     touched_indentations = False
@@ -330,7 +345,7 @@ best.""" % stone
             if self.bag_here:
                 all_strings.the_door_take_bag()
                 inv.add_to_top('dirty bag')
-                self.bag = False
+                self.bag_here = False
                 self.extra = all_strings.the_door_extra2
                 return self.enter()
             else:
@@ -383,6 +398,7 @@ best.""" % stone
 
 class Left(Room):
 
+    name = 'left'
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'take frog', 'touch frog', 'catch frog']
@@ -418,6 +434,7 @@ class Left(Room):
 
 class Right(Room):
 
+    name = 'right'
     racetrack_open = True
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
@@ -454,6 +471,7 @@ class Right(Room):
 
 class Battlefield(Room):
 
+    name = 'battlefield'
     stone_here = True
     good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
                 'talk to her', 'touch soldier', 'take soldier']
@@ -531,6 +549,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 
 class DiningRoom(Room):
 
+    name = 'dining room'
     stone_here = True
     good_moves = ['go east', 'walk east', 'read note', 'touch fountain',
                     'touch fountains', 'take fountain', 'take fountains',
@@ -641,6 +660,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
 
 class Butcher(Room):
 
+    name = 'butcher'
     stone_here = True
     good_moves = ['go south', 'walk south', 'talk to butcher', 'talk',
                     'talk to man', 'talk to him', 'touch pig', 'take meat',
@@ -741,6 +761,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
 
 class Racetrack(Room):
 
+    name = 'racetrack'
     rock_on_floor = True
     throw_options = ["throw rock", "throw rock at person",
                     "throw rock at human", "throw rock at the person",
@@ -866,6 +887,7 @@ quickly counting down on the display that's (gently) pressing into your face.
 
 class Alone(Room):
 
+    name = 'alone'
     final_response = False
     good_text_up = False
     sad_text_up = False
@@ -1052,6 +1074,7 @@ class Alone(Room):
 
 class World(Room):
 
+    name = 'world'
     stone_here = True
     good_moves = ['go north', 'walk north', 'talk', 'talk to elephant',
                 'talk to it', 'sit', 'sit cross-legged', 'sit on rock',
@@ -1204,6 +1227,7 @@ class World(Room):
 
 class End(Room):
 
+    name = 'end'
     stories = {
     'Stone of Peace': all_strings.stone_of_peace_message,
     'Stone of Silence': all_strings.stone_of_silence_message,
@@ -1249,87 +1273,6 @@ class Map(object):
         print "\n" * 35
         return self.rooms[next_room].enter()
 
-class SavedGame(object):
-
-    items = []
-    failed_puzzles = 0
-    starting = "start"
-    rooms = {"start":
-                            {'pen': True, 'visited': True,
-                            'intro': all_strings.starting_room_intro,
-                            'extra': all_strings.starting_room_extra1,
-                            'bearings': all_strings.starting_room_bearings1},
-                    "middle":
-                            {'visited': False,
-                            'intro': all_strings.middle_room_intro,
-                            'extra': all_strings.middle_room_extra,
-                            'bearings': all_strings.middle_room_bearings},
-                    "door":
-                            {'visited': False,
-                            'door_open': False, 'attempted_door': False,
-                            'touched_indentations': False, 'bag_here': True,
-                            'intro': all_strings.the_door_intro,
-                            'extra': all_strings.the_door_extra1,
-                            'bearings': all_strings.the_door_bearings1,
-                            'Stone of Peace': False, 'Stone of Silence': False,
-                            'Stone of Respect': False,
-                            'Stone of Practice': False,
-                            'Stone of Friendship': False,
-                            'Stone of Compassion': False},
-                    "left":
-                            {'visited': False,
-                            'intro': all_strings.left_intro,
-                            'extra': all_strings.left_extra,
-                            'bearings': all_strings.left_bearing},
-                    "right":
-                            {'visited': False,
-                            'racetrack_open': True,
-                            'intro': all_strings.right_intro,
-                            'extra': all_strings.right_extra,
-                            'bearings': all_strings.right_bearings},
-                    "battlefield":
-                            {'visited': False,
-                            'solved': False, 'stone_here': True,
-                            'attempted': False,
-                            'intro': all_strings.battlefield_intro,
-                            'extra': all_strings.battlefield_extra_start,
-                            'bearings': all_strings.battlefield_bearings1},
-                    "dining room":
-                            {'visited': False, 'solved': False,
-                            'stone_here': True, 'attempted': False,
-                            'intro': all_strings.dining_room_intro,
-                            'extra': all_strings.dining_room_extra_start,
-                            'bearings': all_strings.dining_room_bearings_start},
-                    "butcher":
-                            {'visited': False, 'attempted': False,
-                            'solved': False, 'stone_here': True,
-                            'intro': all_strings.butcher_intro,
-                            'extra': all_strings.butcher_extra_start,
-                            'bearings': all_strings.butcher_bearings_start},
-                    "racetrack":
-                            {'visited': False,
-                            'solved': False, 'stone_here': True,
-                            'rock_on_floor': True, 'attempted': False,
-                            'intro': all_strings.racetrack_intro,
-                            'extra': all_strings.racetrack_extra_start,
-                            'bearings': all_strings.racetrack_bearings_start},
-                    "alone":
-                            {'solved': False, 'visited': False,
-                            'stone_here': True, 'final_response': False,
-                            'good_text_up': False, 'sad_text_up': False,
-                            'projector_power': False, "projector_on": False,
-                            "projector_open": False, "attempted": False,
-                            "looked": False,
-                            'intro': all_strings.alone_intro,
-                            'extra': all_strings.alone_extra_start,
-                            'bearings': all_strings.alone_bearings_start},
-                    "world":
-                            {'solved': False, 'visited': False,
-                            'stone_here': True, 'attempted': False,
-                            'intro': all_strings.world_intro_start,
-                            'extra': all_strings.world_extra_start,
-                            'bearings': all_strings.world_bearings_start}
-                    }
 
 class Saver(object):
 
@@ -1361,19 +1304,20 @@ class Saver(object):
     def save(self):
         save_file = main.SavedGame()
         save_file.items = self.inv.items
+        save_file.starting = self.current
         save_file.failed_puzzles = self.inv.failed_puzzles
         save_file.failed_puzzles = self.current
         for room, key in [(self.start, 'start'), (self.middle, 'middle'),
                     (self.door, 'door'),
                     (self.left, 'left'), (self.right, 'right'),
-                    (self.battle 'battlefield'), (self.dining, 'dining room'),
+                    (self.battle, 'battlefield'), (self.dining, 'dining room'),
                     (self.butcher, 'butcher'), (self.alone, 'alone'),
                     (self.race, 'racetrack'), (self.world, 'world')]:
             save_file.rooms[key]['intro'] = room.intro
             save_file.rooms[key]['bearings'] = room.bearings
             save_file.rooms[key]['extra'] = room.extra
             save_file.rooms[key]['visited'] = room.visited
-        for room, key in [(self.battle 'battlefield'), (self.dining, 'dining room'),
+        for room, key in [(self.battle, 'battlefield'), (self.dining, 'dining room'),
                     (self.butcher, 'butcher'), (self.alone, 'alone'),
                     (self.race, 'racetrack'), (self.world, 'world')]:
             save_file.rooms[key]['solved'] = room.solved
@@ -1382,8 +1326,7 @@ class Saver(object):
         save_file.rooms['start']['pen'] = self.start.pen
         save_file.rooms['door']['door_open'] = self.door.door_open
         save_file.rooms['door']['attempted_door'] = self.door.attempted_door
-        (save_file.rooms['door']['touched_indentations'] =
-            self.door.touched_indentations)
+        save_file.rooms['door']['touched_indentations'] = self.door.touched_indentations
         save_file.rooms['door']['bag_here'] = self.door.bag_here
         for stone in self.door.stones.keys():
             save_file.rooms['door'][stone] = self.door.stones[stone]
@@ -1395,6 +1338,7 @@ class Saver(object):
         save_file.rooms['alone']['projector_on'] = self.alone.projector_on
         save_file.rooms['alone']['projector_open'] = self.alone.projector_open
         save_file.rooms['alone']['looked'] = self.alone.looked
+        return save_file
 
 
 class Loader(object):

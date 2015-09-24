@@ -1,4 +1,5 @@
-from time import sleep
+#from time import sleep
+from fakesleep import sleep
 
 def loading(count):
     for i in xrange(count):
