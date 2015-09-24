@@ -273,7 +273,7 @@ class MiddleRoom(Room):
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'touch newspapers', 'touch newspaper',
                     'take newspaper', 'take newspapers', 'touch rubber',
-                    'take rubber']
+                    'take rubber', 'take hair', 'touch hair']
     bad_moves = []
     intro = all_strings.middle_room_intro
     extra = all_strings.middle_room_extra
@@ -293,6 +293,14 @@ class MiddleRoom(Room):
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "door"
+
+        if action == "take hair":
+            all_strings.middle_room_take_hair()
+            return self.enter()
+
+        if action == "touch hair":
+            all_strings.middle_room_touch_hair()
+            return self.enter()
 
         if action == "touch newspapers" or action == "touch newspaper":
             all_strings.middle_room_touch_newspaper()

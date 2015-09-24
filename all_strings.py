@@ -769,6 +769,11 @@ leaves much to be desired. It dripping with old newspapers that have been left
 lying around and in various makeshift beddings. Dripping because the ceiling is
 soaked - evidently the roof doesn't do such a great job keeping the rain out."""
 
+def middle_room_take_hair():
+    print """
+You have enough."""
+    raw_input("\nHit ENTER to continue")
+
 def middle_room_take_newspaper():
     print """
 As you pick up a newspaper up, it falls apart in your hand."""
@@ -779,6 +784,12 @@ The newspaper hits the ground with a wet sound."""
 
 def middle_room_take_rubber():
     print "\nSomehow you don't think it will come in handy."
+    raw_input("\nHit ENTER to continue")
+
+def middle_room_touch_hair():
+    print """
+You touch your own. The stuff spread over this place is unlikely to feel as
+silky smooth."""
     raw_input("\nHit ENTER to continue")
 
 def middle_room_touch_newspaper():
@@ -1037,7 +1048,6 @@ What do you do?
 start_game = """
 Welcome to the game!
 
-Options:
 
 New
 Load"""
