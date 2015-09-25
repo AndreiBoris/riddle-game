@@ -287,6 +287,15 @@ class Room(object):
 
         self.current_room = True
 
+# This method makes sure that once a riddle has been attempted in any given
+# riddle room, the actions that allow the player to attempt the riddle get
+# disabled.
+
+    def one_attempt_only(self):
+        if self.attempted and self.attempt_moves[0] in self.good_moves:
+            for option in self.attempt_moves:
+                self.good_moves.remove(option)
+
 
 class StartingRoom(Room):
 
@@ -724,9 +733,10 @@ class Battlefield(Room):
 
         self.stone_available()
 
-        if self.attempted and self.attempt_moves[0] in self.good_moves:
-            for option in self.attempt_moves:
-                self.good_moves.remove(option)
+# self.one_attempt_only() is present in all riddle rooms and it takes away the
+# attempt_moves from a room once the riddle has been attempted
+
+        self.one_attempt_only()
 
         self.correct_intro()
 
@@ -843,9 +853,7 @@ class DiningRoom(Room):
 
         self.stone_available()
 
-        if self.attempted and self.attempt_moves[0] in self.good_moves:
-            for option in self.attempt_moves:
-                self.good_moves.remove(option)
+        self.one_attempt_only()
 
         self.correct_intro()
 
@@ -972,9 +980,7 @@ class Butcher(Room):
     bearings = all_strings.butcher_bearings_start
     def enter(self):
 
-        if self.attempted and self.attempt_moves[0] in self.good_moves:
-            for option in self.attempt_moves:
-                self.good_moves.remove(option)
+        self.one_attempt_only()
 
         self.stone_available()
 
@@ -1100,9 +1106,7 @@ class Racetrack(Room):
             for option in self.attempt_moves:
                 self.good_moves.append(option)
 
-        if self.attempted and self.attempt_moves[0] in self.good_moves:
-            for option in self.attempt_moves:
-                self.good_moves.remove(option)
+        self.one_attempt_only()
 
         self.stone_available()
 
@@ -1606,9 +1610,7 @@ class World(Room):
     bearings = all_strings.world_bearings_start
     def enter(self):
 
-        if self.attempted and self.attempt_moves[0] in self.good_moves:
-            for option in self.attempt_moves:
-                self.good_moves.remove(option)
+        self.one_attempt_only()
 
         self.stone_available()
 
@@ -2088,8 +2090,3 @@ if __name__ == "__main__":
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
-
-# TODO: Make the riddle room if clauses that take away certain good_moves based
-# on self.attempted standardized by putting the 'attempt' moves into a list
-# and running self.good_moves.remove on each item in that list
-# TODO: See if you can refactor the stone pickup code
