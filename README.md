@@ -15,5 +15,5 @@ new game.
 
 **If you find some kind of bug that makes the game less enjoyable you can save
 the game and contact me at Andrei.Borissenko@gmail.com. Most fixes would be
-compatible with older saved versions of the game. Though I have test this game
+compatible with older saved versions of the game. Though I have tested this game
 enough that I hope you won't have to deal with anything truly annoying. Cheers!
