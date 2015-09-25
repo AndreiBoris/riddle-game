@@ -136,6 +136,7 @@ class Room(object):
 
 # Some of these are not used for some of the rooms.
 
+    name = ''
     current_room = False
     guesses_left = 5
     solved = False
@@ -290,6 +291,9 @@ class Room(object):
 
 
 class StartingRoom(Room):
+
+# The name attributes are important in that they are what is passed into the
+# Saver for it to know what the current room is.
 
     name = 'start'
     start_of_game = True
@@ -1098,14 +1102,16 @@ class Racetrack(Room):
                 self.good_moves.remove(option)
 
         self.stone_available()
+
         self.correct_intro()
+
         action = self.action()
 
-        if action == "go west" or action == "walk west":
+        if action == 'go west' or action == 'walk west':
             self.current_room = False
-            return "right"
+            return 'right'
 
-        if action == "touch rock":
+        if action == 'touch rock':
             if self.rock_on_floor:
                 all_strings.racetrack_touch_rock()
                 return self.enter()
@@ -1113,18 +1119,23 @@ class Racetrack(Room):
                 all.strings.racetrack_touch_rock_gone()
                 return self.enter()
 
-        if action == "talk":
+        if action == 'talk':
             all_strings.racetrack_talk()
             return self.enter()
 
-        if action == "take rock" or action == "take small rock":
+        if action == 'take rock' or action == 'take small rock':
 
             if self.rock_on_floor:
                 self.rock_on_floor = False
                 all_strings.racetrack_take_rock()
                 inv.add('rock')
+
+# Update self.extra to indicate that the rock is no longer there.
+
                 self.extra = all_strings.racetrack_extra_no_rock
                 return self.enter()
+
+# Can't pick up the rock if it's not there.
 
             else:
                 all_strings.racetrack_take_rock_gone()
@@ -1133,15 +1144,6 @@ class Racetrack(Room):
         if action == "throw rock":
             all_strings.racetrack_throw_rock()
             return self.enter()
-
-        if action == "throw rock at human" or action == "throw rock at person":
-            inv.remove('rock')
-            self.attempted = True
-            all_strings.racetrack_throw_rock_at_human()
-            inv.failed_riddles += 1
-            inv.end_if_failed()
-            right_room.racetrack_open = False
-            return "right"
 
         if action == "talk to robot" or action == "talk to the robot":
             for option in ['talk to robot', 'talk to the robot']:
@@ -1156,6 +1158,17 @@ class Racetrack(Room):
 
             return self.enter()
 
+# This is another kind of 'make attempt' that can only lead to failure.
+
+        if action == "throw rock at human" or action == "throw rock at person":
+            inv.remove('rock')
+            self.attempted = True
+            all_strings.racetrack_throw_rock_at_human()
+            inv.failed_riddles += 1
+            inv.end_if_failed()
+            right_room.racetrack_open = False
+            return "right"
+
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
@@ -1165,7 +1178,14 @@ class Racetrack(Room):
             inv.remove('rock')
             self.attempted = True
             all_strings.racetrack_riddle()
-            robot_clock = randint(1446, 1899)
+
+# robot_clock is just used to create a series of numbers that counts down in
+# multiples of itself to indicate to the player that there are a finite number
+# of attempts left (presumably, when the timer reaches 0, no more guesses will
+# be allowed.)
+
+            robot_clock = randint(1500, 1900)
+
             while self.guesses_left > 0 and not self.solved:
                 self.guesses_left -= 1
                 print """
@@ -1191,7 +1211,7 @@ quickly counting down on the display that's (gently) pressing into your face.
                 print all_strings.racetrack_failed
                 inv.failed_riddles += 1
                 inv.end_if_failed()
-            sleep(4.5)
+            all_strings.enter_to_continue()
 
             return self.enter()
 
@@ -1279,7 +1299,8 @@ class Alone(Room):
                 all_strings.alone_failed()
                 inv.failed_riddles += 1
                 inv.end_if_failed()
-            sleep(3)
+
+            all_strings.enter_to_continue()
             self.not_chatted = False
 
             return self.enter()
@@ -1582,7 +1603,7 @@ class World(Room):
                 inv.failed_riddles += 1
                 inv.end_if_failed()
 
-            sleep(2.5)
+            all_strings.enter_to_continue()
             self.intro = all_strings.world_intro_final
             return self.enter()
 
