@@ -1832,6 +1832,19 @@ class Map(object):
 
 class Saver(object):
 
+    rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
+            'left': left_room, 'right': right_room, 'butcher': butcher_room,
+            'dining room': dining_room, 'battlefield': battlefield_room,
+            'racetrack': racetrack_room, 'alone': alone_room,
+            'world': world_room}
+
+    riddle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
+                    'alone', 'world']
+
+# Saver gets initialized in the save action inside Room(object), the room and
+# inv objects from this file are used as the arguments along with the name of
+# the specific room object from which it is called (current)
+
     def __init__(self, start, middle, door, left, right, battle,
                 dining, butcher, alone, race, world, inv, current):
         self.start = start
@@ -1848,12 +1861,29 @@ class Saver(object):
         self.inv = inv
         self.current = current
 
+# A SavedGame object holds all the attributes that change the state of the game
+# as instance variables. save() then takes all the room objects that it was
+# instantiated with and passes their attributes into this stock SavedGame file
+# (which initially hold values that are identical to the start of game values
+# found in this file.)
+
     def save(self):
         save_file = SavedGame()
         save_file.items = self.inv.items
         save_file.starting = self.current
         save_file.failed_riddles = self.inv.failed_riddles
 
+# The tuple list matches the room objects from the game file with corresponding
+# values in save_file's dictionary of values. The key's represent outer keys
+# and each of the inner keys ('intro', 'bearings', 'extra', 'visisted') are then
+# matched with the object's corresponding attributes.
+"""
+        for room in self.rooms.keys():
+            save_file.rooms[room]['intro'] = self.rooms[room].intro
+            save_file.rooms[room]['bearings'] = self.rooms[room].bearings
+            save_file.rooms[room]['extra'] = self.rooms[room].extra
+            save_file.rooms[room]['visited'] = self.rooms[room].visited
+"""
         for room, key in [(self.start, 'start'), (self.middle, 'middle'),
                     (self.door, 'door'),
                     (self.left, 'left'), (self.right, 'right'),
@@ -1865,6 +1895,9 @@ class Saver(object):
             save_file.rooms[key]['extra'] = room.extra
             save_file.rooms[key]['visited'] = room.visited
 
+# Same as above except it only looks at the puzzle rooms because here we are
+# dealing with puzzle specific attributes
+
         for room, key in [(self.battle, 'battlefield'), (self.dining, 'dining room'),
                     (self.butcher, 'butcher'), (self.alone, 'alone'),
                     (self.race, 'racetrack'), (self.world, 'world')]:
@@ -1872,16 +1905,19 @@ class Saver(object):
             save_file.rooms[key]['attempted'] = room.attempted
             save_file.rooms[key]['stone_here'] = room.stone_here
 
+# Make sure that any stones placed in the_door are stored in the save_file
+
+        for stone in self.door.stones.keys():
+            save_file.rooms['door'][stone] = self.door.stones[stone]
+
+# Assorted other important attributes
+
         save_file.rooms['start']['start_of_game'] = self.start.start_of_game
         save_file.rooms['start']['pen'] = self.start.pen
         save_file.rooms['door']['door_open'] = self.door.door_open
         save_file.rooms['door']['attempted_door'] = self.door.attempted_door
         save_file.rooms['door']['touched_indentations'] = self.door.touched_indentations
         save_file.rooms['door']['bag_here'] = self.door.bag_here
-
-        for stone in self.door.stones.keys():
-            save_file.rooms['door'][stone] = self.door.stones[stone]
-
         save_file.rooms['right']['racetrack_open'] = self.right.racetrack_open
         save_file.rooms['racetrack']['rock_on_floor'] = self.race.rock_on_floor
         save_file.rooms['alone']['final_response'] = self.alone.final_response
@@ -1906,13 +1942,22 @@ class Loader(object):
     riddle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
                     'alone', 'world']
 
+# Loader gets instantiated with a save file (unpickled from saved.py) and the
+# inventory object (the inv that is instantiated in this save file)
+
     def __init__(self, save, inventory):
         self.info = save
         self.inv = inventory
 
     def load_it(self):
+
+# The inv object instantiated in this game file gets the save file's inventory
+# items and number of failed riddles.
+
         self.inv.items = self.info.items
         self.inv.failed_riddles = self.info.failed_riddles
+
+# Same as with Saver but even simpler due to
 
         for room in self.rooms.keys():
             self.rooms[room].visited = self.info.rooms[room]['visited']
