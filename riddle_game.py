@@ -3,6 +3,11 @@ from random import randint
 from random import choice
 from sys import exit
 import pickle
+
+# all_strings is just what is sounds like: anything that is imported from it
+# is a string or a function that is a combination of strings, time.sleep() and
+# raw_input prompts that are just meant to control the flow of readable content
+
 import all_strings
 
 # The general breakdown of what this game does is as follows:
@@ -467,7 +472,7 @@ class TheDoor(Room):
                 all_strings.the_door_touch_indentations()
             if action == 'look at indentation' or action == 'look at indentations':
                 all_strings.the_door_see_indentations()
-            TheDoor.touched_indentations = True
+            self.touched_indentations = True
             have_stone = False
             had_stone = False
 
@@ -562,7 +567,7 @@ best.""" % stone
                     while (action != 'pull door' and action != 'pull' and
                             action != 'pull the door' and
                             action != 'pull on door' and
-                            and door_count < 4):
+                            door_count < 4):
                         door_count += 1
                         print "\nI guess you might as well %s." % action
                         action = raw_input("\nBut would you also like to try to do something else? > ")
@@ -715,6 +720,9 @@ class Battlefield(Room):
             all_strings.battlefield_touch_soldier()
             return self.enter()
 
+# This is a "make attempt" action that is present in some form is all of the
+# riddle rooms
+
         if (action == "talk" or action == "talk to soldier" or
             action == "talk to her"):
 
@@ -724,6 +732,9 @@ class Battlefield(Room):
             self.attempted = True
             all_strings.battlefield_riddle()
             solution = ""
+
+# self.guesses_left is initialized as 5 for every subclass of Room
+
             while self.guesses_left > 0 and not self.solved:
                 print """
 The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
@@ -732,6 +743,8 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 
                 if solution == "onion" or solution == "an onion":
                     self.solved = True
+
+# some riddles provide a hint to help a losing player
 
                 if self.guesses_left == 1:
                     all_strings.battlefield_hint()
@@ -758,7 +771,14 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 
             return self.enter()
 
+# This 'take stone' action is available in some form for all of the riddle rooms
+# but it is only available if stone_available() at the top of self.enter()
+# places it in self.good_moves.
+
         if action == "take stone":
+
+# If the player does not have the 'dirty bag' then they can only carry one of
+# the stones at any given time.
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
                 all_strings.no_bag()
@@ -767,10 +787,14 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
                 inv.items.append("Stone of Respect")
-                self.good_moves.remove('take stone')
                 all_strings.stone_of_respect_pickup()
-                if TheDoor.touched_indentations:
+
+# The player gets a hint about what to do with a stone if a certain action was
+# performed in door_room
+
+                if door_room.touched_indentations:
                     all_strings.indentation_hint()
+
                 self.extra = all_strings.battlefield_extra_final
                 return self.enter()
 
@@ -798,6 +822,7 @@ class DiningRoom(Room):
             self.good_moves.remove("read note")
 
         self.correct_intro()
+
         action = self.action()
 
         if action == "go east" or action == "walk east":
@@ -842,6 +867,9 @@ class DiningRoom(Room):
             all_strings.dining_room_touch_sofa()
             return self.enter()
 
+# See explanation of code of if action == "talk" in Battlefield for an
+# explanation of very similar code to this.
+
         if action == "read note":
             all_strings.dining_room_riddle()
 
@@ -858,10 +886,13 @@ class DiningRoom(Room):
 Below the note there are still %d lines that are not used up.""" % self.guesses_left
                     self.guesses_left -= 1
                     solution = raw_input("\nWhat do you write? > ").lower()
+
                     if solution == "silence":
                         self.solved = True
+
                     if self.guesses_left == 1:
                         all_strings.dining_room_hint()
+
             self.bearings = all_strings.dining_room_bearings_after
 
             if self.solved:
@@ -888,7 +919,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                 self.stone_here = False
                 inv.items.append("Stone of Silence")
                 all_strings.stone_of_silence_pickup()
-                if TheDoor.touched_indentations:
+                if door_room.touched_indentations:
                     all_strings.indentation_hint()
                 self.extra = all_strings.dining_room_extra_final
                 self.bearings = all_strings.dining_room_bearings_final
@@ -1000,7 +1031,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 inv.items.append("Stone of Peace")
                 all_strings.stone_of_peace_pickup()
 
-                if TheDoor.touched_indentations:
+                if door_room.touched_indentations:
                     all_strings.indentation_hint()
                 self.extra = all_strings.butcher_extra_final
                 self.bearings = all_strings.butcher_bearings_final
@@ -1142,7 +1173,7 @@ quickly counting down on the display that's (gently) pressing into your face.
                 inv.items.append("Stone of Friendship")
                 all_strings.stone_of_friendship_pickup()
 
-                if TheDoor.touched_indentations:
+                if door_room.touched_indentations:
                     all_strings.indentation_hint()
 
                 self.extra = all_strings.racetrack_extra_final
@@ -1363,7 +1394,7 @@ class Alone(Room):
                 inv.items.append("Stone of Compassion")
                 all_strings.stone_of_compassion_pickup()
 
-                if TheDoor.touched_indentations:
+                if door_room.touched_indentations:
                     all_strings.indentation_hint()
 
                 self.final_response = True
@@ -1530,7 +1561,7 @@ class World(Room):
                 inv.items.append("Stone of Practice")
                 all_strings.stone_of_practice_pickup()
 
-                if TheDoor.touched_indentations:
+                if door_room.touched_indentations:
                     all_strings.indentation_hint()
 
                 return self.enter()
@@ -1563,9 +1594,9 @@ class End(Room):
 
     def enter(self):
         all_strings.end_start()
-        for stone in TheDoor.stones.keys():
+        for stone in door_room.stones.keys():
 
-            if TheDoor.stones[stone]:
+            if door_room.stones[stone]:
                 raw_input("Go on? > ")
                 print "\nYou found the %s." % stone
                 print self.stories[stone]
@@ -1828,3 +1859,7 @@ if __name__ == "__main__":
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
+
+# TODO: Make the riddle room if clauses that take away certain good_moves based
+# on self.attempted standardized by putting the 'attempt' moves into a list
+# and running self.good_moves.remove on each item in that list
