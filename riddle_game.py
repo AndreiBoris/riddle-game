@@ -145,6 +145,7 @@ class Room(object):
     helper = all_strings.helper
     bearings = ''
     attempted = False
+    attempt_moves = []
 
     def action(self):
         # basic action options for any room
@@ -711,6 +712,7 @@ class Battlefield(Room):
                 'talk to her', 'touch soldier', 'take soldier', 'come closer']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
+    attempt_moves = ['talk to soldier', 'talk', 'talk to her', 'come closer']
     intro = all_strings.battlefield_intro
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
@@ -722,9 +724,8 @@ class Battlefield(Room):
 
         self.stone_available()
 
-        if self.attempted and 'talk' in self.good_moves:
-            for option in ['talk', 'talk to soldier', 'talk to her',
-                            'come closer']:
+        if self.attempted and self.attempt_moves[0] in self.good_moves:
+            for option in self.attempt_moves:
                 self.good_moves.remove(option)
 
         self.correct_intro()
@@ -832,6 +833,7 @@ class DiningRoom(Room):
                     'take sofa', 'look outside', 'touch curtains',
                     'touch curtain', 'sit on sofa', 'touch water', 'take water',
                     'take curtain', 'take curtains']
+    attempt_moves = ['read note']
     bad_moves = ['go north', 'walk north', 'walk south', 'walk west',
                 'go south', 'go west' ]
     intro = all_strings.dining_room_intro
@@ -841,8 +843,9 @@ class DiningRoom(Room):
 
         self.stone_available()
 
-        if self.attempted and "read note" in self.good_moves:
-            self.good_moves.remove("read note")
+        if self.attempted and self.attempt_moves[0] in self.good_moves:
+            for option in self.attempt_moves:
+                self.good_moves.remove(option)
 
         self.correct_intro()
 
@@ -960,6 +963,8 @@ class Butcher(Room):
                     'talk to man', 'talk to him', 'touch pig', 'take meat',
                     'take cut', 'take pig', 'touch meat', 'touch cut',
                     'take cuts', 'touch cuts', 'talk to the man']
+    attempt_moves = ['talk', 'talk to butcher', 'talk to man',
+     'talk to him']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
     intro = all_strings.butcher_intro
@@ -967,9 +972,8 @@ class Butcher(Room):
     bearings = all_strings.butcher_bearings_start
     def enter(self):
 
-        if self.attempted and 'talk' in self.good_moves:
-            for option in ['talk', 'talk to butcher', 'talk to man',
-             'talk to him']:
+        if self.attempted and self.attempt_moves[0] in self.good_moves:
+            for option in self.attempt_moves:
                 self.good_moves.remove(option)
 
         self.stone_available()
@@ -1076,15 +1080,15 @@ class Racetrack(Room):
 
     name = 'racetrack'
     rock_on_floor = True
-    throw_options = ["throw rock", "throw rock at person",
-                    "throw rock at human", "throw rock at the person",
-                    "throw rock at the robot", "throw rock at robot",
-                    "throw rock at hugbot", "throw rock at the human"]
     stone_here = True
     good_moves = ['go west', 'walk west', 'talk', 'take rock', 'talk to robot',
                     'talk to human', 'talk to the robot', 'talk to the person',
                     'talk to the human', 'talk to human', 'talk to person',
                     'touch rock', 'take small rock']
+    attempt_moves = ["throw rock", "throw rock at person",
+                    "throw rock at human", "throw rock at the person",
+                    "throw rock at the robot", "throw rock at robot",
+                    "throw rock at hugbot", "throw rock at the human"]
     bad_moves = ['go north', 'walk north', 'walk east', 'walk south', 'go east',
                 'go south']
     intro = all_strings.racetrack_intro
@@ -1093,11 +1097,11 @@ class Racetrack(Room):
     def enter(self):
 
         if not self.rock_on_floor and not self.attempted:
-            for option in self.throw_options:
+            for option in self.attempt_moves:
                 self.good_moves.append(option)
 
-        if self.attempted and 'throw rock' in self.good_moves:
-            for option in self.throw_options:
+        if self.attempted and self.attempt_moves[0] in self.good_moves:
+            for option in self.attempt_moves:
                 self.good_moves.remove(option)
 
         self.stone_available()
@@ -1594,6 +1598,7 @@ class World(Room):
                 'touch elephant', 'touch rock', 'talk to rock',
                 'enjoy the view', 'look at mountains', 'fan yourself',
                 'enjoy the amazing view', 'enjoy view', 'look at view']
+    attempt_moves = ['talk', 'talk to elephant', 'talk to it']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     intro = all_strings.world_intro_start
@@ -1601,8 +1606,8 @@ class World(Room):
     bearings = all_strings.world_bearings_start
     def enter(self):
 
-        if self.attempted and 'talk' in self.good_moves:
-            for option in ['talk', 'talk to elephant', 'talk to it']:
+        if self.attempted and self.attempt_moves[0] in self.good_moves:
+            for option in self.attempt_moves:
                 self.good_moves.remove(option)
 
         self.stone_available()
