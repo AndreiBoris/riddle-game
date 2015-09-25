@@ -1874,10 +1874,7 @@ class Saver(object):
         save_file.starting = self.current
         save_file.failed_riddles = self.inv.failed_riddles
 
-# The tuple list matches the room objects from the game file with corresponding
-# values in save_file's dictionary of values. The key's represent outer keys
-# and each of the inner keys ('intro', 'bearings', 'extra', 'visisted') are then
-# matched with the object's corresponding attributes.
+# This loop deals with assigning all common room attributes
 
         for room in self.rooms.keys():
             save_file.rooms[room]['intro'] = self.rooms[room].intro
@@ -1885,8 +1882,8 @@ class Saver(object):
             save_file.rooms[room]['extra'] = self.rooms[room].extra
             save_file.rooms[room]['visited'] = self.rooms[room].visited
 
-# Same as above except it only looks at the puzzle rooms because here we are
-# dealing with puzzle specific attributes
+# Same as above but it only deals with the riddle rooms that have their own
+# common attributes
 
         for room in self.riddle_rooms:
             save_file.rooms[room]['solved'] = self.rooms[room].solved
@@ -1945,7 +1942,7 @@ class Loader(object):
         self.inv.items = self.info.items
         self.inv.failed_riddles = self.info.failed_riddles
 
-# Same as with Saver but even simpler due to
+# Same as with Saver
 
         for room in self.rooms.keys():
             self.rooms[room].visited = self.info.rooms[room]['visited']
@@ -1958,16 +1955,15 @@ class Loader(object):
             self.rooms[room].attempted = self.info.rooms[room]['attempted']
             self.rooms[room].stone_here = self.info.rooms[room]['stone_here']
 
+        for stone in door_room.stones.keys():
+            door_room.stones[stone] = self.info.rooms['door'][stone]
+
         start_room.start_of_game = self.info.rooms['start']['start_of_game']
         start_room.pen = self.info.rooms['start']['pen']
         door_room.door_open = self.info.rooms['door']['door_open']
         door_room.attempted_door = self.info.rooms['door']['attempted_door']
         door_room.touched_indentations = self.info.rooms['door']['touched_indentations']
         door_room.bag_here = self.info.rooms['door']['bag_here']
-
-        for stone in door_room.stones.keys():
-            door_room.stones[stone] = self.info.rooms['door'][stone]
-
         right_room.racetrack_open = self.info.rooms['right']['racetrack_open']
         racetrack_room.rock_on_floor = self.info.rooms['racetrack']['rock_on_floor']
         alone_room.final_response = self.info.rooms['alone']['final_response']
@@ -1982,6 +1978,11 @@ class Loader(object):
 
 
 class SavedGame(object):
+
+# This class is used to collect all the attributes that are necessary to keep
+# track of in order to know the state of the game at the time of the save. This
+# file is then pickled to saved.py and is then unpickled and fed into the Loader
+# if the player wants to load the values from the save into the current game
 
     def __init__(self):
         self.items = []
@@ -2064,9 +2065,14 @@ class SavedGame(object):
                                 'extra': all_strings.world_extra_start,
                                 'bearings': all_strings.world_bearings_start}}
 
+# This if statement is just so that the game does run if it was imported as a
+# module into another script.
 
 if __name__ == "__main__":
     the_map = Map()
+
+# Get the SavedGame object from saved.py. If there is no saved.py, get a stock
+# SavedGame file in case the player chooses to 'load' regardless.
 
     try:
         with open('saved.py', 'rb') as loaded_doc:
