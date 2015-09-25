@@ -619,7 +619,6 @@ curtains are floating lyrically along. You half-expect a wild butler to appear."
 def dining_room_leave_pen():
     print """
 You decide to leave the pen here, it seems somehow appropriate."""
-    raw_input("\nHit ENTER to continue")
 
 def dining_room_look_outside():
     print """
@@ -639,7 +638,7 @@ You suddenly realize just how quiet this place is. Apart from the noises made by
 your body, there seems to be only one other sound in the room."""
     raw_input("\nHit ENTER to continue")
 
-def dining_room_riddle():
+def dining_room_riddle_start():
     print """
 You walk over to the table and take a look at the note. The script it's written
 in is exquisite. It reminds you of what you imagined Lev Nikolayevich Myshkin's
@@ -697,7 +696,7 @@ def dining_room_touch_water():
 Water feels nice."""
     raw_input("\nHit ENTER to continue")
 
-def dining_room_riddle():
+def dining_room_have_pen():
     print """
 Hmmm. Good thing you had the foresight to pick up this trusty ballpoint pen."""
     raw_input("\nHit ENTER to continue")

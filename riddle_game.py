@@ -894,7 +894,7 @@ class DiningRoom(Room):
 # Battlefield
 
         if action == "read note":
-            all_strings.dining_room_riddle()
+            all_strings.dining_room_riddle_start()
 
             if "ballpoint pen" not in inv.items:
                 all_strings.dining_room_no_pen()
@@ -904,6 +904,7 @@ class DiningRoom(Room):
 
             elif "ballpoint pen" in inv.items:
                 self.attempted = True
+                all_strings.dining_room_have_pen()
                 all_strings.dining_room_riddle()
                 solution = ""
                 while self.guesses_left > 0 and not self.solved:
@@ -1877,33 +1878,20 @@ class Saver(object):
 # values in save_file's dictionary of values. The key's represent outer keys
 # and each of the inner keys ('intro', 'bearings', 'extra', 'visisted') are then
 # matched with the object's corresponding attributes.
-"""
+
         for room in self.rooms.keys():
             save_file.rooms[room]['intro'] = self.rooms[room].intro
             save_file.rooms[room]['bearings'] = self.rooms[room].bearings
             save_file.rooms[room]['extra'] = self.rooms[room].extra
             save_file.rooms[room]['visited'] = self.rooms[room].visited
-"""
-        for room, key in [(self.start, 'start'), (self.middle, 'middle'),
-                    (self.door, 'door'),
-                    (self.left, 'left'), (self.right, 'right'),
-                    (self.battle, 'battlefield'), (self.dining, 'dining room'),
-                    (self.butcher, 'butcher'), (self.alone, 'alone'),
-                    (self.race, 'racetrack'), (self.world, 'world')]:
-            save_file.rooms[key]['intro'] = room.intro
-            save_file.rooms[key]['bearings'] = room.bearings
-            save_file.rooms[key]['extra'] = room.extra
-            save_file.rooms[key]['visited'] = room.visited
 
 # Same as above except it only looks at the puzzle rooms because here we are
 # dealing with puzzle specific attributes
 
-        for room, key in [(self.battle, 'battlefield'), (self.dining, 'dining room'),
-                    (self.butcher, 'butcher'), (self.alone, 'alone'),
-                    (self.race, 'racetrack'), (self.world, 'world')]:
-            save_file.rooms[key]['solved'] = room.solved
-            save_file.rooms[key]['attempted'] = room.attempted
-            save_file.rooms[key]['stone_here'] = room.stone_here
+        for room in self.riddle_rooms:
+            save_file.rooms[room]['solved'] = self.rooms[room].solved
+            save_file.rooms[room]['attempted'] = self.rooms[room].attempted
+            save_file.rooms[room]['stone_here'] = self.rooms[room].stone_here
 
 # Make sure that any stones placed in the_door are stored in the save_file
 
