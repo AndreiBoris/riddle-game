@@ -1832,9 +1832,6 @@ class Map(object):
 
 class Saver(object):
 
-    riddle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
-                    'alone', 'world']
-
     def __init__(self, start, middle, door, left, right, battle,
                 dining, butcher, alone, race, world, inv, current):
         self.start = start
