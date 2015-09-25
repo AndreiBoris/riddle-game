@@ -1576,6 +1576,9 @@ class Alone(Room):
                 self.bearings = all_strings.alone_bearings_final
                 return self.enter()
 
+# This is the modified sleep function used in the "make attempt" action in this
+# room
+
     def loading(self, count):
         for i in xrange(count):
             sleep(1)
@@ -1603,7 +1606,9 @@ class World(Room):
                 self.good_moves.remove(option)
 
         self.stone_available()
+
         self.correct_intro()
+
         action = self.action()
 
         if action == "go north" or action == "walk north":
@@ -1773,6 +1778,9 @@ class End(Room):
         all_strings.end_start()
         for stone in door_room.stones.keys():
 
+# If player placed the stone in indentations in door_room they will get the
+# corresponding message
+
             if door_room.stones[stone]:
                 raw_input("Go on? > ")
                 print "\nYou found the %s." % stone
@@ -1801,24 +1809,28 @@ end_room = End()
 
 class Map(object):
 
+# This maps a string that is the output of these room objects' .enter() method
+# and uses it to find the next room that will be entered.
+
     rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
             'left': left_room, 'right': right_room, 'butcher': butcher_room,
             'dining room': dining_room, 'battlefield': battlefield_room,
             'racetrack': racetrack_room, 'alone': alone_room,
             'world': world_room, 'end': end_room}
 
+# This method gets called by Engine and keeps getting called until the end_room
+# is reached.
+
     def play(self, next_room):
+
+# The 35 next lines are used to break the rooms up from one another on the
+# display.
+
         print "\n" * 35
         return self.rooms[next_room].enter()
 
 
 class Saver(object):
-
-    rooms = {'start': start_room, 'middle': middle_room, 'door': door_room,
-            'left': left_room, 'right': right_room, 'butcher': butcher_room,
-            'dining room': dining_room, 'battlefield': battlefield_room,
-            'racetrack': racetrack_room, 'alone': alone_room,
-            'world': world_room}
 
     riddle_rooms = ['butcher', 'dining room', 'battlefield', 'racetrack',
                     'alone', 'world']
