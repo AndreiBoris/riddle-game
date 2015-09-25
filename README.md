@@ -1,4 +1,21 @@
-# riddle-game
+TO PLAY:
+
+The current version of the game runs only in python. So if have Python2
+installed you can run it by cloning this repository and then finding this
+directory in your favorite terminal and running
+
+python riddle_game.py
+
+in the terminal. It will give you two options, New and Load. Just choose a New
+game by typing
+
+new
+
+If you want to load a previously saved game typing load will instantly do that
+for you.
+
+ABOUT:
+
 This is a text-based game where you have to solve some riddles.
 
 There's a really pretty door, see if you can get the stones to walk through it.
