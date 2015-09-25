@@ -122,10 +122,8 @@ class Inventory(object):
     def end_if_failed(self):
         if self.failed_riddles == 1:
             print all_strings.lost_1
-            all_strings.enter_to_continue()
         if self.failed_riddles == 2:
             print all_strings.lost_2
-            all_strings.enter_to_continue()
         if self.failed_riddles >= 3:
             print all_strings.lose_game
             all_strings.enter_to_continue()
@@ -778,7 +776,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 
             if self.solved:
                 self.extra = all_strings.battlefield_extra_win
-                sleep(1.5)
+                all_strings.enter_to_continue()
                 print all_strings.battlefield_solved
 
             else:
@@ -933,6 +931,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                 inv.end_if_failed()
             all_strings.dining_room_leave_pen()
             inv.remove("ballpoint pen")
+            all_strings.enter_to_continue()
 
             return self.enter()
 
@@ -1211,8 +1210,8 @@ quickly counting down on the display that's (gently) pressing into your face.
                 print all_strings.racetrack_failed
                 inv.failed_riddles += 1
                 inv.end_if_failed()
-            all_strings.enter_to_continue()
 
+            all_strings.enter_to_continue()
             return self.enter()
 
         if action == "take stone":
@@ -1238,6 +1237,11 @@ quickly counting down on the display that's (gently) pressing into your face.
 class Alone(Room):
 
     name = 'alone'
+
+# This room has a lot of attributes due to a more intricate system of what
+# messages display at any given time and also a projector that has a number of
+# potential states
+
     final_response = False
     good_text_up = False
     sad_text_up = False
@@ -1264,7 +1268,7 @@ class Alone(Room):
     def enter(self):
 
 # This is in essence the same thing as the stone_available() method from Room()
-# but it also checks looked.
+# but it also checks self.looked.
 
         if (self.solved and self.stone_here and
          "take stone" not in self.good_moves and self.looked):
@@ -1274,10 +1278,23 @@ class Alone(Room):
 
         self.correct_intro()
 
+# This is a unique implementation of the 'make attempt' as defined in
+# Battlefield(Room). It plays only when the state of three projector attributes
+# are True and doesn't require any direct action from the player to run,
+# otherwise it is basically the same thing as the other 'make attempt' pieces.
+#
+# self.loading() is defined at the bottom of Alone(Room) and is a variation of
+# time.sleep() that prints dots every second.
+
         if (self.projector_on and self.projector_open and not self.attempted):
             self.attempted = True
             all_strings.alone_riddle()
             while self.guesses_left > 0 and not self.solved:
+
+# self.loading here is used to give the player a sense that there is a limited
+# number of guesses that can be made as it prints progressively fewer dots
+# between guesses.
+
                 self.loading(self.guesses_left)
                 self.guesses_left -= 1
                 solution = raw_input("\n?? > ").lower()
@@ -1287,6 +1304,11 @@ class Alone(Room):
 
                 if self.guesses_left == 1:
                     all_strings.alone_hint()
+
+# self.good_text_up and self.sad_text_up exist because the projector can be
+# turned off, in which event a different self.extra will be loaded. If
+# self.good_text_up or self.sad_text_up then these will display as self.extra
+# if the projector is then turned back on.
 
             if self.solved:
                 self.good_text_up = True
@@ -1301,8 +1323,6 @@ class Alone(Room):
                 inv.end_if_failed()
 
             all_strings.enter_to_continue()
-            self.not_chatted = False
-
             return self.enter()
 
         action = self.action()
@@ -1326,14 +1346,25 @@ class Alone(Room):
 
         if action == "plug in projector" or action == "plug in the projector":
 
+# If the projector is already plugged in, get a different message.
+
             if self.projector_power:
                 all_strings.alone_projector_powered()
                 return self.enter()
+
+            if self.final_response:
+                self.extra = all_strings.alone_extra_final
+
+            elif self.attempted and not self.solved:
+                self.extra = all_strings.alone_extra_proj_power_failed
+
             self.projector_power = True
             all_strings.alone_projector_power_on()
             return self.enter()
 
         if action == "unplug projector" or action == "unplug the projector":
+
+# If the projector is already unpluged, get a different message.
 
             if not self.projector_power:
                 all_strings.alone_projector_unpowered()
@@ -1342,8 +1373,11 @@ class Alone(Room):
             self.projector_on = False
             all_strings.alone_projector_power_off()
 
+            if self.stone_here and self.attempted and not self.solved:
+                self.extra = all_strings.alone_extra_proj_unplug_failed
+
             if self.stone_here:
-                self.extra = all_strings.alone_extra_proj_off
+                self.extra = all_strings.alone_extra_proj_unplug
 
             return self.enter()
 
@@ -1360,10 +1394,10 @@ class Alone(Room):
                 if self.final_response:
                     self.extra = all_strings.alone_extra_final
 
-                elif self.good_text_up:
+                elif self.good_text_up and self.projector_open:
                     self.extra = all_strings.alone_extra_win
 
-                elif self.sad_text_up:
+                elif self.sad_text_up and self.projector_open:
                     self.extra = all_strings.alone_extra_lose
 
                 return self.enter()
@@ -1381,7 +1415,10 @@ class Alone(Room):
             self.projector_on = False
             all_strings.alone_projector_turn_off()
 
-            if self.stone_here:
+            if self.stone_here and self.attempted and not self.solved:
+                self.extra = all_strings.alone_extra_proj_off_failed
+
+            elif self.stone_here:
                 self.extra = all_strings.alone_extra_proj_off
 
             return self.enter()
@@ -1407,6 +1444,15 @@ class Alone(Room):
                 all_strings.alone_projector_no_lid()
                 return self.enter()
 
+            if self.final_response:
+                self.extra = all_strings.alone_extra_final
+
+            elif self.good_text_up and self.projector_on:
+                self.extra = all_strings.alone_extra_win
+
+            elif self.sad_text_up and self.projector_on:
+                self.extra = all_strings.alone_extra_lose
+
             self.projector_open = True
             all_strings.alone_projector_open()
             return self.enter()
@@ -1416,6 +1462,12 @@ class Alone(Room):
             if not self.projector_open:
                 all_strings.alone_projector_lid()
                 return self.enter()
+
+            if self.stone_here and self.attempted and not self.solved:
+                self.extra = all_strings.alone_extra_proj_closed_failed
+
+            elif self.stone_here:
+                self.extra = all_strings.alone_extra_proj_closed
 
             self.projector_open = False
             all_strings.alone_projector_close()

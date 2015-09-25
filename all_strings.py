@@ -58,9 +58,35 @@ turn off the projector and stuff please
 .
 i don't really want to talk to anyone"""
 
+alone_extra_proj_closed = """
+The young lady is in evident distress but is bearing it very quietly. You
+have closed the lid of the projector. Maybe it's worth looking at?"""
+
+alone_extra_proj_closed_failed = """
+The young lady is in evident distress but is bearing it very quietly. You
+have closed the lid of the projector. It is probably best for you to just leave."""
+
 alone_extra_proj_off = """
 The young lady is in evident distress but is bearing it very quietly. You
-have turned off the projector. Maybe its worth looking at?"""
+have turned off the projector. Maybe it's worth looking at?"""
+
+alone_extra_proj_off_failed = """
+The young lady is in evident distress but is bearing it very quietly. You
+have turned off the projector. It is probably best for you to just leave."""
+
+alone_extra_proj_power_failed = """
+The young lady is in evident distress but is bearing it very quietly. You
+plugged in the projector again despite her asking you to turn it off. Perhaps
+you have some greater understanding of what is good for her than she herself
+possesses. Amazing."""
+
+alone_extra_proj_unplug = """
+The young lady is in evident distress but is bearing it very quietly. You
+have unplugged the projector. Maybe it's worth looking at?"""
+
+alone_extra_proj_unplug_failed = """
+The young lady is in evident distress but is bearing it very quietly. You
+have unplugged the projector. It is probably best for you to just leave."""
 
 alone_extra_start = """
 The young lady is in evident distress but is bearing it very quietly. Maybe it's
@@ -232,8 +258,7 @@ be a hater."""
     raw_input("\nHit ENTER to continue")
 
 def alone_riddle():
-    print """
-An image displays on the projector screen on the left side of the room.
+    print """An image displays on the projector screen on the left side of the room.
 Something is loading."""
     raw_input("\nHit ENTER to continue")
     loading(4)
