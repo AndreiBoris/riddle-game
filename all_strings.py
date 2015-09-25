@@ -80,11 +80,19 @@ alone_extra_proj_opened_off = """
 The young lady is in evident distress but is bearing it very quietly. You have
 opened the lid again, but the projector is still off."""
 
+alone_extra_proj_on_closed = """
+The young lady is in evident distress but is bearing it very quietly. You have
+opened the turned the projector on again, but the lid is still closed."""
+
 alone_extra_proj_power_failed = """
 The young lady is in evident distress but is bearing it very quietly. You
 plugged in the projector again despite her asking you to turn it off. Perhaps
 you have some greater understanding of what is good for her than she herself
 possesses. Amazing."""
+
+alone_extra_proj_power_off = """
+The young lady is in evident distress but is bearing it very quietly. You have
+plugged the projector back in, but it is still turned off."""
 
 alone_extra_proj_unplug = """
 The young lady is in evident distress but is bearing it very quietly. You

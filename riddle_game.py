@@ -1364,6 +1364,11 @@ class Alone(Room):
             elif self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_power_failed
 
+# If the projector is plugged in but it is not on:
+
+            elif not self.final_response and not self.projector_on:
+                self.extra = all_strings.alone_extra_proj_power_off
+
             self.projector_power = True
             all_strings.alone_projector_power_on()
             return self.enter()
@@ -1385,7 +1390,9 @@ class Alone(Room):
             if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_unplug_failed
 
-            elif self.stone_here:
+# As long as the final response is not up, the following self.extra will play:
+
+            elif not self.final_response:
                 self.extra = all_strings.alone_extra_proj_unplug
 
             return self.enter()
@@ -1397,6 +1404,8 @@ class Alone(Room):
             if self.projector_on:
                 all_strings.alone_projector_running()
                 return self.enter()
+
+# Turn on projector
 
             if self.projector_power:
                 all_strings.alone_projector_turn_on()
@@ -1416,6 +1425,11 @@ class Alone(Room):
                 elif self.sad_text_up and self.projector_open:
                     self.extra = all_strings.alone_extra_lose
 
+# If we're not at the final response and the lid is closed, we get this:
+
+                elif not self.final_response:
+                    self.extra = all_strings.alone_extra_proj_on_closed
+
                 return self.enter()
 
 # Projector can't be turned on if it is not plugged in:
@@ -1432,6 +1446,8 @@ class Alone(Room):
                 all_strings.alone_projector_was_off()
                 return self.enter()
 
+# Turn projector off:
+
             self.projector_on = False
             all_strings.alone_projector_turn_off()
 
@@ -1440,7 +1456,9 @@ class Alone(Room):
             if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_off_failed
 
-            elif self.stone_here:
+# As long as we're not at the final response we get the following message:
+
+            elif not self.final_response:
                 self.extra = all_strings.alone_extra_proj_off
 
             return self.enter()
@@ -1481,7 +1499,9 @@ class Alone(Room):
             elif self.sad_text_up and self.projector_on:
                 self.extra = all_strings.alone_extra_lose
 
-            else:
+# If the projector is off we get:
+
+            elif not self.final_response:
                 self.extra = all_strings.alone_extra_proj_opened_off
 
             self.projector_open = True
@@ -1490,15 +1510,23 @@ class Alone(Room):
 
         if action == "close lid" or action == "close projector lid":
 
+# If lid is already closed:
+
             if not self.projector_open:
                 all_strings.alone_projector_lid()
                 return self.enter()
 
+# If the riddle is failed:
+
             if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_closed_failed
 
-            elif self.stone_here:
+# In any other circumsntance apart from self.final_response being true:
+
+            elif not self.final_response:
                 self.extra = all_strings.alone_extra_proj_closed
+
+# Close projector lid:
 
             self.projector_open = False
             all_strings.alone_projector_close()
