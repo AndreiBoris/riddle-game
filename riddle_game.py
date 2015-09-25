@@ -122,13 +122,13 @@ class Inventory(object):
     def end_if_failed(self):
         if self.failed_riddles == 1:
             print all_strings.lost_1
-            raw_input('\nHit ENTER to continue')
+            all_strings.enter_to_continue()
         if self.failed_riddles == 2:
             print all_strings.lost_2
-            raw_input('\nHit ENTER to continue')
+            all_strings.enter_to_continue()
         if self.failed_riddles >= 3:
             print all_strings.lose_game
-            raw_input('\nHit ENTER to continue')
+            all_strings.enter_to_continue()
             exit(1)
 
 
@@ -540,7 +540,7 @@ You take The %s and place it the indentation where it fits
 best.""" % stone
                     self.stones[stone] = True
                     placed = True
-                    raw_input("\nHit ENTER to continue")
+                    all_strings.enter_to_continue()
 
             if placed:
                 return self.enter()
@@ -788,7 +788,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 inv.end_if_failed()
 
             self.intro = all_strings.battlefield_intro_final
-            raw_input("\nHit ENTER to continue")
+            all_strings.enter_to_continue()
 
             return self.enter()
 
@@ -970,7 +970,9 @@ class Butcher(Room):
                 self.good_moves.remove(option)
 
         self.stone_available()
+
         self.correct_intro()
+
         action = self.action()
 
         if action == "go south" or action == "walk south":
@@ -981,25 +983,23 @@ class Butcher(Room):
             all_strings.butcher_touch_pig()
             return self.enter()
 
-        if (action == "touch cut" or action == "touch meat" or
-            action == "touch cuts"):
+        if (action == 'touch cut' or action == 'touch meat' or
+            action == 'touch cuts'):
             all_strings.butcher_touch_meat()
-            self.good_moves.remove("touch cut")
-            self.good_moves.remove("touch cuts")
-            self.good_moves.remove("touch meat")
+            for option in ['touch cut', 'touch cuts', 'touch meat']:
+                self.good_moves.remove(option)
             return self.enter()
 
-        if action == "take pig":
+        if action == 'take pig':
             all_strings.butcher_take_pig()
-            self.good_moves.remove("take pig")
+            self.good_moves.remove('take pig')
             return self.enter()
 
-        if (action == "take meat" or action == "take cut" or
-            action == "take cuts"):
+        if (action == 'take meat' or action == 'take cut' or
+            action == 'take cuts'):
             all_strings.butcher_take_meat()
-            self.good_moves.remove("take cut")
-            self.good_moves.remove("take meat")
-            self.good_moves.remove("take cuts")
+            for option in ['take cut', 'take cuts', 'take meat']:
+                self.good_moves.remove(option)
             return self.enter()
 
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
@@ -1030,6 +1030,9 @@ The man uses a small knife to carve a line into the wall behind him. There are
 
                 if self.guesses_left == 1:
                     all_strings.butcher_hint()
+
+# Sleep before showing player whether the answer was correct or not.
+
             sleep(2)
             self.bearings = all_strings.butcher_bearings_after
 
@@ -1042,7 +1045,8 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 print all_strings.butcher_failed
                 inv.failed_riddles += 1
                 inv.end_if_failed()
-            sleep(4.5)
+
+            all_strings.enter_to_continue()
 
             return self.enter()
 

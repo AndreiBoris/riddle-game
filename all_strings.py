@@ -662,6 +662,8 @@ def dining_room_riddle():
 Hmmm. Good thing you had the foresight to pick up this trusty ballpoint pen."""
     raw_input("\nHit ENTER to continue")
 
+empty_inv = "Just the clothes on your back."
+
 def end_start():
     print """
 You are standing in a tiny room."""
@@ -677,7 +679,9 @@ If you noticed something that seemed like a bug or just have any comments,
 or suggestions for improvements, please reach me at Andrei.Borissenko@gmail.com
 I would love to hear from you."""
 
-empty_inv = "Just the clothes on your back."
+def enter_to_continue():
+    raw_input('\nHit ENTER to continue')
+
 
 goodbye = "\nGoodbye!"
 
