@@ -78,11 +78,11 @@ have turned off the projector. It is probably best for you to just leave."""
 
 alone_extra_proj_opened_off = """
 The young lady is in evident distress but is bearing it very quietly. You have
-opened the lid again, but the projector is still off."""
+opened the lid, but the projector is still off."""
 
 alone_extra_proj_on_closed = """
 The young lady is in evident distress but is bearing it very quietly. You have
-opened the turned the projector on again, but the lid is still closed."""
+turned the projector on, but the lid is still closed."""
 
 alone_extra_proj_power_failed = """
 The young lady is in evident distress but is bearing it very quietly. You
@@ -638,7 +638,7 @@ You suddenly realize just how quiet this place is. Apart from the noises made by
 your body, there seems to be only one other sound in the room."""
     raw_input("\nHit ENTER to continue")
 
-def dining_room_riddle_start():
+def dining_room_riddle():
     print """
 You walk over to the table and take a look at the note. The script it's written
 in is exquisite. It reminds you of what you imagined Lev Nikolayevich Myshkin's
@@ -1308,7 +1308,7 @@ attempting to channel Houdini some more."""
     raw_input("\nHit ENTER to continue")
 
 def the_door_can_pull():
-    print "In a desperate effort, you decide to pull on the door handle."
+    print "\nIn a desperate effort, you decide to pull on the door handle."
     raw_input("\nHit ENTER to continue")
     print "\nNice."
     sleep(2)

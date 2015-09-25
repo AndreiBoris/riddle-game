@@ -126,7 +126,6 @@ class Inventory(object):
             print all_strings.lost_2
         if self.failed_riddles >= 3:
             print all_strings.lose_game
-            all_strings.enter_to_continue()
             exit(1)
 
 
@@ -709,7 +708,7 @@ class Battlefield(Room):
     name = 'battlefield'
     stone_here = True
     good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
-                'talk to her', 'touch soldier', 'take soldier']
+                'talk to her', 'touch soldier', 'take soldier', 'come closer']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     intro = all_strings.battlefield_intro
@@ -724,7 +723,8 @@ class Battlefield(Room):
         self.stone_available()
 
         if self.attempted and 'talk' in self.good_moves:
-            for option in ['talk', 'talk to soldier', 'talk to her']:
+            for option in ['talk', 'talk to soldier', 'talk to her',
+                            'come closer']:
                 self.good_moves.remove(option)
 
         self.correct_intro()
@@ -747,7 +747,7 @@ class Battlefield(Room):
 # riddle rooms
 
         if (action == "talk" or action == "talk to soldier" or
-            action == "talk to her"):
+            action == "talk to her" or action == 'come closer'):
 
 # These self.attempted attributes in the riddle rooms determine if the actual
 # riddle can be started. Once attempted, no riddle can be repeated, win or lose.
@@ -894,7 +894,7 @@ class DiningRoom(Room):
 # Battlefield
 
         if action == "read note":
-            all_strings.dining_room_riddle_start()
+            all_strings.dining_room_riddle()
 
             if "ballpoint pen" not in inv.items:
                 all_strings.dining_room_no_pen()
@@ -905,7 +905,6 @@ class DiningRoom(Room):
             elif "ballpoint pen" in inv.items:
                 self.attempted = True
                 all_strings.dining_room_have_pen()
-                all_strings.dining_room_riddle()
                 solution = ""
                 while self.guesses_left > 0 and not self.solved:
                     print """
