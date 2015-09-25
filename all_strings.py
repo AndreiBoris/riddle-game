@@ -60,7 +60,8 @@ i don't really want to talk to anyone"""
 
 alone_extra_proj_closed = """
 The young lady is in evident distress but is bearing it very quietly. You
-have closed the lid of the projector. Maybe it's worth looking at?"""
+have closed the lid of the projector, but somehow you think you'd learn more if
+you opened the lid again."""
 
 alone_extra_proj_closed_failed = """
 The young lady is in evident distress but is bearing it very quietly. You
@@ -68,11 +69,16 @@ have closed the lid of the projector. It is probably best for you to just leave.
 
 alone_extra_proj_off = """
 The young lady is in evident distress but is bearing it very quietly. You
-have turned off the projector. Maybe it's worth looking at?"""
+have turned off the projector, but you're somehow not sure whether that was the
+right action to take."""
 
 alone_extra_proj_off_failed = """
 The young lady is in evident distress but is bearing it very quietly. You
 have turned off the projector. It is probably best for you to just leave."""
+
+alone_extra_proj_opened_off = """
+The young lady is in evident distress but is bearing it very quietly. You have
+opened the lid again, but the projector is still off."""
 
 alone_extra_proj_power_failed = """
 The young lady is in evident distress but is bearing it very quietly. You
@@ -82,7 +88,8 @@ possesses. Amazing."""
 
 alone_extra_proj_unplug = """
 The young lady is in evident distress but is bearing it very quietly. You
-have unplugged the projector. Maybe it's worth looking at?"""
+have unplugged the projector, but you're somehow not sure that was the right
+action."""
 
 alone_extra_proj_unplug_failed = """
 The young lady is in evident distress but is bearing it very quietly. You

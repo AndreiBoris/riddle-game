@@ -1352,8 +1352,14 @@ class Alone(Room):
                 all_strings.alone_projector_powered()
                 return self.enter()
 
+# If self.final response is up it supersedes all other possible changes to
+# self.extra
+
             if self.final_response:
                 self.extra = all_strings.alone_extra_final
+
+# If the riddle has been attempted and failed, a particular message will be
+# self.extra when the projector is replugged in
 
             elif self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_power_failed
@@ -1373,15 +1379,20 @@ class Alone(Room):
             self.projector_on = False
             all_strings.alone_projector_power_off()
 
-            if self.stone_here and self.attempted and not self.solved:
+# If the riddle has been attempted and failed, a particular message will be
+# self.extra when the projector is uplugged in
+
+            if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_unplug_failed
 
-            if self.stone_here:
+            elif self.stone_here:
                 self.extra = all_strings.alone_extra_proj_unplug
 
             return self.enter()
 
         if action == "turn on projector" or action == "turn on the projector":
+
+# If projector was already on:
 
             if self.projector_on:
                 all_strings.alone_projector_running()
@@ -1391,8 +1402,13 @@ class Alone(Room):
                 all_strings.alone_projector_turn_on()
                 self.projector_on = True
 
+# self.final_response supersedes all other self.extra messages
+
                 if self.final_response:
                     self.extra = all_strings.alone_extra_final
+
+# Only one of either self.good_text_up or self.sad_text_up would be True in any
+# one game and they will only replace self.extra if the projector lid is open.
 
                 elif self.good_text_up and self.projector_open:
                     self.extra = all_strings.alone_extra_win
@@ -1402,11 +1418,15 @@ class Alone(Room):
 
                 return self.enter()
 
+# Projector can't be turned on if it is not plugged in:
+
             elif not self.projector_power:
                 all_strings.alone_projector_no_power()
                 return self.enter()
 
         if action == "turn off projector" or action == "turn off the projector":
+
+# If the projector is already off:
 
             if not self.projector_on:
                 all_strings.alone_projector_was_off()
@@ -1415,7 +1435,9 @@ class Alone(Room):
             self.projector_on = False
             all_strings.alone_projector_turn_off()
 
-            if self.stone_here and self.attempted and not self.solved:
+# If the riddle has been attempted and failed:
+
+            if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_off_failed
 
             elif self.stone_here:
@@ -1426,6 +1448,8 @@ class Alone(Room):
         if (action == 'look at projector' or action == 'look at the projector' or
             action == 'inspect projector'):
             all_strings.alone_proj_look_basic()
+
+# List state of main 3 projector attributes
 
             if not self.projector_open:
                 all_strings.alone_proj_look_lid()
@@ -1444,14 +1468,21 @@ class Alone(Room):
                 all_strings.alone_projector_no_lid()
                 return self.enter()
 
+# self.final_response supersedes all other possible self.extra messages
+
             if self.final_response:
                 self.extra = all_strings.alone_extra_final
+
+# These will only replace self.extra if the projector is actually on.
 
             elif self.good_text_up and self.projector_on:
                 self.extra = all_strings.alone_extra_win
 
             elif self.sad_text_up and self.projector_on:
                 self.extra = all_strings.alone_extra_lose
+
+            else:
+                self.extra = all_strings.alone_extra_proj_opened_off
 
             self.projector_open = True
             all_strings.alone_projector_open()
@@ -1463,7 +1494,7 @@ class Alone(Room):
                 all_strings.alone_projector_lid()
                 return self.enter()
 
-            if self.stone_here and self.attempted and not self.solved:
+            if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_closed_failed
 
             elif self.stone_here:
@@ -1476,14 +1507,20 @@ class Alone(Room):
         if (action == "look under projector" or
         action == "look under the projector"):
 
+# If the puzzle isn't solved (attempted or not):
+
             if not self.solved:
                 all_strings.alone_look_under_start()
                 return self.enter()
+
+# If the puzzle is solved and the stone hasn't been taken:
 
             elif self.stone_here and self.solved:
                 self.looked = True
                 all_strings.alone_look_under_solved()
                 return self.enter()
+
+# If the stone has been taken:
 
             else:
                 all_strings.alone_look_under_final()
@@ -1502,6 +1539,9 @@ class Alone(Room):
 
                 if door_room.touched_indentations:
                     all_strings.indentation_hint()
+
+# self.final_response will create a self.extra message that will override all
+# other possibilities
 
                 self.final_response = True
                 self.extra = all_strings.alone_extra_final
