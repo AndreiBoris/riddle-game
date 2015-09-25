@@ -5,6 +5,36 @@ from sys import exit
 import pickle
 import all_strings
 
+# The general breakdown of what this game does is as follows:
+#
+# Each of the room classes are instantiated. These room classes are
+# StartingRoom, MiddleRoom, TheDoor, Left, Right, End, World, Racetrack,
+# Alone, Butcher, DiningRoom and Battlefield. Classes Inventory and Map are then
+# also instantiated. If there is a saved.py file in the folder (a file that
+# this game makes when the player make a 'save' action) then a custom instance
+# of SavedGame is unpickled from that saved.py file, otherwise a default version
+# of SavedGame is instantiated. The Loader is then instantiated with this
+# SavedGame object as an argument and Engine is instantiated with the Loader
+# and Map objects as arguments.
+#
+# The Game object then prompts the player to start a New game or to Load the
+# saved game. A new game just runs the default values as seen below, the load
+# option would use the Loader's load_it() method to extract state attributes
+# from the SavedGame object it had passed into it and alter all the room
+# objects in order to change the current state of the game by changing a number of
+# significant attributes that they have like stone_available, visited, etc.
+# load_it() returns a starting position and this is then fed into a while loop
+# in Engine's play() method that keeps running Map's play() method which the
+# enter() methods of the various room objects (each of which return a string
+# that can be fed into the Map.play() method to get a new room).
+#
+# It might be significant to note that the rooms that are refered to as
+# riddle rooms are Alone, Battlefield, Butcher, DiningRoom, World, and
+# Racetrack. These are special in that they have the stone_here attributes
+# as set to true and the player has to solve riddles in them in order to get a
+# stone from each one in order to collect at least 4 stones and then place them
+# in indentations inside the TheDoor in order to get into the End room.
+
 
 class Engine(object):
 
@@ -119,7 +149,8 @@ class Room(object):
 
 # Each room has a specific mutable set of actions that are good_moves, if one
 # of those is picked, that action is returned and fed into the room's script,
-# otherwise this action handles it and reprompts the player.
+# otherwise this action() method handles it and then reprompts the player to
+# make another action.
 
         while action not in self.good_moves:
 
