@@ -657,7 +657,7 @@ def dining_room_touch_water():
 Water feels nice."""
     raw_input("\nHit ENTER to continue")
 
-def dining_room_yes_pen():
+def dining_room_riddle():
     print """
 Hmmm. Good thing you had the foresight to pick up this trusty ballpoint pen."""
     raw_input("\nHit ENTER to continue")

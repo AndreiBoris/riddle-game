@@ -455,6 +455,21 @@ class TheDoor(Room):
 
         action = self.action()
 
+        if (action == 'go south' or action == 'go back' or
+            action == 'back away' or action == 'walk south'):
+            self.current_room = False
+            return 'middle'
+
+# Can only go north if the door is open.
+
+        if action == 'go north' or action == 'walk north':
+            if self.door_open:
+                self.current_room = False
+                return 'end'
+            else:
+                all_strings.the_door_believe()
+                return self.enter()
+
         if action == 'touch door':
             all_strings.the_door_touch_door()
             return self.enter()
@@ -472,7 +487,12 @@ class TheDoor(Room):
                 all_strings.the_door_touch_indentations()
             if action == 'look at indentation' or action == 'look at indentations':
                 all_strings.the_door_see_indentations()
+
+# A hint will now be given whenever a stone picked up, pointing the player back
+# to these indentations
+
             self.touched_indentations = True
+
             have_stone = False
             had_stone = False
 
@@ -509,6 +529,9 @@ class TheDoor(Room):
 
         if action == 'place stones' or action == 'place stone':
             placed = False
+
+# Try to place a stone into the indentations.
+
             for stone in self.stones.keys():
                 if stone in inv.items:
                     inv.remove(stone)
@@ -522,14 +545,11 @@ best.""" % stone
             if placed:
                 return self.enter()
 
+# If the player had no stone, insult the player.
+
             if not placed:
                 all_strings.the_door_not_placed()
                 return self.enter()
-
-        if (action == 'go south' or action == 'go back' or
-            action == 'back away' or action == 'walk south'):
-            self.current_room = False
-            return 'middle'
 
         if action == 'take bag':
 
@@ -554,11 +574,17 @@ best.""" % stone
 
             if self.stone_count() > 3:
 
+# If the player had previously tried to open the door, it will be easier this
+# time.
+
                 if self.attempted_door:
                     all_strings.the_door_experienced()
                     self.door_open = True
                     self.bearings = all_strings.the_door_bearings2
                     return self.enter()
+
+# If this is the first time that the player tries to open the door, it will be
+# harder.
 
                 else:
                     all_strings.the_door_cant_push()
@@ -576,17 +602,12 @@ best.""" % stone
                     self.bearings = all_strings.the_door_bearings2
                     return self.enter()
 
+# If there aren't enough stones in the indentations, the player will fail to
+# open the door.
+
             else:
                 all_strings.the_door_struggles()
                 self.attempted_door = True
-                return self.enter()
-
-        if action == 'go north' or action == 'walk north':
-            if self.door_open:
-                self.current_room = False
-                return 'end'
-            else:
-                all_strings.the_door_believe()
                 return self.enter()
 
 # stone_count() is used to determine if the door can open.
@@ -720,7 +741,7 @@ class Battlefield(Room):
             all_strings.battlefield_touch_soldier()
             return self.enter()
 
-# This is a "make attempt" action that is present in some form is all of the
+# This is a 'make attempt' action that is present in some form is all of the
 # riddle rooms
 
         if (action == "talk" or action == "talk to soldier" or
@@ -867,8 +888,8 @@ class DiningRoom(Room):
             all_strings.dining_room_touch_sofa()
             return self.enter()
 
-# See explanation of code of if action == "talk" in Battlefield for an
-# explanation of very similar code to this.
+# For an explanation of a general 'make attempt' action in puzzle rooms, see
+# Battlefield
 
         if action == "read note":
             all_strings.dining_room_riddle()
@@ -877,9 +898,11 @@ class DiningRoom(Room):
                 all_strings.dining_room_no_pen()
                 return self.enter()
 
+# The attempt will only be made if the player is carrying 'ballpoint pen'
+
             elif "ballpoint pen" in inv.items:
                 self.attempted = True
-                all_strings.dining_room_yes_pen()
+                all_strings.dining_room_riddle()
                 solution = ""
                 while self.guesses_left > 0 and not self.solved:
                     print """
@@ -978,6 +1001,9 @@ class Butcher(Room):
             self.good_moves.remove("take meat")
             self.good_moves.remove("take cuts")
             return self.enter()
+
+# For an explanation of a general 'make attempt' action in puzzle rooms, see
+# Battlefield
 
         if (action == "talk" or action == "talk to man" or
             action == "talk to butcher" or action == "talk to him" or
@@ -1125,6 +1151,9 @@ class Racetrack(Room):
             all_strings.racetrack_talk_to_human()
 
             return self.enter()
+
+# For an explanation of a general 'make attempt' action in puzzle rooms, see
+# Battlefield
 
         if (action == "throw rock at robot" or
         action == "throw rock at the robot" or
@@ -1521,6 +1550,9 @@ class World(Room):
             all_strings.world_touch()
             return self.enter()
 
+# For an explanation of a general 'make attempt' action in puzzle rooms, see
+# Battlefield
+
         if (action == "talk" or action == "talk to elephant" or
             action == "talk to it"):
             self.attempted = True
@@ -1863,3 +1895,4 @@ if __name__ == "__main__":
 # TODO: Make the riddle room if clauses that take away certain good_moves based
 # on self.attempted standardized by putting the 'attempt' moves into a list
 # and running self.good_moves.remove on each item in that list
+# TODO: See if you can refactor the stone pickup code
