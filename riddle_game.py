@@ -717,11 +717,11 @@ class Battlefield(Room):
 
     name = 'battlefield'
     stone_here = True
-    good_moves = ['go north', 'walk north', 'talk to soldier', 'talk',
+    good_moves = ['go north', 'walk north', 'talk to soldier',
                 'talk to her', 'touch soldier', 'take soldier', 'come closer']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
-    attempt_moves = ['talk to soldier', 'talk', 'talk to her', 'come closer']
+    attempt_moves = ['talk to soldier', 'talk to her', 'come closer']
     intro = all_strings.battlefield_intro
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
@@ -757,7 +757,7 @@ class Battlefield(Room):
 # This is a 'make attempt' action that is present in some form is all of the
 # riddle rooms
 
-        if (action == "talk" or action == "talk to soldier" or
+        if (action == "talk to soldier" or
             action == "talk to her" or action == 'come closer'):
 
 # These self.attempted attributes in the riddle rooms determine if the actual
@@ -967,11 +967,11 @@ class Butcher(Room):
 
     name = 'butcher'
     stone_here = True
-    good_moves = ['go south', 'walk south', 'talk to butcher', 'talk',
+    good_moves = ['go south', 'walk south', 'talk to butcher',
                     'talk to man', 'talk to him', 'touch pig', 'take meat',
                     'take cut', 'take pig', 'touch meat', 'touch cut',
                     'take cuts', 'touch cuts', 'talk to the man']
-    attempt_moves = ['talk', 'talk to butcher', 'talk to man',
+    attempt_moves = ['talk to butcher', 'talk to man',
      'talk to him']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
@@ -1018,7 +1018,7 @@ class Butcher(Room):
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
-        if (action == "talk" or action == "talk to man" or
+        if (action == "talk to man" or
             action == "talk to butcher" or action == "talk to him" or
             action == "talk to the man"):
             self.attempted = True
@@ -1258,7 +1258,7 @@ class Alone(Room):
     projector_open = False
     stone_here = True
     looked = False
-    good_moves = ['go south', 'walk south', 'talk', 'talk to lady',
+    good_moves = ['go south', 'walk south', 'talk to lady',
                     'talk to her', 'talk to woman', 'talk to projector',
                     'talk to girl', 'plug in projector', 'turn on projector',
                     'open lid', 'open projector lid', 'look at projector',
@@ -1339,7 +1339,7 @@ class Alone(Room):
             self.current_room = False
             return "right"
 
-        if (action == "talk" or action == "talk to lady" or
+        if (action == "talk to lady" or
             action == "talk to her" or action == "talk to woman"):
             all_strings.alone_talk_to_lady()
             return self.enter()
@@ -1597,12 +1597,12 @@ class World(Room):
 
     name = 'world'
     stone_here = True
-    good_moves = ['go north', 'walk north', 'talk', 'talk to elephant',
+    good_moves = ['go north', 'walk north', 'talk to elephant',
                 'talk to it', 'sit', 'sit cross-legged', 'sit on rock',
                 'touch elephant', 'touch rock', 'talk to rock',
                 'enjoy the view', 'look at mountains', 'fan yourself',
                 'enjoy the amazing view', 'enjoy view', 'look at view']
-    attempt_moves = ['talk', 'talk to elephant', 'talk to it']
+    attempt_moves = ['talk to elephant', 'talk to it']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     intro = all_strings.world_intro_start
@@ -1710,7 +1710,7 @@ class World(Room):
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
-        if (action == "talk" or action == "talk to elephant" or
+        if (action == "talk to elephant" or
             action == "talk to it"):
             self.attempted = True
             all_strings.world_riddle()
