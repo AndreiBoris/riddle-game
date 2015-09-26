@@ -764,16 +764,18 @@ The frog has fallen annoying silent."""
     raw_input("\nHit ENTER to continue")
 
 left_extra = """
-The sounds made by a croaking frog are somehow comforting. Why it is here, you
-do not ask, only that you are not alone and perhaps the world is not as scary
-a place as you once thought it was."""
+The sounds made by the croaking frog are somehow comforting. Why it is here, you
+do not ask. Your only thought is that you are not alone and perhaps the world is
+not as scary a place as you once thought it was."""
 
 left_intro = """
 After walking through the dark tunnel for a while you begin to feel quite
 certain of one thing: it is very dark here. Not that that's a problem or
 anything. Though if it wasn't for the faint glimmers of other places peaking
 through in the distance you would probably begin to lose your mind right now
-about. Hey, maybe you'll be doing that regardless, why not!"""
+about. Hey, maybe you'll be doing that regardless, why not! You hear a frog
+croaking away somewhere in the darkness you hear a frog. You feel an unusually
+strong sense of connection to it."""
 
 def left_take_frog():
     print """
