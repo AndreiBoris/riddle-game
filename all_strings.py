@@ -775,7 +775,7 @@ anything. Though if it wasn't for the faint glimmers of other places peaking
 through in the distance you would probably begin to lose your mind right now
 about. Hey, maybe you'll be doing that regardless, why not! You hear a frog
 croaking away somewhere in the darkness you hear a frog. You feel an unusually
-strong sense of connection to it."""
+strong sense of connection with it."""
 
 def left_take_frog():
     print """
