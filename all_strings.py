@@ -312,6 +312,12 @@ def alone_solved():
     loading(3)
     print "look under the projector, theres something there you should take"
 
+def alone_take_projector():
+    print """
+Looks like a sweet gadget. But you don't plan on projecting anything anywhere,
+so maybe it's best to leave it right here."""
+    raw_input("\nHit ENTER to continue")
+
 def alone_talk_to_girl():
     print """
 Oh, I'm sorry. Did I mention that there was a girl here?"""

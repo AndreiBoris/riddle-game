@@ -1304,7 +1304,7 @@ class Alone(Room):
                     'unplug the projector', 'talk to the projector',
                     'unplug projector', 'look under projector',
                     'look under the projector', 'inspect projector',
-                    'touch projector']
+                    'touch projector', 'take projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
     intro = all_strings.alone_intro
@@ -1402,6 +1402,10 @@ class Alone(Room):
 
         if action == "talk to projector" or action == "talk to the projector":
             all_strings.alone_talk_to_projector()
+            return self.enter()
+
+        if action == "take projector":
+            all_strings.alone_take_projector()
             return self.enter()
 
         if action == "talk to girl":
