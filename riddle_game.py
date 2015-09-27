@@ -643,15 +643,27 @@ best.""" % stone
 
                 else:
                     all_strings.the_door_cant_push()
+
+# Original action string to be inserted in the print statement below:
+
                     action = all_strings.the_door_action
                     door_count = 0
+
+# If the player types a string that is shorter than 25 characters and includes
+# pull anywhere in the string it will be accepted. The ' ' + are there to make
+# 'pull' a valid answer. '!', '.', '?' are all ignored.
+
                     while ((' pull ' not in ' ' +
                     action.replace('!', '').replace('?', '').replace('.', '') +
                     ' ' and door_count < 6) or len(action) > 25):
+
                         door_count += 1
+
                         print '\nI guess you might as well %s.' % action
+
                         action = raw_input('\nBut would you also like to try ' +
                         'to do something else? > ').lower().strip()
+
                     all_strings.the_door_can_pull()
                     self.door_open = True
                     self.bearings = all_strings.the_door_bearings2
@@ -838,6 +850,12 @@ class Battlefield(Room):
 The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
                 solution = raw_input('\nHow do you answer? > ').lower().strip()
+
+# A solution less that 25 characters long with the self.solution inside it will
+# be accepted. The self.solution has spaces around it to avoid players typing
+# big words with the solution in them, for this reason the spaces (' ') have to
+# be added to the solution in case the player just types the self.solution
+# exactly into the prompt with no spaces.
 
                 if (self.solution in ' ' +
                 solution.replace('?', '').replace('.', '').replace(',', '') +
@@ -1137,6 +1155,10 @@ class Racetrack(Room):
                     'touch robot', 'touch human', 'touch person',
                     'pick up rock', 'grab rock', 'grab small rock',
                     'pick up small rock']
+
+# Rock moves all respond to the rock either being on the ground or not, so they
+# are put in this list to make it easier to work with.
+
     rock_moves = ['touch rock', 'take rock', 'pick up rock', 'grab rock',
                     'take small rock', 'grab small rock', 'pick up small rock']
     attempt_moves = ['throw rock', 'throw rock at person',
@@ -1177,6 +1199,9 @@ class Racetrack(Room):
             if self.rock_on_floor:
                 all_strings.racetrack_touch_rock()
                 return self.enter()
+            elif 'rock' in inv.items:
+                all_strings.racetrack_touch_rock()
+                return self.enter()
             else:
                 all.strings.racetrack_touch_rock_gone()
                 return self.enter()
@@ -1188,6 +1213,10 @@ class Racetrack(Room):
         if action == 'touch hugbot' or action == 'touch robot':
             all_strings.racetrack_touch_robot()
             return self.enter()
+
+# self.rock_moves[0] is 'touch rock' it also responds to the rock being there
+# or not, but it doesn't perform the same action as the other items in the list,
+# which is to pick the rock up.
 
         if action in self.rock_moves and action != self.rock_moves[0]:
 
@@ -1677,8 +1706,13 @@ class World(Room):
 
         self.correct_intro()
 
+# If the player has the rock from Racetrack(Room), the throw attempt can be
+# made.
+
         if 'rock' in inv.items:
             self.good_moves.append('throw rock at elephant')
+
+# If the player doesn't have the rock, this is no longer in self.good_moves
 
         if 'rock' not in inv.items and 'throw rock at elephant' in self.good_moves:
             self.good_moves.remove('throw rock at elephant')

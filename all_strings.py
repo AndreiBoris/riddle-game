@@ -1069,8 +1069,7 @@ supposed to touch you!"""
 
 def racetrack_touch_rock():
     print """
-Good thing that you tried to touch that rock before taking it. Now you can
-confirm without a doubt that it is a rock."""
+You can confirm with some certainty that this is a rock."""
     raw_input("\nHit ENTER to continue")
 
 def racetrack_touch_rock_gone():

@@ -1,18 +1,9 @@
 TO PLAY:
 
-The current version of the game runs only in python. So if have Python2
-installed you can run it by cloning this repository and then finding this
-directory in your favorite terminal and running
+If you're not familar with Python, you can run it by downloading the zip file.
+Extracting it. Making sure you have Python 2.7.something installed (from Python
+website) and then right clicking on riddle_game.py and running it with Python.
 
-python riddle_game.py
-
-in the terminal. It will give you two options, New and Load. Just choose a New
-game by typing
-
-new
-
-If you want to load a previously saved game typing load will instantly do that
-for you.
 
 ABOUT:
 
@@ -34,3 +25,6 @@ new game.
 the game and contact me at Andrei.Borissenko@gmail.com. Most fixes would be
 compatible with older saved versions of the game. Though I have tested this game
 enough that I hope you won't have to deal with anything truly annoying. Cheers!
+
+A thank you goes ou to Arash Moghimi and Bryan Weiser for providing some
+suggestions for improvement!
