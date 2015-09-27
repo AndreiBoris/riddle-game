@@ -727,7 +727,7 @@ goodbye = "\nGoodbye!"
 helper = """
 Here are some actions that you might be able to take:
 
-- walk (somewhere)
+- walk/go (somewhere)
 - inventory (or inv)
 - look around (or look)
 - intro
@@ -735,6 +735,7 @@ Here are some actions that you might be able to take:
 - take (something)
 - place (something)
 - throw (something)
+- talk
 - save
 - quit (or exit)
 
@@ -930,7 +931,7 @@ whips over to you."""
     print """
 The robot approaches very quickly and gets menacingly close to you. The exhaust
 that oddly appears have been designed to point forward makes it feel like the
-Cheshire face sending hot air straight to your face."""
+Cheshire face is sending hot air onto your face."""
     raw_input("\nHit ENTER to continue")
     print """
 'You look lonesome,' the robot drones. 'Care for a hug?'"""
@@ -993,7 +994,7 @@ talking to a wall or something."""
 
 def racetrack_talk_to_human():
     print """
-You approach the person with the intention to speak with him."""
+You approach the person."""
     raw_input("\nHit ENTER to continue")
     print """
 'Hello,' you say."""
@@ -1032,6 +1033,12 @@ get yours' sign is particularly sinister as it approaches at such a high speed."
     print """
 You quickly back up out of the racetrack and lock the door behind you. That was
 pretty convenient. Probably best if you don't try going back in there anymore.\n"""
+    raw_input("\nHit ENTER to continue")
+
+def racetrack_touch_robot():
+    print """
+You feel certain that you are not supposed to touch the hugbot. The hugbot is
+supposed to touch you!"""
     raw_input("\nHit ENTER to continue")
 
 def racetrack_touch_rock():

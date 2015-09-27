@@ -1090,7 +1090,8 @@ class Racetrack(Room):
     good_moves = ['go west', 'walk west', 'talk', 'take rock', 'talk to robot',
                     'talk to human', 'talk to the robot', 'talk to the person',
                     'talk to the human', 'talk to human', 'talk to person',
-                    'touch rock', 'take small rock']
+                    'touch rock', 'take small rock', 'touch hugbot',
+                    'touch robot', 'touch human', 'touch person']
     attempt_moves = ["throw rock", "throw rock at person",
                     "throw rock at human", "throw rock at the person",
                     "throw rock at the robot", "throw rock at robot",
@@ -1130,6 +1131,10 @@ class Racetrack(Room):
             all_strings.racetrack_talk()
             return self.enter()
 
+        if action == 'touch hugbot' or action == 'touch robot':
+            all_strings.racetrack_touch_robot()
+            return self.enter()
+
         if action == 'take rock' or action == 'take small rock':
 
             if self.rock_on_floor:
@@ -1148,19 +1153,20 @@ class Racetrack(Room):
                 all_strings.racetrack_take_rock_gone()
                 return self.enter()
 
-        if action == "throw rock":
+        if action == 'throw rock':
             all_strings.racetrack_throw_rock()
             return self.enter()
 
-        if action == "talk to robot" or action == "talk to the robot":
+        if action == 'talk to robot' or action == 'talk to the robot':
             for option in ['talk to robot', 'talk to the robot']:
                 self.good_moves.remove(option)
             all_strings.racetrack_talk_to_robot()
 
             return self.enter()
 
-        if (action == "talk to human" or action == "talk to the human" or
-            action == "talk to person" or action == "talk to the person"):
+        if (action == 'talk to human' or action == 'talk to the human' or
+            action == 'talk to person' or action == 'talk to the person' or
+            action == 'touch human' or action == 'touch person'):
             all_strings.racetrack_talk_to_human()
 
             return self.enter()
