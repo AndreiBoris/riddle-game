@@ -151,6 +151,7 @@ class Room(object):
     extra_final = ''
     room_stone = ''
     room_stone_message = ''
+    solution = "This room doesn't have a solution."
 
     def action(self):
         # basic action options for any room
@@ -779,6 +780,7 @@ class Battlefield(Room):
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     attempt_moves = ['talk to soldier', 'talk to her', 'come closer']
+    solution = 'onion'
     intro = all_strings.battlefield_intro
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
@@ -828,7 +830,6 @@ class Battlefield(Room):
 
             self.attempted = True
             all_strings.battlefield_riddle()
-            solution = ""
 
 # self.guesses_left is initialized as 5 for every subclass of Room
 
@@ -890,6 +891,7 @@ class DiningRoom(Room):
     attempt_moves = ['read note']
     bad_moves = ['go north', 'walk north', 'walk south', 'walk west',
                 'go south', 'go west' ]
+    solution = 'silence'
     intro = all_strings.dining_room_intro
     extra = all_strings.dining_room_extra_start
     bearings = all_strings.dining_room_bearings_start
@@ -966,7 +968,6 @@ class DiningRoom(Room):
             elif "ballpoint pen" in inv.items:
                 self.attempted = True
                 all_strings.dining_room_have_pen()
-                solution = ""
                 while self.guesses_left > 0 and not self.solved:
                     print """
 Below the note there are still %d lines that are not used up.""" % self.guesses_left
@@ -1016,6 +1017,7 @@ class Butcher(Room):
      'talk to him']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
+    solution = 'pillow'
     intro = all_strings.butcher_intro
     extra = all_strings.butcher_extra_start
     bearings = all_strings.butcher_bearings_start
@@ -1074,7 +1076,6 @@ class Butcher(Room):
             action == "talk to the man"):
             self.attempted = True
             all_strings.butcher_riddle()
-            solution = ""
             while self.guesses_left > 0 and not self.solved:
 
                 if self.guesses_left == 5:
@@ -1138,6 +1139,7 @@ class Racetrack(Room):
                     "throw rock at hugbot", "throw rock at the human"]
     bad_moves = ['go north', 'walk north', 'walk east', 'walk south', 'go east',
                 'go south']
+    solution = 'fork'
     intro = all_strings.racetrack_intro
     extra = all_strings.racetrack_extra_start
     bearings = all_strings.racetrack_bearings_start
@@ -1307,6 +1309,7 @@ class Alone(Room):
                     'touch projector', 'take projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
+    solution = 'shoe'
     intro = all_strings.alone_intro
     extra = all_strings.alone_extra_start
     bearings = all_strings.alone_bearings_start
@@ -1648,6 +1651,7 @@ class World(Room):
                     'take elephant']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
+    solution = 'ton'
     intro = all_strings.world_intro_start
     extra = all_strings.world_extra_start
     bearings = all_strings.world_bearings
@@ -1784,7 +1788,7 @@ class World(Room):
                 sleep(1)
                 solution = raw_input("\nYou speak > ").lower().strip()
 
-                if solution == "ton":
+                if self.solution in solution and len(solution) < 15:
                     self.solved = True
 
             if self.solved:

@@ -314,8 +314,8 @@ def alone_solved():
 
 def alone_take_projector():
     print """
-Looks like a sweet gadget. But you don't plan on projecting anything anywhere,
-so maybe it's best to leave it right here."""
+It looks like a sweet gadget. But you don't plan on projecting anything
+anywhere, so maybe it's best to leave the projector right here."""
     raw_input("\nHit ENTER to continue")
 
 def alone_talk_to_girl():
