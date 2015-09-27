@@ -1119,7 +1119,9 @@ class Racetrack(Room):
                     'talk to human', 'talk to the robot', 'talk to the person',
                     'talk to the human', 'talk to human', 'talk to person',
                     'touch rock', 'take small rock', 'touch hugbot',
-                    'touch robot', 'touch human', 'touch person']
+                    'touch robot', 'touch human', 'touch person',
+                    'pick up rock', 'grab rock', 'grab small rock',
+                    'pick up small rock']
     rock_moves = ['touch rock', 'take rock', 'pick up rock', 'grab rock',
                     'take small rock', 'grab small rock', 'pick up small rock']
     attempt_moves = ["throw rock", "throw rock at person",
