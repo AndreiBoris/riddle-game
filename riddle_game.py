@@ -342,9 +342,10 @@ class StartingRoom(Room):
     pen = True
     good_moves = ['go north', 'walk north', 'take pen', 'touch pen',
                     'take mattress', 'touch mattress', 'lie down', 'sleep',
-                    'take junk', 'touch junk']
+                    'take junk', 'touch junk', 'pick up pen', 'grab pen']
     bad_moves = ['walk south', 'walk east', 'walk west', 'go south', 'go east',
                 'go west']
+    pen_moves = ['touch pen', 'take pen', 'grab pen', 'pick up pen']
     wake_up = all_strings.starting_room_wake_up
     extra = all_strings.starting_room_extra1
     intro = all_strings.starting_room_intro
@@ -356,8 +357,8 @@ class StartingRoom(Room):
 # if 'take pen' is there so is 'touch pen' since this is the only spot where
 # they get removed. This applied to all similar code at the top of other rooms
 
-        if not self.pen and 'take pen' in self.good_moves:
-            for option in ["take pen", "touch pen"]:
+        if not self.pen and self.pen_moves[0] in self.good_moves:
+            for option in self.pen_moves:
                 self.good_moves.remove(option)
 
         if self.start_of_game == True:
@@ -406,7 +407,7 @@ class StartingRoom(Room):
             all_strings.starting_room_touch_junk()
             return self.enter()
 
-        if action == "take pen":
+        if action in self.pen_moves and action != 'touch pen':
             all_strings.starting_room_take_pen()
             self.pen = False
             inv.items.append("ballpoint pen")
@@ -672,7 +673,8 @@ class Left(Room):
     name = 'left'
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
-                    'walk north', 'take frog', 'touch frog', 'catch frog']
+                    'walk north', 'take frog', 'touch frog', 'catch frog',
+                    'talk to frog']
     bad_moves = []
     intro = all_strings.left_intro
     extra = all_strings.left_extra
@@ -706,6 +708,10 @@ class Left(Room):
             all_strings.left_catch_frog()
             return self.enter()
 
+        if action == 'talk to frog':
+            all_strings.left_talk_frog()
+            return self.enter()
+
 
 class Right(Room):
 
@@ -713,7 +719,8 @@ class Right(Room):
     racetrack_open = True
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
-                    'walk north', 'touch computer', 'touch computers']
+                    'walk north', 'touch computer', 'touch computers',
+                    'touch computer fan']
     bad_moves = []
     intro = all_strings.right_intro
     extra = all_strings.right_extra
@@ -746,6 +753,10 @@ class Right(Room):
 
         if action == "touch computer" or action == "touch computers":
             all_strings.right_touch_computer()
+            return self.enter()
+
+        if action == 'touch computer fan':
+            all_strings.right_touch_computer_fan()
             return self.enter()
 
 
@@ -2083,7 +2094,5 @@ if __name__ == "__main__":
     game = Engine(the_map, loader)
     game.play()
 
-# TODO: Refactor the stone pick up, should be easy now using custom room
-# stone and final message variables.
 # TODO: Refactor stone_here and final_response in Alone(Room) to get rid of
 # final_response entirely

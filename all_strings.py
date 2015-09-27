@@ -788,6 +788,11 @@ def left_take_frog():
 You would have to catch it first."""
     sleep(2)
 
+def left_talk_frog():
+    print """
+'Ribbit ... Ribbit ... Ribbit. Ribbit!' You hope the message got across."""
+    raw_input("\nHit ENTER to continue")
+
 line_break = "--------------------------------"
 
 lose_game = """
@@ -1097,6 +1102,19 @@ It seems like the computer is sleeping, maybe you should give the mouse a shake?
     raw_input("\nHit ENTER to continue")
     print "\nAfter failing with some predictable guesses, you decide it is hopeless."
     raw_input("\nHit ENTER to continue")
+
+def right_touch_computer_fan():
+    print """
+One of the powered on desktops has an easily detachable side. You take it off
+and locate the whirring fan. There is an angle by which you can get your index
+finger to make contact with the speedy thing."""
+    raw_input("\nHit ENTER to continue")
+    print """
+Ouch! It felt kind of painful but also pretty nice. Hopefully the fan didn't get
+damaged."""
+    raw_input("\nHit ENTER to continue")
+
+
 
 room_bearings = """
 There appears to be no way to get your bearings in this generic room.
