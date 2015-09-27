@@ -151,7 +151,7 @@ class Room(object):
     extra_final = ''
     room_stone = ''
     room_stone_message = ''
-    solution = 'This room doesn't have a solution.'
+    solution = "This room doesn't have a solution."
 
     def action(self):
         # basic action options for any room
