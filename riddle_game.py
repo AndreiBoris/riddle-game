@@ -1290,10 +1290,12 @@ class Alone(Room):
 # but it also checks self.looked.
 
         if (self.solved and self.stone_here and
-         "take stone" not in self.good_moves and self.looked):
-            self.good_moves.append('take stone')
-        if not self.stone_here and 'take stone' in self.good_moves:
-            self.good_moves.remove("take stone")
+         self.stone_moves[0] not in self.good_moves and self.looked):
+            for option in self.stone_moves:
+                self.good_moves.append(option)
+        if not self.stone_here and self.stone_moves[0] in self.good_moves:
+            for option in self.stone_moves:
+                self.good_moves.remove(option)
 
         self.correct_intro()
 
