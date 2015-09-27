@@ -726,7 +726,7 @@ class Right(Room):
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'touch computer', 'touch computers',
-                    'touch computer fan', 'take computer']
+                    'touch computer fan', 'take computer', 'touch fan']
     bad_moves = []
     intro = all_strings.right_intro
     extra = all_strings.right_extra
@@ -761,7 +761,7 @@ class Right(Room):
             all_strings.right_touch_computer()
             return self.enter()
 
-        if action == 'touch computer fan':
+        if action == 'touch computer fan' or action == 'touch fan':
             all_strings.right_touch_computer_fan()
             return self.enter()
 
@@ -1659,19 +1659,19 @@ class World(Room):
 
         self.correct_intro()
 
-        action = self.action()
-
-        if 'rock' in inv.items and 'throw rock at elephant' not in self.good_moves:
+        if 'rock' in inv.items:
             self.good_moves.append('throw rock at elephant')
 
         if 'rock' not in inv.items and 'throw rock at elephant' in self.good_moves:
             self.good_moves.remove('throw rock at elephant')
 
+        action = self.action()
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "right"
 
-        if action = 'throw rock at elephant':
+        if action == 'throw rock at elephant':
             all_strings.world_throw_rock()
             return self.enter()
 

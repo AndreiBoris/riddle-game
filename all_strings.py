@@ -774,7 +774,9 @@ def left_catch_frog():
 You wander in the darkness trying to echo-locate the frog."""
     sleep(3)
     print """
-The frog has fallen annoyingly silent. Croak, damn you!"""
+The frog has fallen annoyingly silent. Croak, damn you! You thought the fog was
+your friend, but now it doesn't seem to want to be grabbed by you, so you're not
+so sure anymore... Maybe it's worth doing some self-reflection."""
     raw_input("\nHit ENTER to continue")
 
 left_extra = """
