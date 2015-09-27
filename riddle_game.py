@@ -151,11 +151,11 @@ class Room(object):
     extra_final = ''
     room_stone = ''
     room_stone_message = ''
-    solution = "This room doesn't have a solution."
+    solution = 'This room doesn't have a solution.'
 
     def action(self):
         # basic action options for any room
-        action = raw_input("> ").lower().strip()
+        action = raw_input('> ').lower().strip()
 
 # Each room has a specific mutable set of actions that are good_moves, if one
 # of those is picked, that action is returned and fed into the room's script,
@@ -203,67 +203,67 @@ class Room(object):
             elif action in self.bad_moves:
                 print all_strings.bad_moves
 
-            elif action == "take":
+            elif action == 'take':
                 print all_strings.action_take
 
-            elif action == "talk":
-                print "\n%s\n" % choice(all_strings.talking)
+            elif action == 'talk':
+                print '\n%s\n' % choice(all_strings.talking)
 
-            elif action == "go":
+            elif action == 'go':
                 print all_strings.action_go
 
-            elif action == "walk":
+            elif action == 'walk':
                 print all_strings.action_walk
 
-            elif action == "touch":
+            elif action == 'touch':
                 print all_strings.action_touch
 
-            elif action == "sleep":
+            elif action == 'sleep':
                 print all_strings.action_sleep
 
             elif action == 'help':
                 print all_strings.line_break
-                print "\n" * 6
+                print '\n' * 6
                 print self.helper
 
             elif action == 'look around' or action == 'look':
                 print all_strings.line_break
-                print "\n" * 8
+                print '\n' * 8
                 print self.extra
                 print self.bearings
 
-            elif action == "intro":
+            elif action == 'intro':
                 print all_strings.line_break
-                print "\n" * 6
+                print '\n' * 6
                 print self.intro
                 print self.bearings
 
-            elif action == "inventory" or action == "inv":
+            elif action == 'inventory' or action == 'inv':
                 print all_strings.line_break
-                print "\n" * 4
+                print '\n' * 4
                 inv.show()
                 print all_strings.action_prompt
 
-            elif action == "sit" or action == "sit down":
+            elif action == 'sit' or action == 'sit down':
                 print all_strings.action_sit
 
-            elif action == "stand":
+            elif action == 'stand':
                 print all_strings.action_stand
 
-            elif action == "wait":
+            elif action == 'wait':
                 print all_strings.action_wait
 
-            elif action == "lie down":
+            elif action == 'lie down':
                 print all_strings.action_lie
 
             else:
                 print "\nI'm sorry, but you can't %r.\n" % action
 
-            action = raw_input("> ").lower().strip()
+            action = raw_input('> ').lower().strip()
 
 # This only plays when one of the good_moves is chosen.
 
-        print "\nYou attempt to %s." % action
+        print '\nYou attempt to %s.' % action
         sleep(0.75)
         return action
 
@@ -293,7 +293,7 @@ class Room(object):
             print self.bearings
 
         elif self.current_room:
-            print "\nWhat do you do?\n"
+            print '\nWhat do you do?\n'
 
         self.current_room = True
 
@@ -311,11 +311,11 @@ class Room(object):
 # the stones at any given time. NOTE that this means this won't work without
 # inv instantiated.
 
-        if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+        if inv.stones_carried() >= 1 and 'dirty bag' not in inv.items:
             all_strings.no_bag()
             return self.enter()
 
-        if inv.stones_carried() == 0 or "dirty bag" in inv.items:
+        if inv.stones_carried() == 0 or 'dirty bag' in inv.items:
             self.stone_here = False
             inv.items.append(self.room_stone)
             print self.room_stone_message
@@ -378,40 +378,40 @@ class StartingRoom(Room):
 # Non-recursive returns feed back into the_map.play() where it finds the room
 # that is being pointed to and runs its enter() method
 
-        if action == "go north" or action == "walk north":
+        if action == 'go north' or action == 'walk north':
             self.current_room = False
-            return "middle"
+            return 'middle'
 
 # Recursive calls are just 'dead end' actions
 
-        if action == "lie down" or action == "sleep":
+        if action == 'lie down' or action == 'sleep':
             all_strings.starting_room_lie()
             return self.enter()
 
-        if action == "touch pen":
+        if action == 'touch pen':
             all_strings.starting_room_touch_pen()
             return self.enter()
 
-        if action == "touch mattress":
+        if action == 'touch mattress':
             all_strings.starting_room_touch_mattress()
             return self.enter()
 
-        if action == "take mattress":
+        if action == 'take mattress':
             all_strings.starting_room_take_mattress()
             return self.enter()
 
-        if action == "take junk":
+        if action == 'take junk':
             all_strings.starting_room_take_junk()
             return self.enter()
 
-        if action == "touch junk":
+        if action == 'touch junk':
             all_strings.starting_room_touch_junk()
             return self.enter()
 
         if action in self.pen_moves and action != 'touch pen':
             all_strings.starting_room_take_pen()
             self.pen = False
-            inv.items.append("ballpoint pen")
+            inv.items.append('ballpoint pen')
             self.extra = all_strings.starting_room_extra2
             return self.enter()
 
@@ -434,43 +434,43 @@ class MiddleRoom(Room):
 
         action = self.action()
 
-        if action == "go south" or action == "walk south":
+        if action == 'go south' or action == 'walk south':
             self.current_room = False
-            return "start"
+            return 'start'
 
-        if action == "go east" or action == "walk east":
+        if action == 'go east' or action == 'walk east':
             self.current_room = False
-            return "right"
+            return 'right'
 
-        if action == "go west" or action == "walk west":
+        if action == 'go west' or action == 'walk west':
             self.current_room = False
-            return "left"
+            return 'left'
 
-        if action == "go north" or action == "walk north":
+        if action == 'go north' or action == 'walk north':
             self.current_room = False
-            return "door"
+            return 'door'
 
-        if action == "take hair":
+        if action == 'take hair':
             all_strings.middle_room_take_hair()
             return self.enter()
 
-        if action == "touch hair":
+        if action == 'touch hair':
             all_strings.middle_room_touch_hair()
             return self.enter()
 
-        if action == "touch newspapers" or action == "touch newspaper":
+        if action == 'touch newspapers' or action == 'touch newspaper':
             all_strings.middle_room_touch_newspaper()
             return self.enter()
 
-        if action == "take newspapers" or action == "take newspaper":
+        if action == 'take newspapers' or action == 'take newspaper':
             all_strings.middle_room_take_newspaper()
             return self.enter()
 
-        if action == "touch rubber":
+        if action == 'touch rubber':
             all_strings.middle_room_touch_rubber()
             return self.enter()
 
-        if action == "take rubber":
+        if action == 'take rubber':
             all_strings.middle_room_take_rubber()
             return self.enter()
 
@@ -524,7 +524,7 @@ class TheDoor(Room):
             all_strings.the_door_touch_door()
             return self.enter()
 
-        if action == "take indentation" or action == "take indentations":
+        if action == 'take indentation' or action == 'take indentations':
             all_strings.the_door_take_indentations()
             return self.enter()
 
@@ -649,9 +649,9 @@ best.""" % stone
                             action != 'pull on door' and
                             door_count < 4):
                         door_count += 1
-                        print "\nI guess you might as well %s." % action
-                        action = raw_input("\nBut would you also like to try " +
-                        "to do something else? > ").lower().strip()
+                        print '\nI guess you might as well %s.' % action
+                        action = raw_input('\nBut would you also like to try ' +
+                        'to do something else? > ').lower().strip()
                     all_strings.the_door_can_pull()
                     self.door_open = True
                     self.bearings = all_strings.the_door_bearings2
@@ -691,27 +691,27 @@ class Left(Room):
         self.correct_intro()
         action = self.action()
 
-        if action == "go south" or action == "walk south":
+        if action == 'go south' or action == 'walk south':
             self.current_room = False
-            return "battlefield"
+            return 'battlefield'
 
-        if action == "go east" or action == "walk east":
+        if action == 'go east' or action == 'walk east':
             self.current_room = False
-            return "middle"
+            return 'middle'
 
-        if action == "go west" or action == "walk west":
+        if action == 'go west' or action == 'walk west':
             self.current_room = False
-            return "dining room"
+            return 'dining room'
 
-        if action == "go north" or action == "walk north":
+        if action == 'go north' or action == 'walk north':
             self.current_room = False
-            return "butcher"
+            return 'butcher'
 
-        if action == "take frog" or action == "touch frog":
+        if action == 'take frog' or action == 'touch frog':
             all_strings.left_take_frog()
             return self.enter()
 
-        if action == "catch frog":
+        if action == 'catch frog':
             all_strings.left_catch_frog()
             return self.enter()
 
@@ -737,28 +737,28 @@ class Right(Room):
         self.correct_intro()
         action = self.action()
 
-        if action == "go south" or action == "walk south":
+        if action == 'go south' or action == 'walk south':
             self.current_room = False
-            return "world"
+            return 'world'
 
-        if (action == "go east" or action == "walk east") and self.racetrack_open:
+        if (action == 'go east' or action == 'walk east') and self.racetrack_open:
             self.current_room = False
-            return "racetrack"
+            return 'racetrack'
 
-        if (action == "go east" or action == "walk east" and
+        if (action == 'go east' or action == 'walk east' and
             not self.racetrack_open):
             all_strings.right_racetrack_closed()
             return self.enter()
 
-        if action == "go west" or action == "walk west":
+        if action == 'go west' or action == 'walk west':
             self.current_room = False
-            return "middle"
+            return 'middle'
 
-        if action == "go north" or action == "walk north":
+        if action == 'go north' or action == 'walk north':
             self.current_room = False
-            return "alone"
+            return 'alone'
 
-        if action == "touch computer" or action == "touch computers":
+        if action == 'touch computer' or action == 'touch computers':
             all_strings.right_touch_computer()
             return self.enter()
 
@@ -807,23 +807,23 @@ class Battlefield(Room):
 
         action = self.action()
 
-        if action == "go north" or action == "walk north":
+        if action == 'go north' or action == 'walk north':
             self.current_room = False
-            return "left"
+            return 'left'
 
-        if action == "take soldier":
+        if action == 'take soldier':
             all_strings.battlefield_take_soldier()
             return self.enter()
 
-        if action == "touch soldier":
+        if action == 'touch soldier':
             all_strings.battlefield_touch_soldier()
             return self.enter()
 
 # This is a 'make attempt' action that is present in some form is all of the
 # riddle rooms
 
-        if (action == "talk to soldier" or
-            action == "talk to her" or action == 'come closer'):
+        if (action == 'talk to soldier' or
+            action == 'talk to her' or action == 'come closer'):
 
 # These self.attempted attributes in the riddle rooms determine if the actual
 # riddle can be started. Once attempted, no riddle can be repeated, win or lose.
@@ -837,7 +837,7 @@ class Battlefield(Room):
                 print """
 The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
-                solution = raw_input("\nHow do you answer? > ").lower().strip()
+                solution = raw_input('\nHow do you answer? > ').lower().strip()
 
                 if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
@@ -911,68 +911,68 @@ class DiningRoom(Room):
 
         action = self.action()
 
-        if action == "go east" or action == "walk east":
+        if action == 'go east' or action == 'walk east':
             self.current_room = False
-            return "left"
+            return 'left'
 
-        if (action == "touch fountains" or action == "touch fountain" or
-            action == "touch water" or action == "take water"):
+        if (action == 'touch fountains' or action == 'touch fountain' or
+            action == 'touch water' or action == 'take water'):
             all_strings.dining_room_touch_water()
             return self.enter()
 
-        if action == "take fountains" or action == "take fountain":
+        if action == 'take fountains' or action == 'take fountain':
             all_strings.dining_room_take_water()
             return self.enter()
 
-        if action == "touch curtains" or action == "touch curtain":
+        if action == 'touch curtains' or action == 'touch curtain':
             all_strings.dining_room_touch_curtain()
             return self.enter()
 
-        if action == "take curtains" or action == "take curtain":
+        if action == 'take curtains' or action == 'take curtain':
             all_strings.dining_room_take_curtain()
             return self.enter()
 
-        if action == "sit on sofa":
+        if action == 'sit on sofa':
             dining_room_sit()
             return self.enter()
 
-        if action == "look outside":
+        if action == 'look outside':
             all_strings.dining_room_look_outside()
             return self.enter()
 
-        if action == "touch clock" or action == "touch grandfather clock":
+        if action == 'touch clock' or action == 'touch grandfather clock':
             all_strings.dining_room_touch_clock()
             return self.enter()
 
-        if (action == "take clock" or action == "take grandfather clock" or
-            action == "take sofa"):
+        if (action == 'take clock' or action == 'take grandfather clock' or
+            action == 'take sofa'):
             all_strings.dining_room_take_big()
             return self.enter()
 
-        if action == "touch sofa":
+        if action == 'touch sofa':
             all_strings.dining_room_touch_sofa()
             return self.enter()
 
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
-        if action == "read note":
+        if action == 'read note':
             all_strings.dining_room_riddle()
 
-            if "ballpoint pen" not in inv.items:
+            if 'ballpoint pen' not in inv.items:
                 all_strings.dining_room_no_pen()
                 return self.enter()
 
 # The attempt will only be made if the player is carrying 'ballpoint pen'
 
-            elif "ballpoint pen" in inv.items:
+            elif 'ballpoint pen' in inv.items:
                 self.attempted = True
                 all_strings.dining_room_have_pen()
                 while self.guesses_left > 0 and not self.solved:
                     print """
 Below the note there are still %d lines that are not used up.""" % self.guesses_left
                     self.guesses_left -= 1
-                    solution = raw_input("\nWhat do you write? > ").lower().strip()
+                    solution = raw_input('\nWhat do you write? > ').lower().strip()
 
                     if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                         self.solved = True
@@ -992,7 +992,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                 inv.failed_riddles += 1
                 inv.end_if_failed()
             all_strings.dining_room_leave_pen()
-            inv.remove("ballpoint pen")
+            inv.remove('ballpoint pen')
             all_strings.enter_to_continue()
 
             return self.enter()
@@ -1037,11 +1037,11 @@ class Butcher(Room):
 
         action = self.action()
 
-        if action == "go south" or action == "walk south":
+        if action == 'go south' or action == 'walk south':
             self.current_room = False
-            return "left"
+            return 'left'
 
-        if action == "touch pig":
+        if action == 'touch pig':
             all_strings.butcher_touch_pig()
             return self.enter()
 
@@ -1071,9 +1071,9 @@ class Butcher(Room):
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
-        if (action == "talk to man" or
-            action == "talk to butcher" or action == "talk to him" or
-            action == "talk to the man"):
+        if (action == 'talk to man' or
+            action == 'talk to butcher' or action == 'talk to him' or
+            action == 'talk to the man'):
             self.attempted = True
             all_strings.butcher_riddle()
             while self.guesses_left > 0 and not self.solved:
@@ -1088,7 +1088,7 @@ The man uses a small knife to carve a line into the wall behind him. There is
 The man uses a small knife to carve a line into the wall behind him. There are
 %d lines in the wall. His lips seem to curl involuntarily.""" % (6 - self.guesses_left)
                 self.guesses_left -= 1
-                solution = raw_input("\nHow do you answer? > ").lower().strip()
+                solution = raw_input('\nHow do you answer? > ').lower().strip()
 
                 if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
@@ -1133,10 +1133,10 @@ class Racetrack(Room):
                     'pick up small rock']
     rock_moves = ['touch rock', 'take rock', 'pick up rock', 'grab rock',
                     'take small rock', 'grab small rock', 'pick up small rock']
-    attempt_moves = ["throw rock", "throw rock at person",
-                    "throw rock at human", "throw rock at the person",
-                    "throw rock at the robot", "throw rock at robot",
-                    "throw rock at hugbot", "throw rock at the human"]
+    attempt_moves = ['throw rock', 'throw rock at person',
+                    'throw rock at human', 'throw rock at the person',
+                    'throw rock at the robot', 'throw rock at robot',
+                    'throw rock at hugbot', 'throw rock at the human']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk south', 'go east',
                 'go south']
     solution = ' fork '
@@ -1221,21 +1221,21 @@ class Racetrack(Room):
 
 # This is another kind of 'make attempt' that can only lead to failure.
 
-        if action == "throw rock at human" or action == "throw rock at person":
+        if action == 'throw rock at human' or action == 'throw rock at person':
             inv.remove('rock')
             self.attempted = True
             all_strings.racetrack_throw_rock_at_human()
             inv.failed_riddles += 1
             inv.end_if_failed()
             right_room.racetrack_open = False
-            return "right"
+            return 'right'
 
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
-        if (action == "throw rock at robot" or
-        action == "throw rock at the robot" or
-        action == "throw rock at hugbot"):
+        if (action == 'throw rock at robot' or
+        action == 'throw rock at the robot' or
+        action == 'throw rock at hugbot'):
             inv.remove('rock')
             self.attempted = True
             all_strings.racetrack_riddle()
@@ -1253,7 +1253,7 @@ class Racetrack(Room):
 'It's okay my friend, you are loved,' the hugbot says. You see the number %d
 quickly counting down on the display that's (gently) pressing into your face.
 """ % (((self.guesses_left + 1) * robot_clock) + randint(1, 100))
-                solution = raw_input("What is the safeword? > ").lower().strip()
+                solution = raw_input('What is the safeword? > ').lower().strip()
 
                 if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
@@ -1360,7 +1360,7 @@ class Alone(Room):
 
                 self.loading(self.guesses_left)
                 self.guesses_left -= 1
-                solution = raw_input("\n?? > ").lower().strip()
+                solution = raw_input('\n?? > ').lower().strip()
 
                 if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
@@ -1394,28 +1394,28 @@ class Alone(Room):
             all_strings.alone_touch_projector()
             return self.enter()
 
-        if action == "go south" or action == "walk south":
+        if action == 'go south' or action == 'walk south':
             self.current_room = False
-            return "right"
+            return 'right'
 
-        if (action == "talk to lady" or
-            action == "talk to her" or action == "talk to woman"):
+        if (action == 'talk to lady' or
+            action == 'talk to her' or action == 'talk to woman'):
             all_strings.alone_talk_to_lady()
             return self.enter()
 
-        if action == "talk to projector" or action == "talk to the projector":
+        if action == 'talk to projector' or action == 'talk to the projector':
             all_strings.alone_talk_to_projector()
             return self.enter()
 
-        if action == "take projector":
+        if action == 'take projector':
             all_strings.alone_take_projector()
             return self.enter()
 
-        if action == "talk to girl":
+        if action == 'talk to girl':
             all_strings.alone_talk_to_girl()
             return self.enter()
 
-        if action == "plug in projector" or action == "plug in the projector":
+        if action == 'plug in projector' or action == 'plug in the projector':
 
 # If the projector is already plugged in, get a different message.
 
@@ -1444,7 +1444,7 @@ class Alone(Room):
             all_strings.alone_projector_power_on()
             return self.enter()
 
-        if action == "unplug projector" or action == "unplug the projector":
+        if action == 'unplug projector' or action == 'unplug the projector':
 
 # If the projector is already unpluged, get a different message.
 
@@ -1468,7 +1468,7 @@ class Alone(Room):
 
             return self.enter()
 
-        if action == "turn on projector" or action == "turn on the projector":
+        if action == 'turn on projector' or action == 'turn on the projector':
 
 # If projector was already on:
 
@@ -1509,7 +1509,7 @@ class Alone(Room):
                 all_strings.alone_projector_no_power()
                 return self.enter()
 
-        if action == "turn off projector" or action == "turn off the projector":
+        if action == 'turn off projector' or action == 'turn off the projector':
 
 # If the projector is already off:
 
@@ -1551,7 +1551,7 @@ class Alone(Room):
 
             return self.enter()
 
-        if action == "open lid" or action == "open projector lid":
+        if action == 'open lid' or action == 'open projector lid':
 
             if self.projector_open:
                 all_strings.alone_projector_no_lid()
@@ -1579,7 +1579,7 @@ class Alone(Room):
             all_strings.alone_projector_open()
             return self.enter()
 
-        if action == "close lid" or action == "close projector lid":
+        if action == 'close lid' or action == 'close projector lid':
 
 # If lid is already closed:
 
@@ -1603,8 +1603,8 @@ class Alone(Room):
             all_strings.alone_projector_close()
             return self.enter()
 
-        if (action == "look under projector" or
-        action == "look under the projector"):
+        if (action == 'look under projector' or
+        action == 'look under the projector'):
 
 # If the puzzle isn't solved (attempted or not):
 
@@ -1634,7 +1634,7 @@ class Alone(Room):
     def loading(self, count):
         for i in xrange(count):
             sleep(1)
-            print "\n."
+            print '\n.'
 
 
 class World(Room):
@@ -1677,15 +1677,15 @@ class World(Room):
 
         action = self.action()
 
-        if action == "go north" or action == "walk north":
+        if action == 'go north' or action == 'walk north':
             self.current_room = False
-            return "right"
+            return 'right'
 
         if action == 'throw rock at elephant':
             all_strings.world_throw_rock()
             return self.enter()
 
-        if action == "sit":
+        if action == 'sit':
 
             if self.stone_here:
                 all_strings.world_sit_start()
@@ -1695,7 +1695,7 @@ class World(Room):
                 all_strings.world_sit_final()
                 return self.enter()
 
-        if action == "sit cross-legged":
+        if action == 'sit cross-legged':
 
             if self.stone_here:
                 all_strings.world_meditate_start()
@@ -1705,7 +1705,7 @@ class World(Room):
                 all_strings.world_meditate_final()
                 return self.enter()
 
-        if action == "sit on rock":
+        if action == 'sit on rock':
 
             if self.stone_here:
                 all_strings.world_chill_start()
@@ -1715,8 +1715,8 @@ class World(Room):
                 all_strings.world_chill_final()
                 return self.enter()
 
-        if (action == "enjoy the view" or action == "enjoy the amazing view" or
-            action == "enjoy view" or action == "look at view"):
+        if (action == 'enjoy the view' or action == 'enjoy the amazing view' or
+            action == 'enjoy view' or action == 'look at view'):
 
             if self.stone_here:
                 all_strings.world_enjoy_start()
@@ -1726,7 +1726,7 @@ class World(Room):
                 all_strings.world_enjoy_final()
                 return self.enter()
 
-        if action == "look at mountains":
+        if action == 'look at mountains':
 
             if self.stone_here:
                 all_strings.world_gaze_start()
@@ -1736,7 +1736,7 @@ class World(Room):
                 all_strings.world_gaze_final()
                 return self.enter()
 
-        if action == "touch rock":
+        if action == 'touch rock':
 
             if self.stone_here:
                 all_strings.world_rock_start()
@@ -1746,7 +1746,7 @@ class World(Room):
                 all_strings.world_rock_final()
                 return self.enter()
 
-        if action == "talk to rock":
+        if action == 'talk to rock':
 
             if self.stone_here:
                 all_strings.world_rock_buddy_start()
@@ -1756,7 +1756,7 @@ class World(Room):
                 all_strings.world_rock_buddy_final()
                 return self.enter()
 
-        if action == "fan yourself":
+        if action == 'fan yourself':
 
             if self.stone_here:
                 all_strings.world_fan_start()
@@ -1766,7 +1766,7 @@ class World(Room):
                 all_strings.world_fan_final()
                 return self.enter()
 
-        if action == "touch elephant":
+        if action == 'touch elephant':
             all_strings.world_touch()
             return self.enter()
 
@@ -1786,7 +1786,7 @@ class World(Room):
                 self.overheating(self.guesses_left)
                 self.guesses_left -= 1
                 sleep(1)
-                solution = raw_input("\nYou speak > ").lower().strip()
+                solution = raw_input('\nYou speak > ').lower().strip()
 
                 if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
@@ -2112,9 +2112,9 @@ class SavedGame(object):
                                 {'solved': False, 'visited': False,
                                 'stone_here': True, 'final_response': False,
                                 'good_text_up': False, 'sad_text_up': False,
-                                'projector_power': False, "projector_on": False,
-                                "projector_open": False, "attempted": False,
-                                "looked": False,
+                                'projector_power': False, 'projector_on': False,
+                                'projector_open': False, 'attempted': False,
+                                'looked': False,
                                 'intro': all_strings.alone_intro,
                                 'extra': all_strings.alone_extra_start,
                                 'bearings': all_strings.alone_bearings_start},
