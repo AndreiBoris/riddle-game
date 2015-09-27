@@ -1007,7 +1007,11 @@ class Butcher(Room):
     good_moves = ['go south', 'walk south', 'talk to butcher',
                     'talk to man', 'talk to him', 'touch pig', 'take meat',
                     'take cut', 'take pig', 'touch meat', 'touch cut',
-                    'take cuts', 'touch cuts', 'talk to the man']
+                    'take cuts', 'touch cuts', 'talk to the man',
+                    'touch butcher', 'touch man', 'touch him', 'touch the man',
+                    'touch the butcher']
+    man_moves = ['touch butcher', 'touch man', 'touch him', 'touch the man',
+                'touch the butcher']
     attempt_moves = ['talk to butcher', 'talk to man',
      'talk to him']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
@@ -1037,6 +1041,10 @@ class Butcher(Room):
 
         if action == "touch pig":
             all_strings.butcher_touch_pig()
+            return self.enter()
+
+        if action in self.man_moves:
+            all_strings.butcher_touch_man()
             return self.enter()
 
         if (action == 'touch cut' or action == 'touch meat' or

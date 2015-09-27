@@ -500,10 +500,9 @@ The man laughs a kind-sounding laugh,
 butcher_intro = """
 A fairly standard-looking butcher shop. There is metal counter over a glass
 display where certain cuts of meat are shown. A smooth, trim man with glasses
-stands behind the counter. He is manually sharpening a knife with a stone. The
-knife is not, in fact, a butcher's cleaver. Somehow this fact doesn't give you
-any deep sense of comfort. Behind the man you see a skinned pig hanging from a
-hook. How quaint."""
+stands behind the counter. He is manually sharpening a knife. The knife is not a
+butcher's cleaver. Somehow this fact doesn't give you any deep sense of comfort.
+Behind the man you see a skinned pig hanging from a hook. How quaint."""
 
 def butcher_riddle():
     print """
@@ -543,6 +542,10 @@ seems counter-intuitive to your whole plan."""
     raw_input("\nHit ENTER to continue")
     print "\nYou give it up."
     sleep(1)
+
+def butcher_touch_man():
+    print "\nHe has a knife."
+    raw_input("\nHit ENTER to continue")
 
 def butcher_touch_meat():
     print "\nSquishy."
