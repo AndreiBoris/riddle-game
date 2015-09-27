@@ -343,6 +343,11 @@ You see that the projector might be in emotional stress."""
 Deep down, you feel the projector heard you. It will be okay."""
     raw_input("\nHit ENTER to continue")
 
+def alone_touch_projector():
+    print """
+Plastic."""
+    raw_input("\nHit ENTER to continue")
+
 bad_moves = "\nYou can't go there from here.\n"
 
 battlefield_bearings1 = """
@@ -619,10 +624,10 @@ It's really damn quiet in this weird place."""
 dining_room_intro = """
 This room is extremely gaudy. They've got little fountains with little rocks and
 fishies. The sofa is upholstered with some fancy fabric that probably costs more
-per square foot and the an ordinary 2500 square foot house in the suburbs. They
-even got one of the grandfather clocks with the pendulum swinging back and
-forth. The window at the back of the dining room is open and the gorgeous silk
-curtains are floating lyrically along. You half-expect a wild butler to appear."""
+per square foot than a full 3000 square foot house in the suburbs. They even
+have one of the grandfather clocks with the pendulum swinging back and forth.
+The window at the back of the dining room is open and the gorgeous silk curtains
+are floating lyrically along."""
 
 def dining_room_leave_pen():
     print """
@@ -781,10 +786,10 @@ left_intro = """
 After walking through the dark tunnel for a while you begin to feel quite
 certain of one thing: it is very dark here. Not that that's a problem or
 anything. Though if it wasn't for the faint glimmers of other places peaking
-through in the distance you would probably begin to lose your mind right now
-about. Hey, maybe you'll be doing that regardless, why not! You hear a frog
-croaking away somewhere in the darkness you hear a frog. You feel an unusually
-strong sense of connection with it."""
+through in the distance you would probably begin to lose your mind right about
+now. Hey, maybe you'll be doing that regardless, why not! You hear a frog
+croaking away somewhere in the darkness. The frog doesn't judge you. The frog is
+your friend."""
 
 def left_take_frog():
     print """
@@ -1226,7 +1231,7 @@ those that you cannot in peace."""
 stone_of_friendship_pickup = """
 You pick up the stone. It is warm to the touch. It probably had that hugbot's
 exhaust blowing on it too. Somehow this stone reminds you of some of the
-happiest times you've had with some close friends, along ago. Looking at the
+happiest times you've had with some close friends, long ago. Looking at the
 stone, you see the word 'FRIENDSHIP' written on it."""
 
 stone_of_friendship_message = """
