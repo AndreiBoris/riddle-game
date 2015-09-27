@@ -487,7 +487,9 @@ class TheDoor(Room):
                     'place stone', 'touch indentation', 'take indentations',
                     'take indentation', 'look at indentations',
                     'look at indentation', 'inspect indentations',
-                    'inspect indentation']
+                    'inspect indentation', 'touch bag', 'pick up bag',
+                    'grab bag']
+    bag_moves = ['touch bag', 'take bag', 'pick up bag', 'grab bag']
     bad_moves = ['go east', 'walk east', 'go west', 'walk west']
     stones = {'Stone of Peace': False, 'Stone of Silence': False,
             'Stone of Respect': False, 'Stone of Practice': False,
@@ -598,7 +600,11 @@ best.""" % stone
                 all_strings.the_door_not_placed()
                 return self.enter()
 
-        if action == 'take bag':
+        if action == 'touch bag':
+            all_strings.the_door_touch_bag()
+            return self.enter()
+
+        if action in self.bag_moves and action != self.bag_moves[0]:
 
             if self.bag_here:
                 all_strings.the_door_take_bag()

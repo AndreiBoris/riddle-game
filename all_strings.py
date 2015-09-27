@@ -1448,6 +1448,11 @@ The bag reminds you enough of your childhood that you think it's best if you
 hold onto it. Might come in handy."""
     raw_input("\nHit ENTER to continue")
 
+def the_door_touch_bag():
+    print """
+Feels like the 19th century. Dependable but archaic."""
+    raw_input("\nHit ENTER to continue")
+
 def the_door_see_indentations():
     print "\nThere are three on each side of the door."
     sleep(2)
