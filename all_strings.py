@@ -766,7 +766,7 @@ def left_catch_frog():
 You wander in the darkness trying to echo-locate the frog."""
     sleep(3)
     print """
-The frog has fallen annoying silent."""
+The frog has fallen annoyingly silent. Croak, damn you!"""
     raw_input("\nHit ENTER to continue")
 
 left_extra = """
@@ -1086,6 +1086,12 @@ def right_racetrack_closed():
 You start walking toward the racetrack when you realize what awaits you there
 after that episode with the rock and the human ... Perhaps it is best to just
 stay right where you are."""
+    raw_input("\nHit ENTER to continue")
+
+def right_take_computer():
+    print """
+Oooo, what a horrible thing that'd be for the people who actually have to use
+and do something useful on these computers."""
     raw_input("\nHit ENTER to continue")
 
 def right_touch_computer():

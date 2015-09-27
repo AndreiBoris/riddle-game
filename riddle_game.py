@@ -726,7 +726,7 @@ class Right(Room):
     good_moves = ['go east', 'walk east', 'walk south', 'walk east',
                     'walk west', 'go south', 'go east', 'go west', 'go north',
                     'walk north', 'touch computer', 'touch computers',
-                    'touch computer fan']
+                    'touch computer fan', 'take computer']
     bad_moves = []
     intro = all_strings.right_intro
     extra = all_strings.right_extra
@@ -763,6 +763,10 @@ class Right(Room):
 
         if action == 'touch computer fan':
             all_strings.right_touch_computer_fan()
+            return self.enter()
+
+        if action == 'take computer':
+            all_strings.right_take_computer()
             return self.enter()
 
 
