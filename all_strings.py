@@ -1659,6 +1659,10 @@ def world_throw_rock():
 This cannot be a good idea."""
     raw_input("\nHit ENTER to continue")
 
+def world_take():
+    print "\n...Right."
+    raw_input("\nHit ENTER to continue")
+
 def world_touch():
     print "\nSeems like a bad idea."
     raw_input("\nHit ENTER to continue")

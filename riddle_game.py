@@ -1638,8 +1638,10 @@ class World(Room):
                 'talk to it', 'sit', 'sit cross-legged', 'sit on rock',
                 'touch elephant', 'touch rock', 'talk to rock',
                 'enjoy the view', 'look at mountains', 'fan yourself',
-                'enjoy the amazing view', 'enjoy view', 'look at view']
-    attempt_moves = ['talk to elephant', 'talk to it']
+                'enjoy the amazing view', 'enjoy view', 'look at view',
+                'take elephant']
+    attempt_moves = ['talk to elephant', 'talk to it', 'touch elephant',
+                    'take elephant']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     intro = all_strings.world_intro_start
@@ -1758,6 +1760,10 @@ class World(Room):
 
         if action == "touch elephant":
             all_strings.world_touch()
+            return self.enter()
+
+        if action == 'take elephant':
+            all_strings.world_take()
             return self.enter()
 
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
