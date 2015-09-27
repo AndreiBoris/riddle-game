@@ -147,10 +147,10 @@ class Room(object):
     attempted = False
     attempt_moves = []
     stone_moves = ['take stone', 'pick up stone', 'grab stone']
-    bearings_final = ""
-    extra_final = ""
-    room_stone = ""
-    room_stone_message = None
+    bearings_final = ''
+    extra_final = ''
+    room_stone = ''
+    room_stone_message = ''
 
     def action(self):
         # basic action options for any room
@@ -304,6 +304,32 @@ class Room(object):
         if self.attempted and self.attempt_moves[0] in self.good_moves:
             for option in self.attempt_moves:
                 self.good_moves.remove(option)
+
+    def stone_pickup(self):
+# If the player does not have the 'dirty bag' then they can only carry one of
+# the stones at any given time. NOTE that this means this won't work without
+# inv instantiated.
+
+        if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
+            all_strings.no_bag()
+            return self.enter()
+
+        if inv.stones_carried() == 0 or "dirty bag" in inv.items:
+            self.stone_here = False
+            inv.items.append(self.room_stone)
+            print self.room_stone_message
+            all_strings.enter_to_continue()
+
+# The player gets a hint about what to do with a stone if a certain action was
+# performed in door_room. NOTE that this means this won't work without the
+# door_room instantiated.
+
+        if door_room.touched_indentations:
+            all_strings.indentation_hint()
+
+        self.extra = self.extra_final
+        self.bearings = self.bearings_final
+        return self.enter()
 
 
 class StartingRoom(Room):
@@ -736,10 +762,10 @@ class Battlefield(Room):
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
 
-    bearings_final = all_strings.battlefield_bearings2
+    bearings_final = all_strings.battlefield_bearings_final
     extra_final = all_strings.battlefield_extra_final
     room_stone = 'Stone of Respect'
-    room_stone_message = all_strings.stone_of_respect_pickup()
+    room_stone_message = all_strings.stone_of_respect_pickup
 
     def enter(self):
 
@@ -821,33 +847,13 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 
             return self.enter()
 
-# This 'take stone' action is available in some form for all of the riddle rooms
-# but it is only available if stone_available() at the top of self.enter()
-# places it in self.good_moves.
+# self.stone_moves are available for all of the riddle rooms but these actions
+# are only available if stone_available() at the top of self.enter() places it
+# in self.good_moves.
 
         if action in self.stone_moves:
+            return self.stone_pickup()
 
-# If the player does not have the 'dirty bag' then they can only carry one of
-# the stones at any given time.
-
-            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                all_strings.no_bag()
-                return self.enter()
-
-            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here = False
-                inv.items.append(self.room_stone)
-                self.room_stone_message
-
-# The player gets a hint about what to do with a stone if a certain action was
-# performed in door_room
-
-                if door_room.touched_indentations:
-                    all_strings.indentation_hint()
-
-                self.extra = self.extra_final
-                self.bearings = self.bearings_final
-                return self.enter()
 
 
 class DiningRoom(Room):
@@ -866,6 +872,12 @@ class DiningRoom(Room):
     intro = all_strings.dining_room_intro
     extra = all_strings.dining_room_extra_start
     bearings = all_strings.dining_room_bearings_start
+
+    bearings_final = all_strings.dining_room_bearings_final
+    extra_final = all_strings.dining_room_extra_final
+    room_stone = 'Stone of Silence'
+    room_stone_message = all_strings.stone_of_silence_pickup
+
     def enter(self):
 
         self.stone_available()
@@ -964,20 +976,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
             return self.enter()
 
         if action in self.stone_moves:
-
-            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                all_strings.no_bag()
-                return self.enter()
-
-            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here = False
-                inv.items.append("Stone of Silence")
-                all_strings.stone_of_silence_pickup()
-                if door_room.touched_indentations:
-                    all_strings.indentation_hint()
-                self.extra = all_strings.dining_room_extra_final
-                self.bearings = all_strings.dining_room_bearings_final
-                return self.enter()
+            return self.stone_pickup()
 
 
 class Butcher(Room):
@@ -995,6 +994,12 @@ class Butcher(Room):
     intro = all_strings.butcher_intro
     extra = all_strings.butcher_extra_start
     bearings = all_strings.butcher_bearings_start
+
+    bearings_final = all_strings.butcher_bearings_final
+    extra_final = all_strings.butcher_extra_final
+    room_stone = 'Stone of Peace'
+    room_stone_message = all_strings.stone_of_peace_pickup
+
     def enter(self):
 
         self.one_attempt_only()
@@ -1081,22 +1086,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
             return self.enter()
 
         if action in self.stone_moves:
-
-            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                all_strings.no_bag()
-                return self.enter()
-
-            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here = False
-                inv.items.append("Stone of Peace")
-                all_strings.stone_of_peace_pickup()
-
-                if door_room.touched_indentations:
-                    all_strings.indentation_hint()
-                self.extra = all_strings.butcher_extra_final
-                self.bearings = all_strings.butcher_bearings_final
-
-                return self.enter()
+            return self.stone_pickup()
 
 
 class Racetrack(Room):
@@ -1118,6 +1108,12 @@ class Racetrack(Room):
     intro = all_strings.racetrack_intro
     extra = all_strings.racetrack_extra_start
     bearings = all_strings.racetrack_bearings_start
+
+    bearings_final = all_strings.racetrack_bearings_final
+    extra_final = all_strings.racetrack_extra_final
+    room_stone = 'Stone of Friendship'
+    room_stone_message = all_strings.stone_of_friendship_pickup
+
     def enter(self):
 
         if not self.rock_on_floor and not self.attempted:
@@ -1246,23 +1242,7 @@ quickly counting down on the display that's (gently) pressing into your face.
             return self.enter()
 
         if action in self.stone_moves:
-
-            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                all_strings.no_bag()
-                return self.enter()
-
-            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here = False
-                inv.items.append("Stone of Friendship")
-                all_strings.stone_of_friendship_pickup()
-
-                if door_room.touched_indentations:
-                    all_strings.indentation_hint()
-
-                self.extra = all_strings.racetrack_extra_final
-                self.bearings = all_strings.racetrack_bearings_final
-
-                return self.enter()
+            return self.stone_pickup()
 
 
 class Alone(Room):
@@ -1296,6 +1276,12 @@ class Alone(Room):
     intro = all_strings.alone_intro
     extra = all_strings.alone_extra_start
     bearings = all_strings.alone_bearings_start
+
+    bearings_final = all_strings.alone_bearings_final
+    extra_final = all_strings.alone_extra_final
+    room_stone = 'Stone of Compassion'
+    room_stone_message = all_strings.stone_of_compassion_pickup
+
     def enter(self):
 
 # This is in essence the same thing as the stone_available() method from Room()
@@ -1310,6 +1296,13 @@ class Alone(Room):
                 self.good_moves.remove(option)
 
         self.correct_intro()
+
+# This is used to control a message that comes up in self.extra, but it is not
+# necessary and should be refactored so that the message just uses
+# self.stone_here. This final_response message overrides all other self.extra
+# messages
+        if not self.stone_here:
+            self.final_response = True
 
 # This is a unique implementation of the 'make attempt' as defined in
 # Battlefield(Room). It plays only when the state of three projector attributes
@@ -1588,26 +1581,7 @@ class Alone(Room):
                 return self.enter()
 
         if action in self.stone_moves:
-
-            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                all_strings.no_bag()
-                return self.enter()
-
-            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here = False
-                inv.items.append("Stone of Compassion")
-                all_strings.stone_of_compassion_pickup()
-
-                if door_room.touched_indentations:
-                    all_strings.indentation_hint()
-
-# self.final_response will create a self.extra message that will override all
-# other possibilities
-
-                self.final_response = True
-                self.extra = all_strings.alone_extra_final
-                self.bearings = all_strings.alone_bearings_final
-                return self.enter()
+            return self.stone_pickup()
 
 # This is the modified sleep function used in the "make attempt" action in this
 # room
@@ -1632,7 +1606,13 @@ class World(Room):
                 'go south', 'go west', ]
     intro = all_strings.world_intro_start
     extra = all_strings.world_extra_start
-    bearings = all_strings.world_bearings_start
+    bearings = all_strings.world_bearings
+
+    bearings_final = all_strings.world_bearings
+    extra_final = all_strings.world_extra_final
+    room_stone = 'Stone of Practice'
+    room_stone_message = all_strings.stone_of_practice_pickup
+
     def enter(self):
 
         self.one_attempt_only()
@@ -1765,20 +1745,7 @@ class World(Room):
             return self.enter()
 
         if action in self.stone_moves:
-
-            if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
-                all_strings.no_bag()
-                return self.enter()
-
-            if inv.stones_carried() == 0 or "dirty bag" in inv.items:
-                self.stone_here = False
-                inv.items.append("Stone of Practice")
-                all_strings.stone_of_practice_pickup()
-
-                if door_room.touched_indentations:
-                    all_strings.indentation_hint()
-
-                return self.enter()
+            return self.stone_pickup()
 
     def overheating(self, count):
         if count == 5:
@@ -2094,7 +2061,7 @@ class SavedGame(object):
                                 'stone_here': True, 'attempted': False,
                                 'intro': all_strings.world_intro_start,
                                 'extra': all_strings.world_extra_start,
-                                'bearings': all_strings.world_bearings_start}}
+                                'bearings': all_strings.world_bearings}}
 
 # This if statement is just so that the game does run if it was imported as a
 # module into another script.
@@ -2118,3 +2085,5 @@ if __name__ == "__main__":
 
 # TODO: Refactor the stone pick up, should be easy now using custom room
 # stone and final message variables.
+# TODO: Refactor stone_here and final_response in Alone(Room) to get rid of
+# final_response entirely
