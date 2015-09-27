@@ -83,7 +83,8 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = []
+    items = ['Stone of Silence', 'Stone of Peace', 'Stone of Practice',
+                'Stone of Respect']
 
 # 3 failed riddles mean the game cannot be completed, so at that point it fails.
 
@@ -644,10 +645,9 @@ best.""" % stone
                     all_strings.the_door_cant_push()
                     action = all_strings.the_door_action
                     door_count = 0
-                    while (action != 'pull door' and action != 'pull' and
-                            action != 'pull the door' and
-                            action != 'pull on door' and
-                            door_count < 4):
+                    while ((' pull ' not in ' ' +
+                    action.replace('!', '').replace('?', '').replace('.', '') +
+                    ' ' and door_count < 6) or len(action) > 25):
                         door_count += 1
                         print '\nI guess you might as well %s.' % action
                         action = raw_input('\nBut would you also like to try ' +
@@ -1296,7 +1296,6 @@ class Alone(Room):
 # messages display at any given time and also a projector that has a number of
 # potential states
 
-    final_response = False
     good_text_up = False
     sad_text_up = False
     projector_power = False
@@ -1314,7 +1313,9 @@ class Alone(Room):
                     'unplug the projector', 'talk to the projector',
                     'unplug projector', 'look under projector',
                     'look under the projector', 'inspect projector',
-                    'touch projector', 'take projector']
+                    'touch projector', 'take projector', 'plug projector in',
+                    'turn projector on', 'turn the projector on',
+                    'plug the projector in']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
     solution = ' shoe '
@@ -1341,13 +1342,6 @@ class Alone(Room):
                 self.good_moves.remove(option)
 
         self.correct_intro()
-
-# This is used to control a message that comes up in self.extra, but it is not
-# necessary and should be refactored so that the message just uses
-# self.stone_here. This final_response message overrides all other self.extra
-# messages
-        if not self.stone_here:
-            self.final_response = True
 
 # This is a unique implementation of the 'make attempt' as defined in
 # Battlefield(Room). It plays only when the state of three projector attributes
@@ -1425,7 +1419,9 @@ class Alone(Room):
             all_strings.alone_talk_to_girl()
             return self.enter()
 
-        if action == 'plug in projector' or action == 'plug in the projector':
+        if (action == 'plug in projector' or
+        action == 'plug in the projector' or action == 'plug projector in' or
+        action == 'plug the projector in'):
 
 # If the projector is already plugged in, get a different message.
 
@@ -1433,10 +1429,10 @@ class Alone(Room):
                 all_strings.alone_projector_powered()
                 return self.enter()
 
-# If self.final response is up it supersedes all other possible changes to
-# self.extra
+# If the stone is not here, the final message supersedes all other possible
+# changes to self.extra
 
-            if self.final_response:
+            if not self.stone_here:
                 self.extra = all_strings.alone_extra_final
 
 # If the riddle has been attempted and failed, a particular message will be
@@ -1447,7 +1443,7 @@ class Alone(Room):
 
 # If the projector is plugged in but it is not on:
 
-            elif not self.final_response and not self.projector_on:
+            elif self.stone_here and not self.projector_on:
                 self.extra = all_strings.alone_extra_proj_power_off
 
             self.projector_power = True
@@ -1471,14 +1467,15 @@ class Alone(Room):
             if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_unplug_failed
 
-# As long as the final response is not up, the following self.extra will play:
+# As long as the stone is here, the following self.extra will play:
 
-            elif not self.final_response:
+            elif self.stone_here:
                 self.extra = all_strings.alone_extra_proj_unplug
 
             return self.enter()
 
-        if action == 'turn on projector' or action == 'turn on the projector':
+        if (action == 'turn on projector' or action == 'turn on the projector' or
+        action == 'turn projector on' or action == 'turn the projector on'):
 
 # If projector was already on:
 
@@ -1492,9 +1489,10 @@ class Alone(Room):
                 all_strings.alone_projector_turn_on()
                 self.projector_on = True
 
-# self.final_response supersedes all other self.extra messages
+# If the stone has been taken, the final message supersedes all other self.extra
+# messages
 
-                if self.final_response:
+                if not self.stone_here:
                     self.extra = all_strings.alone_extra_final
 
 # Only one of either self.good_text_up or self.sad_text_up would be True in any
@@ -1506,9 +1504,9 @@ class Alone(Room):
                 elif self.sad_text_up and self.projector_open:
                     self.extra = all_strings.alone_extra_lose
 
-# If we're not at the final response and the lid is closed, we get this:
+# If the stone is still here and the lid is closed, we get this:
 
-                elif not self.final_response:
+                elif self.stone_here:
                     self.extra = all_strings.alone_extra_proj_on_closed
 
                 return self.enter()
@@ -1537,9 +1535,9 @@ class Alone(Room):
             if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_off_failed
 
-# As long as we're not at the final response we get the following message:
+# As long as the stone is still here we get the following message:
 
-            elif not self.final_response:
+            elif self.stone_here:
                 self.extra = all_strings.alone_extra_proj_off
 
             return self.enter()
@@ -1567,9 +1565,9 @@ class Alone(Room):
                 all_strings.alone_projector_no_lid()
                 return self.enter()
 
-# self.final_response supersedes all other possible self.extra messages
+# the final message supercedes all other self.extra messages
 
-            if self.final_response:
+            if not self.stone_here:
                 self.extra = all_strings.alone_extra_final
 
 # These will only replace self.extra if the projector is actually on.
@@ -1582,7 +1580,7 @@ class Alone(Room):
 
 # If the projector is off we get:
 
-            elif not self.final_response:
+            elif self.stone_here:
                 self.extra = all_strings.alone_extra_proj_opened_off
 
             self.projector_open = True
@@ -1602,9 +1600,9 @@ class Alone(Room):
             if self.attempted and not self.solved:
                 self.extra = all_strings.alone_extra_proj_closed_failed
 
-# In any other circumsntance apart from self.final_response being true:
+# As long as the stone is still around:
 
-            elif not self.final_response:
+            elif self.stone_here:
                 self.extra = all_strings.alone_extra_proj_closed
 
 # Close projector lid:
@@ -1977,7 +1975,6 @@ class Saver(object):
         save_file.rooms['door']['bag_here'] = self.door.bag_here
         save_file.rooms['right']['racetrack_open'] = self.right.racetrack_open
         save_file.rooms['racetrack']['rock_on_floor'] = self.race.rock_on_floor
-        save_file.rooms['alone']['final_response'] = self.alone.final_response
         save_file.rooms['alone']['good_text_up'] = self.alone.good_text_up
         save_file.rooms['alone']['sad_text_up'] = self.alone.sad_text_up
         save_file.rooms['alone']['projector_power'] = self.alone.projector_power
@@ -2038,7 +2035,6 @@ class Loader(object):
         door_room.bag_here = self.info.rooms['door']['bag_here']
         right_room.racetrack_open = self.info.rooms['right']['racetrack_open']
         racetrack_room.rock_on_floor = self.info.rooms['racetrack']['rock_on_floor']
-        alone_room.final_response = self.info.rooms['alone']['final_response']
         alone_room.good_text_up = self.info.rooms['alone']['good_text_up']
         alone_room.sad_text_up = self.info.rooms['alone']['sad_text_up']
         alone_room.projector_power = self.info.rooms['alone']['projector_power']
@@ -2122,11 +2118,10 @@ class SavedGame(object):
                                 'bearings': all_strings.racetrack_bearings_start},
                         'alone':
                                 {'solved': False, 'visited': False,
-                                'stone_here': True, 'final_response': False,
+                                'stone_here': True, 'looked': False,
                                 'good_text_up': False, 'sad_text_up': False,
                                 'projector_power': False, 'projector_on': False,
                                 'projector_open': False, 'attempted': False,
-                                'looked': False,
                                 'intro': all_strings.alone_intro,
                                 'extra': all_strings.alone_extra_start,
                                 'bearings': all_strings.alone_bearings_start},
@@ -2156,6 +2151,3 @@ if __name__ == '__main__':
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
-
-# TODO: Refactor stone_here and final_response in Alone(Room) to get rid of
-# final_response entirely
