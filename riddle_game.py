@@ -780,7 +780,7 @@ class Battlefield(Room):
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
     attempt_moves = ['talk to soldier', 'talk to her', 'come closer']
-    solution = 'onion'
+    solution = ' onion '
     intro = all_strings.battlefield_intro
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
@@ -839,7 +839,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
                 solution = raw_input("\nHow do you answer? > ").lower().strip()
 
-                if solution == "onion" or solution == "an onion":
+                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
 
 # some riddles provide a hint to help a losing player
@@ -891,7 +891,7 @@ class DiningRoom(Room):
     attempt_moves = ['read note']
     bad_moves = ['go north', 'walk north', 'walk south', 'walk west',
                 'go south', 'go west' ]
-    solution = 'silence'
+    solution = ' silence '
     intro = all_strings.dining_room_intro
     extra = all_strings.dining_room_extra_start
     bearings = all_strings.dining_room_bearings_start
@@ -974,7 +974,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                     self.guesses_left -= 1
                     solution = raw_input("\nWhat do you write? > ").lower().strip()
 
-                    if solution == "silence":
+                    if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                         self.solved = True
 
                     if self.guesses_left == 1:
@@ -1017,7 +1017,7 @@ class Butcher(Room):
      'talk to him']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
-    solution = 'pillow'
+    solution = ' pillow '
     intro = all_strings.butcher_intro
     extra = all_strings.butcher_extra_start
     bearings = all_strings.butcher_bearings_start
@@ -1090,7 +1090,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 self.guesses_left -= 1
                 solution = raw_input("\nHow do you answer? > ").lower().strip()
 
-                if solution == "pillow" or solution == "a pillow":
+                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
 
                 if self.guesses_left == 1:
@@ -1139,7 +1139,7 @@ class Racetrack(Room):
                     "throw rock at hugbot", "throw rock at the human"]
     bad_moves = ['go north', 'walk north', 'walk east', 'walk south', 'go east',
                 'go south']
-    solution = 'fork'
+    solution = ' fork '
     intro = all_strings.racetrack_intro
     extra = all_strings.racetrack_extra_start
     bearings = all_strings.racetrack_bearings_start
@@ -1255,7 +1255,7 @@ quickly counting down on the display that's (gently) pressing into your face.
 """ % (((self.guesses_left + 1) * robot_clock) + randint(1, 100))
                 solution = raw_input("What is the safeword? > ").lower().strip()
 
-                if solution == "fork" or solution == "a fork":
+                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
 
                 if self.guesses_left == 1:
@@ -1309,7 +1309,7 @@ class Alone(Room):
                     'touch projector', 'take projector']
     bad_moves = ['go north', 'walk north', 'walk east', 'walk west', 'go east',
                 'go west']
-    solution = 'shoe'
+    solution = ' shoe '
     intro = all_strings.alone_intro
     extra = all_strings.alone_extra_start
     bearings = all_strings.alone_bearings_start
@@ -1362,7 +1362,7 @@ class Alone(Room):
                 self.guesses_left -= 1
                 solution = raw_input("\n?? > ").lower().strip()
 
-                if solution == "shoe" or solution == "a shoe":
+                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
 
                 if self.guesses_left == 1:
@@ -1651,7 +1651,7 @@ class World(Room):
                     'take elephant']
     bad_moves = ['go east', 'walk east', 'walk south', 'walk west',
                 'go south', 'go west', ]
-    solution = 'ton'
+    solution = ' ton '
     intro = all_strings.world_intro_start
     extra = all_strings.world_extra_start
     bearings = all_strings.world_bearings
@@ -1777,8 +1777,8 @@ class World(Room):
 # For an explanation of a general 'make attempt' action in puzzle rooms, see
 # Battlefield
 
-        if (action == "talk to elephant" or
-            action == "talk to it"):
+        if (action == 'talk to elephant' or
+            action == 'talk to it'):
             self.attempted = True
             all_strings.world_riddle()
             while self.guesses_left > 0 and not self.solved:
@@ -1788,7 +1788,7 @@ class World(Room):
                 sleep(1)
                 solution = raw_input("\nYou speak > ").lower().strip()
 
-                if self.solution in solution and len(solution) < 15:
+                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
                     self.solved = True
 
             if self.solved:
@@ -1843,12 +1843,12 @@ class End(Room):
 # corresponding message
 
             if door_room.stones[stone]:
-                raw_input("Go on? > ")
-                print "\nYou found the %s." % stone
+                raw_input('Go on? > ')
+                print '\nYou found the %s.' % stone
                 print self.stories[stone]
-                print "\n" * 2
+                print '\n' * 2
 
-        raw_input("Ready to finish? > ")
+        raw_input('Ready to finish? > ')
         print all_strings.end_message
         exit(1)
 
@@ -1887,7 +1887,7 @@ class Map(object):
 # The 35 next lines are used to break the rooms up from one another on the
 # display.
 
-        print "\n" * 35
+        print '\n' * 35
         return self.rooms[next_room].enter()
 
 
@@ -2047,19 +2047,19 @@ class SavedGame(object):
     def __init__(self):
         self.items = []
         self.failed_riddles = 0
-        self.starting = "start"
-        self.rooms = {"start":
+        self.starting = 'start'
+        self.rooms = {'start':
                                 {'pen': True, 'visited': True,
                                 'start_of_game': True,
                                 'intro': all_strings.starting_room_intro,
                                 'extra': all_strings.starting_room_extra1,
                                 'bearings': all_strings.starting_room_bearings1},
-                        "middle":
+                        'middle':
                                 {'visited': False,
                                 'intro': all_strings.middle_room_intro,
                                 'extra': all_strings.middle_room_extra,
                                 'bearings': all_strings.middle_room_bearings},
-                        "door":
+                        'door':
                                 {'visited': False,
                                 'door_open': False, 'attempted_door': False,
                                 'touched_indentations': False, 'bag_here': True,
@@ -2071,44 +2071,44 @@ class SavedGame(object):
                                 'Stone of Practice': False,
                                 'Stone of Friendship': False,
                                 'Stone of Compassion': False},
-                        "left":
+                        'left':
                                 {'visited': False,
                                 'intro': all_strings.left_intro,
                                 'extra': all_strings.left_extra,
                                 'bearings': all_strings.left_bearing},
-                        "right":
+                        'right':
                                 {'visited': False,
                                 'racetrack_open': True,
                                 'intro': all_strings.right_intro,
                                 'extra': all_strings.right_extra,
                                 'bearings': all_strings.right_bearings},
-                        "battlefield":
+                        'battlefield':
                                 {'visited': False,
                                 'solved': False, 'stone_here': True,
                                 'attempted': False,
                                 'intro': all_strings.battlefield_intro,
                                 'extra': all_strings.battlefield_extra_start,
                                 'bearings': all_strings.battlefield_bearings1},
-                        "dining room":
+                        'dining room':
                                 {'visited': False, 'solved': False,
                                 'stone_here': True, 'attempted': False,
                                 'intro': all_strings.dining_room_intro,
                                 'extra': all_strings.dining_room_extra_start,
                                 'bearings': all_strings.dining_room_bearings_start},
-                        "butcher":
+                        'butcher':
                                 {'visited': False, 'attempted': False,
                                 'solved': False, 'stone_here': True,
                                 'intro': all_strings.butcher_intro,
                                 'extra': all_strings.butcher_extra_start,
                                 'bearings': all_strings.butcher_bearings_start},
-                        "racetrack":
+                        'racetrack':
                                 {'visited': False,
                                 'solved': False, 'stone_here': True,
                                 'rock_on_floor': True, 'attempted': False,
                                 'intro': all_strings.racetrack_intro,
                                 'extra': all_strings.racetrack_extra_start,
                                 'bearings': all_strings.racetrack_bearings_start},
-                        "alone":
+                        'alone':
                                 {'solved': False, 'visited': False,
                                 'stone_here': True, 'final_response': False,
                                 'good_text_up': False, 'sad_text_up': False,
@@ -2118,7 +2118,7 @@ class SavedGame(object):
                                 'intro': all_strings.alone_intro,
                                 'extra': all_strings.alone_extra_start,
                                 'bearings': all_strings.alone_bearings_start},
-                        "world":
+                        'world':
                                 {'solved': False, 'visited': False,
                                 'stone_here': True, 'attempted': False,
                                 'intro': all_strings.world_intro_start,
@@ -2128,7 +2128,7 @@ class SavedGame(object):
 # This if statement is just so that the game does run if it was imported as a
 # module into another script.
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     the_map = Map()
 
 # Get the SavedGame object from saved.py. If there is no saved.py, get a stock
