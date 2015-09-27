@@ -612,7 +612,8 @@ best.""" % stone
                             door_count < 4):
                         door_count += 1
                         print "\nI guess you might as well %s." % action
-                        action = raw_input("\nBut would you also like to try to do something else? > ")
+                        action = raw_input("\nBut would you also like to try " +
+                        "to do something else? > ").lower().strip()
                     all_strings.the_door_can_pull()
                     self.door_open = True
                     self.bearings = all_strings.the_door_bearings2
@@ -778,7 +779,7 @@ class Battlefield(Room):
                 print """
 The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
-                solution = raw_input("\nHow do you answer? > ").lower()
+                solution = raw_input("\nHow do you answer? > ").lower().strip()
 
                 if solution == "onion" or solution == "an onion":
                     self.solved = True
@@ -926,7 +927,7 @@ class DiningRoom(Room):
                     print """
 Below the note there are still %d lines that are not used up.""" % self.guesses_left
                     self.guesses_left -= 1
-                    solution = raw_input("\nWhat do you write? > ").lower()
+                    solution = raw_input("\nWhat do you write? > ").lower().strip()
 
                     if solution == "silence":
                         self.solved = True
@@ -1041,7 +1042,7 @@ The man uses a small knife to carve a line into the wall behind him. There is
 The man uses a small knife to carve a line into the wall behind him. There are
 %d lines in the wall. His lips seem to curl involuntarily.""" % (6 - self.guesses_left)
                 self.guesses_left -= 1
-                solution = raw_input("\nHow do you answer? > ").lower()
+                solution = raw_input("\nHow do you answer? > ").lower().strip()
 
                 if solution == "pillow" or solution == "a pillow":
                     self.solved = True
@@ -1210,7 +1211,7 @@ class Racetrack(Room):
 'It's okay my friend, you are loved,' the hugbot says. You see the number %d
 quickly counting down on the display that's (gently) pressing into your face.
 """ % (((self.guesses_left + 1) * robot_clock) + randint(1, 100))
-                solution = raw_input("What is the safeword? > ").lower()
+                solution = raw_input("What is the safeword? > ").lower().strip()
 
                 if solution == "fork" or solution == "a fork":
                     self.solved = True
@@ -1318,7 +1319,7 @@ class Alone(Room):
 
                 self.loading(self.guesses_left)
                 self.guesses_left -= 1
-                solution = raw_input("\n?? > ").lower()
+                solution = raw_input("\n?? > ").lower().strip()
 
                 if solution == "shoe" or solution == "a shoe":
                     self.solved = True
@@ -1732,7 +1733,7 @@ class World(Room):
                 self.overheating(self.guesses_left)
                 self.guesses_left -= 1
                 sleep(1)
-                solution = raw_input("\nYou speak > ").lower()
+                solution = raw_input("\nYou speak > ").lower().strip()
 
                 if solution == "ton":
                     self.solved = True
