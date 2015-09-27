@@ -146,10 +146,11 @@ class Room(object):
     bearings = ''
     attempted = False
     attempt_moves = []
+    stone_moves = ['take stone', 'pick up stone', 'grab stone']
 
     def action(self):
         # basic action options for any room
-        action = raw_input("> ").lower()
+        action = raw_input("> ").lower().strip()
 
 # Each room has a specific mutable set of actions that are good_moves, if one
 # of those is picked, that action is returned and fed into the room's script,
@@ -253,7 +254,7 @@ class Room(object):
             else:
                 print "\nI'm sorry, but you can't %r.\n" % action
 
-            action = raw_input("> ").lower()
+            action = raw_input("> ").lower().strip()
 
 # This only plays when one of the good_moves is chosen.
 
@@ -264,12 +265,16 @@ class Room(object):
     def stone_available(self):
 
 # This runs at the beginning of each riddle room (except for Alone(), see
-# specific comments for that one)
+# specific comments for that one) and gives the player the option to pick up
+# the stone that is yielded at the end of any riddle.
 
-        if self.stone_here and self.solved and "take stone" not in self.good_moves:
-            self.good_moves.append("take stone")
-        if not self.stone_here and "take stone" in self.good_moves:
-            self.good_moves.remove("take stone")
+        if (self.stone_here and self.solved and
+        self.stone_moves[0] not in self.good_moves):
+            for option in self.stone_moves:
+                self.good_moves.append(option)
+        if not self.stone_here and self.stone_moves[0] in self.good_moves:
+            for option in self.stone_moves:
+                self.good_moves.remove(option)
 
 # correct_intro() Decides which messages to play when enter() is run in any
 # room.
@@ -809,7 +814,7 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 # but it is only available if stone_available() at the top of self.enter()
 # places it in self.good_moves.
 
-        if action == "take stone":
+        if action in self.stone_moves:
 
 # If the player does not have the 'dirty bag' then they can only carry one of
 # the stones at any given time.
@@ -946,7 +951,7 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
 
             return self.enter()
 
-        if action == "take stone":
+        if action in self.stone_moves:
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
                 all_strings.no_bag()
@@ -1063,7 +1068,7 @@ The man uses a small knife to carve a line into the wall behind him. There are
 
             return self.enter()
 
-        if action == "take stone":
+        if action in self.stone_moves:
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
                 all_strings.no_bag()
@@ -1228,7 +1233,7 @@ quickly counting down on the display that's (gently) pressing into your face.
             all_strings.enter_to_continue()
             return self.enter()
 
-        if action == "take stone":
+        if action in self.stone_moves:
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
                 all_strings.no_bag()
@@ -1568,7 +1573,7 @@ class Alone(Room):
                 all_strings.alone_look_under_final()
                 return self.enter()
 
-        if action == "take stone":
+        if action in self.stone_moves:
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
                 all_strings.no_bag()
@@ -1745,7 +1750,7 @@ class World(Room):
             self.intro = all_strings.world_intro_final
             return self.enter()
 
-        if action == "take stone":
+        if action in self.stone_moves:
 
             if inv.stones_carried() >= 1 and "dirty bag" not in inv.items:
                 all_strings.no_bag()
