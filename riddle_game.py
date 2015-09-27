@@ -1120,6 +1120,8 @@ class Racetrack(Room):
                     'talk to the human', 'talk to human', 'talk to person',
                     'touch rock', 'take small rock', 'touch hugbot',
                     'touch robot', 'touch human', 'touch person']
+    rock_moves = ['touch rock', 'take rock', 'pick up rock', 'grab rock',
+                    'take small rock', 'grab small rock', 'pick up small rock']
     attempt_moves = ["throw rock", "throw rock at person",
                     "throw rock at human", "throw rock at the person",
                     "throw rock at the robot", "throw rock at robot",
@@ -1169,7 +1171,7 @@ class Racetrack(Room):
             all_strings.racetrack_touch_robot()
             return self.enter()
 
-        if action == 'take rock' or action == 'take small rock':
+        if action in self.rock_moves and action != self.rock_moves[0]:
 
             if self.rock_on_floor:
                 self.rock_on_floor = False
