@@ -839,7 +839,8 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 self.guesses_left -= 1
                 solution = raw_input('\nHow do you answer? > ').lower().strip()
 
-                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
+                if (self.solution in ' ' + solution.replace('?', '') + ' ' and
+                len(solution) < 15):
                     self.solved = True
 
 # some riddles provide a hint to help a losing player
@@ -974,7 +975,8 @@ Below the note there are still %d lines that are not used up.""" % self.guesses_
                     self.guesses_left -= 1
                     solution = raw_input('\nWhat do you write? > ').lower().strip()
 
-                    if self.solution in ' ' + solution + ' ' and len(solution) < 15:
+                    if (self.solution in ' ' + solution.replace('?', '') + ' ' and
+                    len(solution) < 15):
                         self.solved = True
 
                     if self.guesses_left == 1:
@@ -1090,7 +1092,8 @@ The man uses a small knife to carve a line into the wall behind him. There are
                 self.guesses_left -= 1
                 solution = raw_input('\nHow do you answer? > ').lower().strip()
 
-                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
+                if (self.solution in ' ' + solution.replace('?', '') + ' ' and
+                len(solution) < 15):
                     self.solved = True
 
                 if self.guesses_left == 1:
@@ -1255,7 +1258,8 @@ quickly counting down on the display that's (gently) pressing into your face.
 """ % (((self.guesses_left + 1) * robot_clock) + randint(1, 100))
                 solution = raw_input('What is the safeword? > ').lower().strip()
 
-                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
+                if (self.solution in ' ' + solution.replace('?', '') + ' ' and
+                len(solution) < 15):
                     self.solved = True
 
                 if self.guesses_left == 1:
@@ -1362,7 +1366,8 @@ class Alone(Room):
                 self.guesses_left -= 1
                 solution = raw_input('\n?? > ').lower().strip()
 
-                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
+                if (self.solution in ' ' + solution.replace('?', '') + ' ' and
+                len(solution) < 15):
                     self.solved = True
 
                 if self.guesses_left == 1:
@@ -1788,7 +1793,8 @@ class World(Room):
                 sleep(1)
                 solution = raw_input('\nYou speak > ').lower().strip()
 
-                if self.solution in ' ' + solution + ' ' and len(solution) < 15:
+                if (self.solution in ' ' + solution.replace('?', '') + ' ' and
+                len(solution) < 15):
                     self.solved = True
 
             if self.solved:
