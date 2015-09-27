@@ -1656,9 +1656,19 @@ class World(Room):
 
         action = self.action()
 
+        if 'rock' in inv.items and 'throw rock at elephant' not in self.good_moves:
+            self.good_moves.append('throw rock at elephant')
+
+        if 'rock' not in inv.items and 'throw rock at elephant' in self.good_moves:
+            self.good_moves.remove('throw rock at elephant')
+
         if action == "go north" or action == "walk north":
             self.current_room = False
             return "right"
+
+        if action = 'throw rock at elephant':
+            all_strings.world_throw_rock()
+            return self.enter()
 
         if action == "sit":
 

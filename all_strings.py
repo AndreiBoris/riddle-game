@@ -1647,6 +1647,11 @@ world_solved = """
 You blink and the elephant is gone. It seems like there is hardly a trace of it.
 There is some small object where it elephant appeared to be."""
 
+def world_throw_rock():
+    print """
+This cannot be a good idea."""
+    raw_input("\nHit ENTER to continue")
+
 def world_touch():
     print "\nSeems like a bad idea."
     raw_input("\nHit ENTER to continue")
