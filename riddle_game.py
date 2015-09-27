@@ -147,6 +147,10 @@ class Room(object):
     attempted = False
     attempt_moves = []
     stone_moves = ['take stone', 'pick up stone', 'grab stone']
+    bearings_final = ""
+    extra_final = ""
+    room_stone = ""
+    room_stone_message = None
 
     def action(self):
         # basic action options for any room
@@ -731,6 +735,12 @@ class Battlefield(Room):
     intro = all_strings.battlefield_intro
     extra = all_strings.battlefield_extra_start
     bearings = all_strings.battlefield_bearings1
+
+    bearings_final = all_strings.battlefield_bearings2
+    extra_final = all_strings.battlefield_extra_final
+    room_stone = 'Stone of Respect'
+    room_stone_message = all_strings.stone_of_respect_pickup()
+
     def enter(self):
 
 # These self.stone_available() methods are called at the beginning of each
@@ -826,8 +836,8 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
 
             if inv.stones_carried() == 0 or "dirty bag" in inv.items:
                 self.stone_here = False
-                inv.items.append("Stone of Respect")
-                all_strings.stone_of_respect_pickup()
+                inv.items.append(self.room_stone)
+                self.room_stone_message
 
 # The player gets a hint about what to do with a stone if a certain action was
 # performed in door_room
@@ -835,7 +845,8 @@ The soldier holds up her left hand, with %d digits up.""" % self.guesses_left
                 if door_room.touched_indentations:
                     all_strings.indentation_hint()
 
-                self.extra = all_strings.battlefield_extra_final
+                self.extra = self.extra_final
+                self.bearings = self.bearings_final
                 return self.enter()
 
 
@@ -2104,3 +2115,6 @@ if __name__ == "__main__":
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
+
+# TODO: Refactor the stone pick up, should be easy now using custom room
+# stone and final message variables.
