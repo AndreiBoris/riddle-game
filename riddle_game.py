@@ -83,8 +83,7 @@ class Engine(object):
 
 class Inventory(object):
 
-    items = ['Stone of Silence', 'Stone of Peace', 'Stone of Practice',
-                'Stone of Respect']
+    items = []
 
 # 3 failed riddles mean the game cannot be completed, so at that point it fails.
 
