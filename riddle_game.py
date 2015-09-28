@@ -2,6 +2,7 @@ from time import sleep
 from random import randint
 from random import choice
 from sys import exit
+import os.path
 import pickle
 
 # all_strings is just what is sounds like: anything that is imported from it
@@ -185,8 +186,8 @@ class Room(object):
 # of the current room objects loaded into it.
 
                     saved_file = the_saver.save()
-                    with open('saved.py', 'wb') as save_doc:
-                        pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
+                    with open(file_dir + '/saved.py', 'wb') as save_doc:
+                        saved_file = pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
                     print '\nGame saved.'
                     print all_strings.action_prompt
                 else:
@@ -2170,12 +2171,13 @@ class SavedGame(object):
 
 if __name__ == '__main__':
     the_map = Map()
+    file_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Get the SavedGame object from saved.py. If there is no saved.py, get a stock
 # SavedGame file in case the player chooses to 'load' regardless.
 
     try:
-        with open('saved.py', 'rb') as loaded_doc:
+        with open(file_dir + '/saved.py', 'rb') as loaded_doc:
             load_game = pickle.load(loaded_doc)
     except IOError:
         load_game = SavedGame()
@@ -2184,3 +2186,7 @@ if __name__ == '__main__':
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
+
+# TODO: Encrypt the pickled file before storying it.
+# TODO: use os.path to find the directory that the game file is in and
+# use to get the saved filed where it should go, otherwise it breaks in windows
