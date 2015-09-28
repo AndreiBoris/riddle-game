@@ -4,6 +4,7 @@ from random import choice
 from sys import exit
 import os.path
 import pickle
+from encrypt import encode, decode
 
 # all_strings is just what is sounds like: anything that is imported from it
 # is a string or a function that is a combination of strings, time.sleep() and
@@ -188,6 +189,11 @@ class Room(object):
                     saved_file = the_saver.save()
                     with open(file_dir + '/saved.py', 'wb') as save_doc:
                         saved_file = pickle.dump(saved_file, save_doc, pickle.HIGHEST_PROTOCOL)
+                    with open(file_dir + '/saved.py', 'rb') as save_doc:
+                        the_info = save_doc.read()
+                    the_info = encode(the_info)
+                    with open(file_dir + '/saved.py', 'wb') as save_doc:
+                        save_doc.write(the_info)
                     print '\nGame saved.'
                     print all_strings.action_prompt
                 else:
@@ -2177,8 +2183,24 @@ if __name__ == '__main__':
 # SavedGame file in case the player chooses to 'load' regardless.
 
     try:
+        with open(file_dir + '/saved.py', 'rb') as encrypted_file:
+            encryption = encrypted_file.read()
+        decoded_file = decode(encryption)
+        with open(file_dir + '/saved.py', 'wb') as rewritten:
+            rewritten.write(decoded_file)
         with open(file_dir + '/saved.py', 'rb') as loaded_doc:
             load_game = pickle.load(loaded_doc)
+        with open(file_dir + '/saved.py', 'wb') as save_doc:
+            saved_file = pickle.dump(load_game, save_doc, pickle.HIGHEST_PROTOCOL)
+        with open(file_dir + '/saved.py', 'rb') as save_doc:
+            the_info = save_doc.read()
+        the_info = encode(the_info)
+        with open(file_dir + '/saved.py', 'wb') as save_doc:
+            save_doc.write(the_info)
+    except TypeError:
+        with open(file_dir + '/saved.py', 'w') as erased_file:
+            erased_file.truncate()
+        load_game = SavedGame()
     except IOError:
         load_game = SavedGame()
 
