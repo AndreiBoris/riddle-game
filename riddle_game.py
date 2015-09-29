@@ -2208,7 +2208,3 @@ if __name__ == '__main__':
     loader = Loader(load_game, inv)
     game = Engine(the_map, loader)
     game.play()
-
-# TODO: Encrypt the pickled file before storying it.
-# TODO: use os.path to find the directory that the game file is in and
-# use to get the saved filed where it should go, otherwise it breaks in windows
