@@ -1,13 +1,16 @@
 ## TO PLAY:
 
-Using Git
+#### Using Git
 
-Type in the following:
+Type in the following into your bash terminal:
+
 ```
 git clone https://github.com/AndreiCommunication/riddle-game.git
 cd riddle-game
 python riddle-game.py
 ```
+
+#### Using the zip file
 
 If you're not familar with Git or Python, you should be able to run it by 
 downloading the zip file. Extracting it. Making sure you have Python 2.7.something 
