@@ -1,11 +1,21 @@
-TO PLAY:
+## TO PLAY:
 
-If you're not familar with Python, you can run it by downloading the zip file.
-Extracting it. Making sure you have Python 2.7.something installed (from Python
-website) and then right clicking on riddle_game.py and running it with Python.
+Using Git
+
+Type in the following:
+```
+git clone https://github.com/AndreiCommunication/riddle-game.git
+cd riddle-game
+python riddle-game.py
+```
+
+If you're not familar with Git or Python, you should be able to run it by 
+downloading the zip file. Extracting it. Making sure you have Python 2.7.something 
+installed (from Python website) and then right clicking on riddle_game.py and 
+running it with Python.
 
 
-ABOUT:
+## ABOUT:
 
 This is a text-based game where you have to solve some riddles.
 
