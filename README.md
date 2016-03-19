@@ -12,9 +12,9 @@ python riddle-game.py
 
 #### Using the zip file
 
-If you're not familar with Git or Python, you should be able to run it by 
-downloading the zip file. Extracting it. Making sure you have Python 2.7.something 
-installed (from Python website) and then right clicking on riddle_game.py and 
+If you're not familar with Git or Python, you should be able to run it by
+downloading the zip file. Extracting it. Making sure you have Python 2.7.something
+installed (from Python website) and then right clicking on riddle_game.py and
 running it with Python.
 
 
@@ -35,9 +35,13 @@ save slot. If there is no saved game currently logged, load will just start a
 new game.
 
 **If you find some kind of bug that makes the game less enjoyable you can save
-the game and contact me at Andrei.Borissenko@gmail.com. Most fixes would be
-compatible with older saved versions of the game. Though I have tested this game
-enough that I hope you won't have to deal with anything truly annoying. Cheers!
+the game and create an issue here! Most fixes would be compatible with older
+saved versions of the game. Though I have tested this game enough that I hope
+you won't have to deal with anything truly annoying. Cheers!
 
 A thank you goes out to Arash Moghimi and Bryan Weiser for providing some
 suggestions for improvement!
+
+Realistically I probably won't go back to edit this game but might come back and
+do a newer, better version of something like this at some point in the future.
+Will take suggestions :)
